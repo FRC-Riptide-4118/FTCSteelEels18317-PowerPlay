@@ -51,7 +51,7 @@ public class MecanumTeleOp extends LinearOpMode {
     public DcMotor leftSlide = null;
     public DcMotor rightSlide = null;
     public Servo intakeLeft = null;
-    public Servo intakeRight = null;
+  //  public Servo intakeRight = null;
 
 
     @Override
@@ -65,21 +65,15 @@ public class MecanumTeleOp extends LinearOpMode {
         leftSlide = hardwareMap.get(DcMotor.class, "left_slide");
         rightSlide = hardwareMap.get(DcMotor.class, "right_slide");
         intakeLeft = hardwareMap.get(Servo.class, "left_intake");
-        intakeRight = hardwareMap.get(Servo.class, "right_intake");
+       // intakeRight = hardwareMap.get(Servo.class, "right_intake");
 
         // Reversing the motors
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        rearLeft.setDirection(DcMotor.Direction.FORWARD);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        rearLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
         rearRight.setDirection(DcMotor.Direction.FORWARD);
-        leftSlide.setDirection(DcMotor.Direction.REVERSE);
+        leftSlide.setDirection(DcMotor.Direction.FORWARD);
         rightSlide.setDirection(DcMotor.Direction.FORWARD);
-
-        // Encoders
-        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
@@ -93,9 +87,9 @@ public class MecanumTeleOp extends LinearOpMode {
 
             /*-------Drivetrain-------*/
             // Gamepad controls
-            double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-            double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-            double rightX = gamepad1.right_stick_x;
+            double r = Math.hypot(-gamepad1.left_stick_x, gamepad1.left_stick_y);
+            double robotAngle = Math.atan2(gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4;
+            double rightX = -gamepad1.right_stick_x;
             final double v1 = r * Math.cos(robotAngle) + rightX;
             final double v2 = r * Math.sin(robotAngle) - rightX;
             final double v3 = r * Math.sin(robotAngle) + rightX;
@@ -109,38 +103,50 @@ public class MecanumTeleOp extends LinearOpMode {
             /*-------INTAKE-------*/
             if (gamepad1.left_bumper) {
                 intakeLeft.setPosition(1.0);
-                intakeRight.setPosition(1.0);
+               // intakeRight.setPosition(1.0);
             }
             else {
                 intakeLeft.setPosition(0.0);
-                intakeRight.setPosition(0.0);
+               // intakeRight.setPosition(0.0);
             }
 
             /*-------Lift-------*/
 
             // Ground Junction
             if (gamepad1.a) {
-                leftSlide.setTargetPosition(100);
-                rightSlide.setTargetPosition(100);
+                leftSlide.setTargetPosition(10);
+                rightSlide.setTargetPosition(10);
+                leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
 
             // Low Junction
             if (gamepad1.x) {
-                leftSlide.setTargetPosition(200);
-                rightSlide.setTargetPosition(200);
+                leftSlide.setTargetPosition(20);
+                rightSlide.setTargetPosition(20);
+                leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
 
             // Medium Junction
             if (gamepad1.y) {
-                leftSlide.setTargetPosition(300);
-                rightSlide.setTargetPosition(300);
+                leftSlide.setTargetPosition(30);
+                rightSlide.setTargetPosition(30);
+                leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
 
             // High Junction
-            if (gamepad1.b) {
-                leftSlide.setTargetPosition(400);
-                rightSlide.setTargetPosition(400);
+            if (gamepad1.a) {
+                leftSlide.setTargetPosition(40);
+                rightSlide.setTargetPosition(40);
+                leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
+
+
+
+
 
 
         }
