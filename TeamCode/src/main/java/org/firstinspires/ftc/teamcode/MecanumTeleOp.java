@@ -73,7 +73,7 @@ public class MecanumTeleOp extends LinearOpMode {
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         rearRight.setDirection(DcMotor.Direction.FORWARD);
         leftSlide.setDirection(DcMotor.Direction.FORWARD);
-        rightSlide.setDirection(DcMotor.Direction.FORWARD);
+        rightSlide.setDirection(DcMotor.Direction.REVERSE);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
@@ -102,46 +102,60 @@ public class MecanumTeleOp extends LinearOpMode {
 
             /*-------INTAKE-------*/
             if (gamepad1.left_bumper) {
-                intakeLeft.setPosition(1.0);
+                intakeLeft.setPosition(0.75);
                // intakeRight.setPosition(1.0);
             }
             else {
-                intakeLeft.setPosition(0.0);
+                intakeLeft.setPosition(1.0);
                // intakeRight.setPosition(0.0);
             }
 
             /*-------Lift-------*/
+            leftSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // Ground Junction
             if (gamepad1.a) {
-                leftSlide.setTargetPosition(10);
-                rightSlide.setTargetPosition(10);
+                leftSlide.setPower(.5);
+                rightSlide.setPower(.5);
+                leftSlide.setTargetPosition(5);
+                rightSlide.setTargetPosition(5);
                 leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
 
             // Low Junction
             if (gamepad1.x) {
-                leftSlide.setTargetPosition(20);
-                rightSlide.setTargetPosition(20);
+                leftSlide.setPower(.5);
+                rightSlide.setPower(.5);
+                leftSlide.setTargetPosition(10);
+                rightSlide.setTargetPosition(10);
                 leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
 
             // Medium Junction
             if (gamepad1.y) {
-                leftSlide.setTargetPosition(30);
-                rightSlide.setTargetPosition(30);
+                leftSlide.setPower(.5);
+                rightSlide.setPower(.5);
+                leftSlide.setTargetPosition(20);
+                rightSlide.setTargetPosition(20);
                 leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
 
             // High Junction
-            if (gamepad1.a) {
-                leftSlide.setTargetPosition(40);
-                rightSlide.setTargetPosition(40);
+            if (gamepad1.b) {
+                leftSlide.setPower(.5);
+                rightSlide.setPower(.5);
+                leftSlide.setTargetPosition(30);
+                rightSlide.setTargetPosition(30);
                 leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
+            else {
+                leftSlide.setPower(0);
+                rightSlide.setPower(0);
             }
 
 
