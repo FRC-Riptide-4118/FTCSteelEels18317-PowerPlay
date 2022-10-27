@@ -122,7 +122,7 @@ public class ParkingZone1 extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(drive_speed, 36.5, 36.5, 36.5, 36.5, 5.0);  // S1: Forward 36.5 Inches with 5 Sec timeout
+        encoderDrive(drive_speed, 5, 5, 5, 5, 5.0);  // S1: Forward 36.5 Inches with 5 Sec timeout
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

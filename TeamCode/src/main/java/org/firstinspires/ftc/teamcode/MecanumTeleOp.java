@@ -51,12 +51,11 @@ public class MecanumTeleOp extends LinearOpMode {
     public DcMotor leftSlide = null;
     public DcMotor rightSlide = null;
     public Servo intakeLeft = null;
-  //  public Servo intakeRight = null;
+    public DcMotor arm = null;
 
 
     @Override
     public void runOpMode() {
-
         // Define and Initialize Motors
         frontLeft = hardwareMap.get(DcMotor.class, "front_left_wheel");
         rearLeft = hardwareMap.get(DcMotor.class, "rear_left_wheel");
@@ -65,7 +64,7 @@ public class MecanumTeleOp extends LinearOpMode {
         leftSlide = hardwareMap.get(DcMotor.class, "left_slide");
         rightSlide = hardwareMap.get(DcMotor.class, "right_slide");
         intakeLeft = hardwareMap.get(Servo.class, "left_intake");
-       // intakeRight = hardwareMap.get(Servo.class, "right_intake");
+        arm = hardwareMap.get(DcMotor.class, "arm");
 
         // Reversing the motors
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -73,7 +72,8 @@ public class MecanumTeleOp extends LinearOpMode {
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         rearRight.setDirection(DcMotor.Direction.FORWARD);
         leftSlide.setDirection(DcMotor.Direction.REVERSE);
-        rightSlide.setDirection(DcMotor.Direction.REVERSE);
+        rightSlide.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotor.Direction.FORWARD);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
@@ -102,67 +102,45 @@ public class MecanumTeleOp extends LinearOpMode {
 
             /*-------INTAKE-------*/
             if (gamepad1.left_bumper) {
-                intakeLeft.setPosition(0.75);
-               // intakeRight.setPosition(1.0);
-            }
-            else {
                 intakeLeft.setPosition(1.0);
-               // intakeRight.setPosition(0.0);
+            }
+            if (gamepad1.right_bumper) {
+                intakeLeft.setPosition(0.0);
+            }
+            if (gamepad2.left_bumper) {
+                intakeLeft.setPosition(0.0);
+            }
+            if (gamepad2.right_bumper) {
+                intakeLeft.setPosition(1.0);
             }
 
             /*-------Lift-------*/
-            leftSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rightSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            // Ground Junction
-            if (gamepad1.a) {
+           if (gamepad2.dpad_left) {
                 leftSlide.setPower(.5);
                 rightSlide.setPower(.5);
-                leftSlide.setTargetPosition(5);
-                rightSlide.setTargetPosition(5);
-                leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
-
-            // Low Junction
-            if (gamepad1.x) {
+           }
+            if (gamepad2.dpad_right) {
                 leftSlide.setPower(.5);
                 rightSlide.setPower(.5);
-                leftSlide.setTargetPosition(10);
-                rightSlide.setTargetPosition(10);
-                leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
-
-            // Medium Junction
-            if (gamepad1.y) {
-                leftSlide.setPower(.5);
-                rightSlide.setPower(.5);
-                leftSlide.setTargetPosition(20);
-                rightSlide.setTargetPosition(20);
-                leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
-
-            // High Junction
-            if (gamepad1.b) {
-                leftSlide.setPower(.5);
-                rightSlide.setPower(.5);
-                leftSlide.setTargetPosition(30);
-                rightSlide.setTargetPosition(30);
-                leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
             else {
                 leftSlide.setPower(0);
                 rightSlide.setPower(0);
             }
 
-
-
-
-
-
+            /*-------Arm-------*/
+            if (gamepad2.a) {
+                arm.setPower(.5);
+                arm.setPower(.5);
+            }
+            if (gamepad2.x) {
+                arm.setPower(-.5);
+                arm.setPower(-.5);
+            }
+            else {
+                arm.setPower(0);
+                arm.setPower(0);
+            }
         }
     }
 }
