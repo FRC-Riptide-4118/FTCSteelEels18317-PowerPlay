@@ -130,12 +130,12 @@ public class MecanumTeleOp extends LinearOpMode {
 
             /*-------Arm-------*/
             if (gamepad2.a) {
-                arm.setPower(.5);
-                arm.setPower(.5);
+                arm.setPower(.25);
+                arm.setPower(.25);
             }
             if (gamepad2.x) {
-                arm.setPower(-.5);
-                arm.setPower(-.5);
+                arm.setPower(-.25);
+                arm.setPower(-.25);
             }
             else {
                 arm.setPower(0);
