@@ -130,8 +130,12 @@ public class MecanumTeleOp extends LinearOpMode {
 
             /*-------Lift-------*/
            if (gamepad2.dpad_up) {
-                leftSlide.setPower(.75);
-                rightSlide.setPower(.75);
+               leftSlide.setPower(.75);
+               rightSlide.setPower(.75);
+           }
+           else {
+                   leftSlide.setPower(0);
+                   rightSlide.setPower(0);
            }
             if (gamepad2.dpad_down) {
                 leftSlide.setPower(-.5);
@@ -146,6 +150,10 @@ public class MecanumTeleOp extends LinearOpMode {
             if (gamepad2.right_stick_y>0) {
                 arm.setPower(.5);
                 arm.setPower(.5);
+            }
+            else {
+                arm.setPower(0);
+                arm.setPower(0);
             }
             if (gamepad2.right_stick_y<0) {
                 arm.setPower(-.5);
