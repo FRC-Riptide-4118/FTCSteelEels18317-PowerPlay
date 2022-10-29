@@ -79,7 +79,7 @@ public class ParkingZone1 extends LinearOpMode {
     static final double     DRIVE_GEAR_REDUCTION    = 19.2 ;     // No External Gearing.
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
-    static final double     drive_speed = 1;
+    static final double     drive_speed = .5;
 
     @Override
     public void runOpMode() {
@@ -121,8 +121,18 @@ public class ParkingZone1 extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(drive_speed, 5, 5, 5, 5, 5.0);
-        encoderDrive(drive_speed, -5, 5, 5, -5, 5.0);// S1: Forward 36.5 Inches with 5 Sec timeout
+
+        frontLeft.setPower(drive_speed);
+        frontRight.setPower(drive_speed);
+        rearLeft.setPower(drive_speed);
+        rearRight.setPower(drive_speed);
+        encoderDrive(3, 3, 3, 3, 5.0);
+
+        frontLeft.setPower(drive_speed);
+        frontRight.setPower(drive_speed);
+        rearLeft.setPower(drive_speed);
+        rearRight.setPower(drive_speed);
+        encoderDrive(-3, 3, 3, -3, 5.0);// S1: Forward 36.5 Inches with 5 Sec timeout
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -137,8 +147,7 @@ public class ParkingZone1 extends LinearOpMode {
      *  2) Move runs out of time
      *  3) Driver stops the opmode running.
      */
-    public void encoderDrive(double speed,
-                             double frontLeftInches, double frontRightInches, double rearLeftInches, double rearRightInches,
+    public void encoderDrive(double frontLeftInches, double frontRightInches, double rearLeftInches, double rearRightInches,
                              double timeoutS) {
         int newfrontLeftTarget;
         int newfrontRightTarget;
@@ -165,11 +174,6 @@ public class ParkingZone1 extends LinearOpMode {
             rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
-            runtime.reset();
-            frontLeft.setPower(Math.abs(speed));
-            frontRight.setPower(Math.abs(speed));
-            rearLeft.setPower(Math.abs(speed));
-            rearRight.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits

@@ -75,6 +75,11 @@ public class MecanumTeleOp extends LinearOpMode {
         rightSlide.setDirection(DcMotor.Direction.FORWARD);
         arm.setDirection(DcMotor.Direction.FORWARD);
 
+        // Brakes so that the mechanisms stay in place
+        leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
         telemetry.update();
@@ -115,17 +120,13 @@ public class MecanumTeleOp extends LinearOpMode {
             }
 
             /*-------Lift-------*/
-           if (gamepad2.dpad_left) {
+           if (gamepad2.dpad_up) {
                 leftSlide.setPower(.75);
                 rightSlide.setPower(.75);
-                leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
            }
-            if (gamepad2.dpad_right) {
+            if (gamepad2.dpad_down) {
                 leftSlide.setPower(-.5);
                 rightSlide.setPower(-.5);
-                leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
             else {
                 leftSlide.setPower(0);
@@ -133,15 +134,13 @@ public class MecanumTeleOp extends LinearOpMode {
             }
 
             /*-------Arm-------*/
-            if (gamepad2.a) {
-                arm.setPower(.25);
-                arm.setPower(.25);
-                arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            if (gamepad2.right_stick_y>0) {
+                arm.setPower(.5);
+                arm.setPower(.5);
             }
-            if (gamepad2.x) {
-                arm.setPower(-.25);
-                arm.setPower(-.25);
-                arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            if (gamepad2.right_stick_y<0) {
+                arm.setPower(-.5);
+                arm.setPower(-.5);
             }
             else {
                 arm.setPower(0);
