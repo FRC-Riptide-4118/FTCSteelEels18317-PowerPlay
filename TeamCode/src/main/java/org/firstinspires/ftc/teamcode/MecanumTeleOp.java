@@ -80,6 +80,15 @@ public class MecanumTeleOp extends LinearOpMode {
         rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        // Running w/o Encoders
+        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
         telemetry.update();
