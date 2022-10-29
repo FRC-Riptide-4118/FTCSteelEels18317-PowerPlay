@@ -116,12 +116,16 @@ public class MecanumTeleOp extends LinearOpMode {
 
             /*-------Lift-------*/
            if (gamepad2.dpad_left) {
-                leftSlide.setPower(.5);
-                rightSlide.setPower(.5);
+                leftSlide.setPower(.75);
+                rightSlide.setPower(.75);
+                leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
            }
             if (gamepad2.dpad_right) {
-                leftSlide.setPower(.5);
-                rightSlide.setPower(.5);
+                leftSlide.setPower(-.5);
+                rightSlide.setPower(-.5);
+                leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
             else {
                 leftSlide.setPower(0);
@@ -132,10 +136,12 @@ public class MecanumTeleOp extends LinearOpMode {
             if (gamepad2.a) {
                 arm.setPower(.25);
                 arm.setPower(.25);
+                arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
             if (gamepad2.x) {
                 arm.setPower(-.25);
                 arm.setPower(-.25);
+                arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
             else {
                 arm.setPower(0);
