@@ -67,19 +67,12 @@ public class ParkingZone1 extends LinearOpMode {
     private DcMotor  frontRight  = null;
     private DcMotor  rearLeft  = null;
 
-    private ElapsedTime     runtime = new ElapsedTime();
-
-    // Calculate the COUNTS_PER_INCH for your specific drive train.
-    // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
-    // For external drive gearing, set DRIVE_GEAR_REDUCTION as needed.
-    // For example, use a value of 2.0 for a 12-tooth spur gear driving a 24-tooth spur gear.
-    // This is gearing DOWN for less speed and more torque.
-    // For gearing UP, use a gear ratio less than 1.0. Note this will affect the direction of wheel rotation.
-    static final double     COUNTS_PER_MOTOR_REV    = 537.7 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 19.2 ;     // No External Gearing.
-    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
-    static final double     drive_speed = .5;
+    void reset_encoders() {
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 
     @Override
     public void runOpMode() {
@@ -98,23 +91,12 @@ public class ParkingZone1 extends LinearOpMode {
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         rearRight.setDirection(DcMotor.Direction.REVERSE);
 
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        reset_encoders();
 
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Starting at",  "%7d :%7d :%7d :%7d");
-        frontLeft.getCurrentPosition();
-        rearLeft.getCurrentPosition();
-        rearRight.getCurrentPosition();
-        frontRight.getCurrentPosition();
-        telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -122,89 +104,44 @@ public class ParkingZone1 extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
-        frontLeft.setPower(drive_speed);
-        frontRight.setPower(drive_speed);
-        rearLeft.setPower(drive_speed);
-        rearRight.setPower(drive_speed);
-        encoderDrive(3, 3, 3, 3, 5.0);
+        frontLeft.setPower(.5);
+        frontRight.setPower(.5);
+        rearLeft.setPower(.5);
+        rearRight.setPower(.5);
 
-        frontLeft.setPower(drive_speed);
-        frontRight.setPower(drive_speed);
-        rearLeft.setPower(drive_speed);
-        rearRight.setPower(drive_speed);
-        encoderDrive(-3, 3, 3, -3, 5.0);// S1: Forward 36.5 Inches with 5 Sec timeout
+        frontLeft.setTargetPosition(500);
+        frontRight.setTargetPosition(500);
+        rearLeft.setTargetPosition(500);
+        rearRight.setTargetPosition(500);
 
-        telemetry.addData("Path", "Complete");
+        // Send telemetry message to indicate successful Encoder reset
+
+        int fl = frontLeft.getCurrentPosition();
+        int rl = rearLeft.getCurrentPosition();
+        int rr = rearRight.getCurrentPosition();
+        int fr = frontRight.getCurrentPosition();
+        telemetry.addData("Current Position:",  "%7d :%7d :%7d :%7d", fl, rl, rr, fr);
         telemetry.update();
-        sleep(1000);  // pause to display final telemetry message.
-    }
 
-    /*
-     *  Method to perform a relative move, based on encoder counts.
-     *  Encoders are not reset as the move is based on the current position.
-     *  Move will stop if any of three conditions occur:
-     *  1) Move gets to the desired position
-     *  2) Move runs out of time
-     *  3) Driver stops the opmode running.
-     */
-    public void encoderDrive(double frontLeftInches, double frontRightInches, double rearLeftInches, double rearRightInches,
-                             double timeoutS) {
-        int newfrontLeftTarget;
-        int newfrontRightTarget;
-        int newrearLeftTarget;
-        int newrearRightTarget;
+        double current_encoder = rearLeft.getCurrentPosition();
 
-        // Ensure that the opmode is still active
-        if (opModeIsActive()) {
-
-            // Determine new target position, and pass to motor controller
-            newfrontLeftTarget = frontLeft.getCurrentPosition() + (int)(frontLeftInches * COUNTS_PER_INCH);
-            newfrontRightTarget = frontRight.getCurrentPosition() + (int)(frontRightInches * COUNTS_PER_INCH);
-            newrearRightTarget = rearRight.getCurrentPosition() + (int)(rearRightInches * COUNTS_PER_INCH);
-            newrearLeftTarget = rearLeft.getCurrentPosition() + (int)(rearLeftInches * COUNTS_PER_INCH);
-            frontLeft.setTargetPosition(newfrontLeftTarget);
-            frontRight.setTargetPosition(newfrontRightTarget);
-            rearLeft.setTargetPosition(newrearLeftTarget);
-            rearRight.setTargetPosition(newrearRightTarget);
-
-            // Turn On RUN_TO_POSITION
+        while(current_encoder<1000){
             frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // reset the timeout time and start motion.
-
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
-            // its target position, the motion will stop.  This is "safer" in the event that the robot will
-            // always end the motion as soon as possible.
-            // However, if you require that BOTH motors have finished their moves before the robot continues
-            // onto the next step, use (isBusy() || isBusy()) in the loop test.
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (frontLeft.isBusy() && frontRight.isBusy() && rearLeft.isBusy() && rearRight.isBusy())) {
-
-                // Display it for the driver.
-                telemetry.addData("Running to",  " %7d :%7d :%7d :%7d", newfrontLeftTarget, newfrontRightTarget, newrearRightTarget, newrearLeftTarget);
-                telemetry.addData("Currently at",  " at %7d :%7d :%7d :%7d",
-                        frontLeft.getCurrentPosition(), frontRight.getCurrentPosition(), rearRight.getCurrentPosition(), rearLeft.getCurrentPosition());
-                telemetry.update();
-            }
-
-            // Stop all motion;
-            frontLeft.setPower(0);
-            frontRight.setPower(0);
-            rearLeft.setPower(0);
-            rearRight.setPower(0);
-
-            // Turn off RUN_TO_POSITION
-            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            sleep(250);   // optional pause after each move.
+            current_encoder = rearLeft.getCurrentPosition();
+            fl = frontLeft.getCurrentPosition();
+            rl = rearLeft.getCurrentPosition();
+            rr = rearRight.getCurrentPosition();
+            fr = frontRight.getCurrentPosition();
+            telemetry.addData("Current Position:",  "%7d :%7d :%7d :%7d", fl, rl, rr, fr);
+            telemetry.update();
         }
+
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        rearLeft.setPower(0);
+        rearRight.setPower(0);
     }
 }

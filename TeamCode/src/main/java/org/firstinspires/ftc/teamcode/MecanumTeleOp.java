@@ -71,11 +71,11 @@ public class MecanumTeleOp extends LinearOpMode {
         rearLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         rearRight.setDirection(DcMotor.Direction.FORWARD);
-        leftSlide.setDirection(DcMotor.Direction.REVERSE);
-        rightSlide.setDirection(DcMotor.Direction.FORWARD);
+        leftSlide.setDirection(DcMotor.Direction.FORWARD);
+        rightSlide.setDirection(DcMotor.Direction.REVERSE);
         arm.setDirection(DcMotor.Direction.FORWARD);
 
-        // Brakes so that the mechanisms stay in place
+        /*  Brakes so that the mechanisms stay in place
         leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -87,7 +87,7 @@ public class MecanumTeleOp extends LinearOpMode {
         rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); */
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
@@ -101,9 +101,9 @@ public class MecanumTeleOp extends LinearOpMode {
 
             /*-------Drivetrain-------*/
             // Gamepad controls
-            double r = Math.hypot(-gamepad1.left_stick_x, gamepad1.left_stick_y);
-            double robotAngle = Math.atan2(gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4;
-            double rightX = -gamepad1.right_stick_x;
+            double r = Math.hypot(-gamepad2.left_stick_x, gamepad2.left_stick_y);
+            double robotAngle = Math.atan2(gamepad2.left_stick_y, -gamepad2.left_stick_x) - Math.PI / 4;
+            double rightX = -gamepad2.right_stick_x;
             final double v1 = r * Math.cos(robotAngle) + rightX;
             final double v2 = r * Math.sin(robotAngle) - rightX;
             final double v3 = r * Math.sin(robotAngle) + rightX;
@@ -128,7 +128,14 @@ public class MecanumTeleOp extends LinearOpMode {
                 intakeLeft.setPosition(1.0);
             }
 
-            /*-------Lift-------*/
+            // Lift
+            leftSlide.setPower(gamepad2.right_stick_y/2);
+            rightSlide.setPower(gamepad2.right_stick_y/2);
+
+            // Arm
+            arm.setPower(gamepad1.right_stick_y/1.5);
+
+            /*-------Lift-------
            if (gamepad2.dpad_up) {
                leftSlide.setPower(.75);
                rightSlide.setPower(.75);
@@ -146,7 +153,7 @@ public class MecanumTeleOp extends LinearOpMode {
                 rightSlide.setPower(0);
             }
 
-            /*-------Arm-------*/
+            /*-------Arm-------
             if (gamepad2.right_stick_y>0) {
                 arm.setPower(.5);
                 arm.setPower(.5);
@@ -162,7 +169,7 @@ public class MecanumTeleOp extends LinearOpMode {
             else {
                 arm.setPower(0);
                 arm.setPower(0);
-            }
+            } */
         }
     }
 }
