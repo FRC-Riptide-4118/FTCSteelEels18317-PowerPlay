@@ -29,41 +29,46 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import android.transition.Slide;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name = "Mecanum Drive", group = "Robot")
+@TeleOp(name = "Testing", group = "Robot")
 
-public class MecanumTeleOp extends LinearOpMode {
+public class Testing extends LinearOpMode {
 
     /* Declare OpMode members. */
+    public DcMotor Slides = null;
     public DcMotor frontLeft = null;
     public DcMotor rearRight = null;
     public DcMotor frontRight = null;
     public DcMotor rearLeft = null;
-    public DcMotor leftSlide = null;
-    public DcMotor rightSlide = null;
-    public Servo intakeLeft = null;
+    public Servo Gripper = null;
     public DcMotor arm = null;
+
+    private static final int Slides_Start = 0;
+    private static final int Arm_Start = -5;
+    private static final int Slides_Low = -750;
+    private static final int Arm_Low = 350;
+    private static final int Slides_Medium = -950;
+    private static final int Arm_Medium = 350;
+    private static final int Slides_High = -1050;
+    private static final int Arm_High = 350;
+    private static final double Gripper_Release = 0.9;
+    private static final double Gripper_Grab = 0;
 
 
     @Override
     public void runOpMode() {
         // Define and Initialize Motors
+        Slides slides = new Slides(hardwareMap);
         frontLeft = hardwareMap.get(DcMotor.class, "front_left_wheel");
         rearLeft = hardwareMap.get(DcMotor.class, "rear_left_wheel");
         frontRight = hardwareMap.get(DcMotor.class, "front_right_wheel");
         rearRight = hardwareMap.get(DcMotor.class, "rear_right_wheel");
-        leftSlide = hardwareMap.get(DcMotor.class, "left_slide");
-        rightSlide = hardwareMap.get(DcMotor.class, "right_slide");
-        intakeLeft = hardwareMap.get(Servo.class, "left_intake");
+        Gripper = hardwareMap.get(Servo.class, "left_intake");
         arm = hardwareMap.get(DcMotor.class, "arm");
 
         // Reversing the motors
@@ -71,23 +76,17 @@ public class MecanumTeleOp extends LinearOpMode {
         rearLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         rearRight.setDirection(DcMotor.Direction.FORWARD);
-        leftSlide.setDirection(DcMotor.Direction.FORWARD);
-        rightSlide.setDirection(DcMotor.Direction.REVERSE);
         arm.setDirection(DcMotor.Direction.FORWARD);
 
-        /*  Brakes so that the mechanisms stay in place
-        leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        // Running w/o Encoders
-        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+        // Reset the slides
+        Slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); */
+
+        Slides.setTargetPosition(Slides_Start);
+        arm.setTargetPosition(Arm_Start);
+
+        Slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
@@ -101,9 +100,9 @@ public class MecanumTeleOp extends LinearOpMode {
 
             /*-------Drivetrain-------*/
             // Gamepad controls
-            double r = Math.hypot(-gamepad2.left_stick_x, gamepad2.left_stick_y);
-            double robotAngle = Math.atan2(gamepad2.left_stick_y, -gamepad2.left_stick_x) - Math.PI / 4;
-            double rightX = -gamepad2.right_stick_x;
+            double r = Math.hypot(-gamepad1.left_stick_x, gamepad1.left_stick_y);
+            double robotAngle = Math.atan2(gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4;
+            double rightX = -gamepad1.right_stick_x;
             final double v1 = r * Math.cos(robotAngle) + rightX;
             final double v2 = r * Math.sin(robotAngle) - rightX;
             final double v3 = r * Math.sin(robotAngle) + rightX;
@@ -116,60 +115,47 @@ public class MecanumTeleOp extends LinearOpMode {
 
             /*-------INTAKE-------*/
             if (gamepad1.left_bumper) {
-                intakeLeft.setPosition(1.0);
+                Gripper.setPosition(Gripper_Grab);
             }
             if (gamepad1.right_bumper) {
-                intakeLeft.setPosition(0.0);
-            }
-            if (gamepad2.left_bumper) {
-                intakeLeft.setPosition(0.0);
-            }
-            if (gamepad2.right_bumper) {
-                intakeLeft.setPosition(1.0);
+                Gripper.setPosition(Gripper_Release);
             }
 
-            // Lift
-            leftSlide.setPower(gamepad2.right_stick_y/2);
-            rightSlide.setPower(gamepad2.right_stick_y/2);
 
-            // Arm
-            arm.setPower(gamepad1.right_stick_y/1.5);
-
-            /*-------Lift-------
-           if (gamepad2.dpad_up) {
-               leftSlide.setPower(.75);
-               rightSlide.setPower(.75);
-           }
-           else {
-                   leftSlide.setPower(0);
-                   rightSlide.setPower(0);
-           }
-            if (gamepad2.dpad_down) {
-                leftSlide.setPower(-.5);
-                rightSlide.setPower(-.5);
+            // Lift & Arm
+            if (gamepad1.a){
+                arm.setPower(.4);
+                arm.setTargetPosition(Arm_Start);
+                sleep(750);
+                Slides.setPower(.1);
+                Slides.setTargetPosition(Slides_Start);
+                sleep(500);
+                Gripper.setPosition(Gripper_Release);
             }
-            else {
-                leftSlide.setPower(0);
-                rightSlide.setPower(0);
-            }
-
-            /*-------Arm-------
-            if (gamepad2.right_stick_y>0) {
+            if (gamepad1.x) {
+                Slides.setPower(.5);
+                Slides.setTargetPosition(Slides_Low);
+                sleep(500);
                 arm.setPower(.5);
+                arm.setTargetPosition(Arm_Low);
+            }
+            if (gamepad1.y) {
+                Gripper.setPosition(Gripper_Grab);
+                Slides.setPower(.5);
+                Slides.setTargetPosition(Slides_Medium);
+                sleep(500);
                 arm.setPower(.5);
+                arm.setTargetPosition(Arm_Medium);
             }
-            else {
-                arm.setPower(0);
-                arm.setPower(0);
-            }
-            if (gamepad2.right_stick_y<0) {
-                arm.setPower(-.5);
-                arm.setPower(-.5);
-            }
-            else {
-                arm.setPower(0);
-                arm.setPower(0);
-            } */
+            /* if (gamepad1.b) {
+                Gripper.setPosition(Gripper_Grab);
+                Slides.setPower(.5);
+                Slides.setTargetPosition(Slides_High);
+                sleep(500);
+                arm.setPower(.5);
+                arm.setTargetPosition(Arm_High);
+            }  */
+            slides.periodic();
         }
     }
 }

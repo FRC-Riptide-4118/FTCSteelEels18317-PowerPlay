@@ -3,26 +3,30 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+
+import org.checkerframework.checker.units.qual.A;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name = "ACTIVELeftBLUERandomizerWarehouse (Blocks to Java)")
+@Autonomous(name = "parkingWithColorSensor")
 @Disabled
-public class ACTIVELeftBLUERandomizerWarehouse extends LinearOpMode {
+public class Parking extends LinearOpMode {
 
-  private DcMotor rightFrontAsDcMotor;
-  private DcMotor rightRearAsDcMotor;
-  private DcMotor ArmAsDcMotor;
-  private DistanceSensor left_distancesensorAsDistanceSensor;
-  private DistanceSensor right_distancesensorAsDistanceSensor;
-  private DcMotor intakeMotorAsDcMotor;
-  private DcMotor leftFrontAsDcMotor;
-  private DcMotor leftRearAsDcMotor;
+  ColorSensor colorSensor;
+  private DcMotor  frontLeft  = null;
+  private DcMotor  rearRight  = null;
+  private DcMotor  frontRight  = null;
+  private DcMotor  rearLeft  = null;
+  private DcMotor  leftSlide  = null;
+  private DcMotor  rightSlide  = null;
 
-  int rightTarget;
-  int leftTarget;
+  int frontRightTarget;
+  int frontLeftTarget;
+  int rearRightTarget;
+  int rearLeftTarget;
   double DRIVE_COUNTS_PER_IN;
 
   /**
@@ -35,117 +39,95 @@ public class ACTIVELeftBLUERandomizerWarehouse extends LinearOpMode {
     double WHEEL_CIRCUMFERENCE_MM;
     double DRIVE_COUNTS_PER_MM;
 
-    rightFrontAsDcMotor = hardwareMap.get(DcMotor.class, "rightFrontAsDcMotor");
-    rightRearAsDcMotor = hardwareMap.get(DcMotor.class, "rightRearAsDcMotor");
-    ArmAsDcMotor = hardwareMap.get(DcMotor.class, "ArmAsDcMotor");
-    left_distancesensorAsDistanceSensor = hardwareMap.get(DistanceSensor.class, "left_distancesensorAsDistanceSensor");
-    right_distancesensorAsDistanceSensor = hardwareMap.get(DistanceSensor.class, "right_distancesensorAsDistanceSensor");
-    intakeMotorAsDcMotor = hardwareMap.get(DcMotor.class, "intakeMotorAsDcMotor");
-    leftFrontAsDcMotor = hardwareMap.get(DcMotor.class, "leftFrontAsDcMotor");
-    leftRearAsDcMotor = hardwareMap.get(DcMotor.class, "leftRearAsDcMotor");
+    frontLeft = hardwareMap.get(DcMotor.class, "front_left_wheel");
+    rearLeft = hardwareMap.get(DcMotor.class, "rear_left_wheel");
+    frontRight = hardwareMap.get(DcMotor.class, "front_right_wheel");
+    rearRight = hardwareMap.get(DcMotor.class, "rear_right_wheel");
+
+    frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+    rearLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+    frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+    rearRight.setDirection(DcMotorSimple.Direction.FORWARD);
+
+    HD_COUNTS_PER_REV = 537;
+    DRIVE_GEAR_REDUCTION = 20;
+    WHEEL_CIRCUMFERENCE_MM = 101.6 * Math.PI;
+    DRIVE_COUNTS_PER_MM = (HD_COUNTS_PER_REV * DRIVE_GEAR_REDUCTION) / WHEEL_CIRCUMFERENCE_MM;
+    DRIVE_COUNTS_PER_IN = DRIVE_COUNTS_PER_MM * 25.4;
 
     waitForStart();
     // Math for Traveling w/ Inches
     if (opModeIsActive()) {
-      HD_COUNTS_PER_REV = 28;
-      DRIVE_GEAR_REDUCTION = 20;
-      WHEEL_CIRCUMFERENCE_MM = 100 * Math.PI;
-      DRIVE_COUNTS_PER_MM = (HD_COUNTS_PER_REV * DRIVE_GEAR_REDUCTION) / WHEEL_CIRCUMFERENCE_MM;
-      DRIVE_COUNTS_PER_IN = DRIVE_COUNTS_PER_MM * 25.4;
       waitForStart();
-      // Reverse Motors and Color Sensor
-      rightFrontAsDcMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-      rightRearAsDcMotor.setDirection(DcMotorSimple.Direction.REVERSE);
       // Running Code
-      ArmAsDcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       Reset_Encoders();
-      do_something(14.8, 14.8, 0.2);
+      drivetrain(5, 5, 5, 5, .5);
       Reset_Encoders();
-      if (left_distancesensorAsDistanceSensor.getDistance(DistanceUnit.CM) <= 10) {
-        // Raise arm to level 2
-        do_something(7, 7, 0.3);
-        ArmAsDcMotor.setTargetPosition(2500);
-        ArmAsDcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ArmAsDcMotor.setPower(1);
+      colorSensor.enableLed(true);  // Turn the LED on
+      if (colorSensor.red() >= 5) {
+        // move to zone 1
+        colorSensor.enableLed(false);  // Turn the LED off
+        drivetrain(-7, 7, -7, 7, 0.3);
         Reset_Encoders();
-        do_something(-7, -7, 0.3);
-      } else if (right_distancesensorAsDistanceSensor.getDistance(DistanceUnit.CM) <= 10) {
-        // Raise arm to level 3
-        do_something(7, 7, 0.3);
-        ArmAsDcMotor.setTargetPosition(3900);
-        ArmAsDcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ArmAsDcMotor.setPower(1);
+        drivetrain(-7, -7, -7, -7, 0.3);
+      } else if (colorSensor.red() <= 2) {
+        // move to zone 2
+        colorSensor.enableLed(false);  // Turn the LED off
+        drivetrain(7, 7, 7, 7, 0.3);
         Reset_Encoders();
-        do_something(-7, -7, 0.3);
+        drivetrain(-7, -7, -7, -7,0.3);
       } else {
-        do_something(7, 7, 0.3);
-        // Raise arm to level 1
-        ArmAsDcMotor.setTargetPosition(1350);
-        ArmAsDcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ArmAsDcMotor.setPower(1);
+        colorSensor.enableLed(false);  // Turn the LED off
+        drivetrain(7, 7, 7, 7,0.3);
+        // move to zone 3
         Reset_Encoders();
-        do_something(-7, -7, 0.3);
+        drivetrain(-7, -7, -7, -7,0.3);
       }
       Reset_Encoders();
-      do_something(6, -6, 0.4);
-      Reset_Encoders();
-      do_something(7, 7, 0.4);
-      Reset_Encoders();
-      intakeMotorAsDcMotor.setPower(1);
-      sleep(2500);
-      intakeMotorAsDcMotor.setPower(0);
-      do_something(-5, -5, 0.5);
-      ArmAsDcMotor.setTargetPosition(1350);
-      ArmAsDcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      ArmAsDcMotor.setPower(1);
-      Reset_Encoders();
-      do_something(-18, 18, 0.4);
-      Reset_Encoders();
-      do_something(38, 38, 0.7);
-      ArmAsDcMotor.setTargetPosition(0);
-      ArmAsDcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      ArmAsDcMotor.setPower(1);
-      Reset_Encoders();
-      do_something(10, 10, 0.3);
+      drivetrain(6, -6, 6, -6,0.4);
       Reset_Encoders();
     }
   }
 
   //Inches
-  private void do_something(double leftInches, double rightInches, double Power) {
+  private void drivetrain(double frontLeftInches, double frontRightInches, double rearLeftInches, double rearRightInches, double Power) {
     if (opModeIsActive()) {
-      rightTarget = (int) (rightFrontAsDcMotor.getCurrentPosition() + rightInches * DRIVE_COUNTS_PER_IN);
-      rightTarget = (int) (rightRearAsDcMotor.getCurrentPosition() + rightInches * DRIVE_COUNTS_PER_IN);
-      leftTarget = (int) (leftFrontAsDcMotor.getCurrentPosition() + leftInches * DRIVE_COUNTS_PER_IN);
-      leftTarget = (int) (leftRearAsDcMotor.getCurrentPosition() + leftInches * DRIVE_COUNTS_PER_IN);
-      rightFrontAsDcMotor.setTargetPosition(rightTarget);
-      leftFrontAsDcMotor.setTargetPosition(leftTarget);
-      rightRearAsDcMotor.setTargetPosition(rightTarget);
-      leftRearAsDcMotor.setTargetPosition(leftTarget);
-      rightFrontAsDcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      leftRearAsDcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      rightRearAsDcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      leftFrontAsDcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      rightFrontAsDcMotor.setPower(Power);
-      leftRearAsDcMotor.setPower(Power);
-      rightRearAsDcMotor.setPower(Power);
-      leftFrontAsDcMotor.setPower(Power);
-      while (opModeIsActive() && (rightFrontAsDcMotor.isBusy() || leftFrontAsDcMotor.isBusy()) && (rightRearAsDcMotor.isBusy() || leftRearAsDcMotor.isBusy())) {
+      frontRightTarget = (int) (frontRight.getCurrentPosition() + frontRightInches * DRIVE_COUNTS_PER_IN);
+      rearRightTarget = (int) (rearRight.getCurrentPosition() + rearRightInches * DRIVE_COUNTS_PER_IN);
+      frontLeftTarget = (int) (frontLeft.getCurrentPosition() + frontLeftInches * DRIVE_COUNTS_PER_IN);
+      rearLeftTarget = (int) (rearLeft.getCurrentPosition() + rearLeftInches * DRIVE_COUNTS_PER_IN);
+      frontRight.setTargetPosition(frontRightTarget);
+      frontLeft.setTargetPosition(frontLeftTarget);
+      rearRight.setTargetPosition(rearRightTarget);
+      rearLeft.setTargetPosition(rearLeftTarget);
+      frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      frontLeft.setPower(Power);
+      rearLeft.setPower(Power);
+      rearRight.setPower(Power);
+      frontRight.setPower(Power);
+      while (opModeIsActive() && (frontRight.isBusy() || frontLeft.isBusy()) && (rearRight.isBusy() || rearLeft.isBusy())) {
       }
-      rightFrontAsDcMotor.setPower(0);
-      leftFrontAsDcMotor.setPower(0);
-      rightRearAsDcMotor.setPower(0);
-      leftRearAsDcMotor.setPower(0);
+      frontRight.setPower(0);
+      frontLeft.setPower(0);
+      rearRight.setPower(0);
+      rearLeft.setPower(0);
     }
   }
 
   //Resetting Encoders
   private void Reset_Encoders() {
-    rightFrontAsDcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    rightRearAsDcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    leftFrontAsDcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    leftRearAsDcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    leftTarget = 0;
-    rightTarget = 0;
+    frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    rearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    rearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    frontLeftTarget = 0;
+    frontRightTarget = 0;
+    rearRightTarget = 0;
+    rearLeftTarget = 0;
   }
 }
