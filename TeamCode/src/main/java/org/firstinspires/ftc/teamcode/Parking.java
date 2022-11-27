@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Disabled
 public class Parking extends LinearOpMode {
 
-  ColorSensor colorSensor;
+  private ColorSensor = null;
   private DcMotor  frontLeft  = null;
   private DcMotor  rearRight  = null;
   private DcMotor  frontRight  = null;
@@ -43,6 +43,7 @@ public class Parking extends LinearOpMode {
     rearLeft = hardwareMap.get(DcMotor.class, "rear_left_wheel");
     frontRight = hardwareMap.get(DcMotor.class, "front_right_wheel");
     rearRight = hardwareMap.get(DcMotor.class, "rear_right_wheel");
+    ColorSensor = hardwareMap.get(ColorSensor.class, "color_sensor");
 
     frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
     rearLeft.setDirection(DcMotorSimple.Direction.FORWARD);
