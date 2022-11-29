@@ -1,21 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.checkerframework.checker.units.qual.A;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+@Autonomous(name = "LeftScoring")
 
-@Autonomous(name = "parkingWithColorSensor")
-
-public class Parking extends LinearOpMode {
+public class LeftScoring extends LinearOpMode {
 
   private ColorSensor colorSensor = null;
   private DcMotor  frontLeft  = null;
@@ -112,32 +107,15 @@ public class Parking extends LinearOpMode {
       rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       Reset_Encoders();
-      drivetrain(25, 25, 25, 25, 0.2, 0.2, 0.2, telemetry);
+      raiseArm();
+      drivetrain(-23, 23, 23, -23, 0.2, 0.2, 0.2, telemetry);
       Reset_Encoders();
-
-//      while (opModeIsActive()) {
-//        telemetry.addData("Red", colorSensor.red());
-//        telemetry.addData("Green", colorSensor.green());
-//        telemetry.addData("Blue", colorSensor.blue());
-//        telemetry.addData("green/red", ((double)colorSensor.green()/(double)colorSensor.red()));
-//        telemetry.addData("green/blue", ((double)colorSensor.green()/(double)colorSensor.blue()));
-//        telemetry.addData("red/blue", ((double)colorSensor.red()/(double)colorSensor.blue()));
-//
-//        if (isRed(colorSensor.red(), colorSensor.green(), colorSensor.blue())) {
-//          telemetry.addLine("Left");
-//        }
-//        else if (isBlue(colorSensor.red(), colorSensor.green(), colorSensor.blue())) {
-//          telemetry.addLine("Middle");
-//        }
-//        else if (isGreen(colorSensor.red(), colorSensor.green(), colorSensor.blue())){
-//          telemetry.addLine("Right");
-//        }
-//        else { // Default case
-//          telemetry.addLine("Middle");
-//        }
-//
-//        telemetry.update();
-//      }
+      Gripper.setPosition(Gripper_Release);
+      lowerArm();
+      drivetrain(23, -23, -23, 23, 0.2, -0.2, -0.2, telemetry);
+      Reset_Encoders();
+      drivetrain(23, 23, 23, 23, 0.2, 0.2, 0.2, telemetry);
+      Reset_Encoders();
 
 
 
@@ -246,6 +224,28 @@ public class Parking extends LinearOpMode {
   public boolean isBlue(int red, int green, int blue) {
     return (blue > red &&
             blue > green);
+  }
+
+  public void raiseArm(){
+    leftSlide.setPower(1);
+    rightSlide.setPower(1);
+    leftSlide.setTargetPosition(Slides_Medium);
+    rightSlide.setTargetPosition(Slides_Medium);
+    arm.setPower(.5);
+    arm.setTargetPosition(Arm_Medium);
+  }
+
+  public void lowerArm(){
+    Gripper.setPosition(Gripper_Release);
+    sleep(500);
+    arm.setPower(.5);
+    arm.setTargetPosition(Arm_Ground);
+    leftSlide.setPower(0.8);
+    rightSlide.setPower(0.8);
+    leftSlide.setTargetPosition(Slides_Start);
+    rightSlide.setTargetPosition(Slides_Start);
+    arm.setTargetPosition(Arm_Start);
+    Gripper.setPosition(Gripper_Grab);
   }
 
 }

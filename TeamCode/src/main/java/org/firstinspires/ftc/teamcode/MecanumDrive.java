@@ -60,16 +60,21 @@ public class MecanumDrive extends LinearOpMode {
     public Servo Gripper = null;
     public DcMotor arm = null;
 
+    //Slides Encoder Values
     private static final int Slides_Start = 0;
+    private static final int Slides_Low = -450;
+    private static final int Slides_Medium = -900;
+    private static final int Slides_High = -1100;
+
+    //Arm Encoder Values
     private static final int Arm_Start = 0;
     private static final int Arm_Ground = -100;
-    private static final int Slides_Low = -400;
-    private static final int Arm_Low = 400;
-    private static final int Slides_Medium = -850;
-    private static final int Arm_Medium = 380;
-    private static final int Slides_High = -1100;
+    private static final int Arm_Low = 420;
+    private static final int Arm_Medium = 420;
     private static final int Arm_High = 350;
-    private static final double Gripper_Release = 0.9;
+
+    //Gripper Values
+    private static final double Gripper_Release = 0.7;
     private static final double Gripper_Grab = 0;
 
     private boolean raising = false;
@@ -184,6 +189,7 @@ public class MecanumDrive extends LinearOpMode {
                 arm.setTargetPosition(Arm_Ground);
                 if (armInTimer.seconds() > 1.0) armInTimer.reset();
             }
+
             if(returning) {
                 if(armInTimer.seconds() > 1.0) {
                     leftSlide.setPower(0.8);
@@ -195,8 +201,6 @@ public class MecanumDrive extends LinearOpMode {
                     returning = false;
                 }
             }
-
-
 
 //            // Lift & Arm
 //            if (gamepad1.a){
@@ -240,6 +244,15 @@ public class MecanumDrive extends LinearOpMode {
                 }
             }
 
+            if(gamepad1.dpad_down) {
+                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() + 10);
+                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() + 10);
+            }
+            if(gamepad1.dpad_up) {
+                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() - 10);
+                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - 10);
+            }
+
 //            if (gamepad1.y) {
 //                Gripper.setPosition(Gripper_Grab);
 //                sleep(750);
@@ -251,16 +264,17 @@ public class MecanumDrive extends LinearOpMode {
 //                arm.setPower(.5);
 //                arm.setTargetPosition(Arm_Medium);
 //            }
-            /* if (gamepad1.b) {
-                Gripper.setPosition(Gripper_Grab);
-                leftSlide.setPower(.5);
-                rightSlide.setPower(.5);
-                leftSlide.setTargetPosition(Slides_High);
-                rightSlide.setTargetPosition(Slides_High);
-                sleep(500);
-                arm.setPower(.5);
-                arm.setTargetPosition(Arm_High);
-            } */
+//             if (gamepad1.b) {
+//                Gripper.setPosition(Gripper_Grab);
+//                leftSlide.setPower(.5);
+//                rightSlide.setPower(.5);
+//                leftSlide.setTargetPosition(Slides_High);
+//                rightSlide.setTargetPosition(Slides_High);
+//                sleep(500);
+//                arm.setPower(.5);
+//                arm.setTargetPosition(Arm_High);
+//            }
+
         }
     }
 }
