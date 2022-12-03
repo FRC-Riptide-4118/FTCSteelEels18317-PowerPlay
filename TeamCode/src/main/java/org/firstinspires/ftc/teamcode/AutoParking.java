@@ -7,32 +7,43 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "LeftScoring")
+@Autonomous(name = "AutoParkingWithColorSensor")
 
-public class LeftScoring extends LinearOpMode {
+public class AutoParking extends LinearOpMode {
 
   private ColorSensor colorSensor = null;
   private DcMotor  frontLeft  = null;
   private DcMotor  rearRight  = null;
   private DcMotor  frontRight  = null;
   private DcMotor  rearLeft  = null;
-  private DcMotor  leftSlide  = null;
-  private DcMotor  rightSlide  = null;
+  private DcMotorEx  leftSlide  = null;
+  private DcMotorEx  rightSlide  = null;
   private Servo  Gripper = null;
   private DcMotor arm = null;
 
+  //Slides Encoder Values
   private static final int Slides_Start = 0;
+  private static final int Slides_Low = -400;
+  private static final int Slides_Medium = -900;
+  private static final int Slides_High = -1100;
+
+  //Arm Encoder Values
   private static final int Arm_Start = 0;
   private static final int Arm_Ground = -100;
-  private static final int Slides_Low = -400;
-  private static final int Arm_Low = 400;
-  private static final int Slides_Medium = -850;
-  private static final int Arm_Medium = 380;
-  private static final int Slides_High = -1100;
+  private static final int Arm_Low = 420;
+  private static final int Arm_Medium = 420;
   private static final int Arm_High = 350;
-  private static final double Gripper_Release = 0.9;
+
+  //Gripper Values
+  private static final double Gripper_Release = 0.7;
   private static final double Gripper_Grab = 0;
+
+  private boolean raisingToLow = false;
+  private boolean returning = false;
+  private boolean raisingToMiddle = false;
+  private ElapsedTime armInTimer;
 
   int frontRightTarget;
   int frontLeftTarget;
@@ -107,24 +118,39 @@ public class LeftScoring extends LinearOpMode {
       rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       Reset_Encoders();
-      raiseArm();
-      drivetrain(-23, 23, 23, -23, 0.2, 0.2, 0.2, telemetry);
-      Reset_Encoders();
-      Gripper.setPosition(Gripper_Release);
-      lowerArm();
-      drivetrain(23, -23, -23, 23, 0.2, -0.2, -0.2, telemetry);
-      Reset_Encoders();
-      drivetrain(23, 23, 23, 23, 0.2, 0.2, 0.2, telemetry);
+      drivetrain(24, 24, 24, 24, 0.2, 0.2, 0.2, telemetry);
       Reset_Encoders();
 
-
+//      while (opModeIsActive()) {
+//        telemetry.addData("Red", colorSensor.red());
+//        telemetry.addData("Green", colorSensor.green());
+//        telemetry.addData("Blue", colorSensor.blue());
+//        telemetry.addData("green/red", ((double)colorSensor.green()/(double)colorSensor.red()));
+//        telemetry.addData("green/blue", ((double)colorSensor.green()/(double)colorSensor.blue()));
+//        telemetry.addData("red/blue", ((double)colorSensor.red()/(double)colorSensor.blue()));
+//
+//        if (isRed(colorSensor.red(), colorSensor.green(), colorSensor.blue())) {
+//          telemetry.addLine("Left");
+//        }
+//        else if (isBlue(colorSensor.red(), colorSensor.green(), colorSensor.blue())) {
+//          telemetry.addLine("Middle");
+//        }
+//        else if (isGreen(colorSensor.red(), colorSensor.green(), colorSensor.blue())){
+//          telemetry.addLine("Right");
+//        }
+//        else { // Default case
+//          telemetry.addLine("Middle");
+//        }
+//
+//        telemetry.update();
+//      }
 
       colorSensor.enableLed(true);  // Turn the LED off
       if (isRed(colorSensor.red(), colorSensor.green(), colorSensor.blue())) { // yellow
         // move to zone 1
         drivetrain(13, 13, 13, 13, 0.3, 0.3, 0.3,  telemetry);
         Reset_Encoders();
-        drivetrain(-45, 45, 45, -45, 0.3, .3, .3, telemetry);
+        drivetrain(-45, 45, 45, -45, 0.3, 0.3, 0.3, telemetry);
         Reset_Encoders();
         drivetrain(14, 14, 14, 14, 0.3, 0.3, 0.3,  telemetry);
         Reset_Encoders();
@@ -136,7 +162,7 @@ public class LeftScoring extends LinearOpMode {
         // move to zone 3
         drivetrain(12, 12, 12, 12, 0.3, 0.3, 0.3,  telemetry);
         Reset_Encoders();
-        drivetrain(47, 47, 47, 47, 0.3, -.3, -.3, telemetry);
+        drivetrain(47, 47, 47, 47, 0.3, -0.3, -0.3, telemetry);
         Reset_Encoders();
         drivetrain(17, 17, 17, 17, 0.3, 0.3, 0.3,  telemetry);
         Reset_Encoders();
@@ -196,7 +222,8 @@ public class LeftScoring extends LinearOpMode {
     }
   }
 
-  private void Reset_Encoders() {   //Resetting Encoders
+  //Resetting Encoders
+  private void Reset_Encoders() {
     frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     rearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -207,46 +234,29 @@ public class LeftScoring extends LinearOpMode {
     rearLeftTarget = 0;
   }
 
+  // InchesToCounts
   public int inchesToCounts(double inches) {
     return (int) (inches * DRIVE_COUNTS_PER_IN);
   }
 
+  // Red Color Sensor
   public boolean isRed(int red, int green, int blue) {
     return (red > green &&
             red > blue);
   }
 
+  // Green Color Sensor
   public boolean isGreen(int red, int green, int blue) {
     return (green > red &&
             green > blue);
   }
 
+  // Blue Color Sensor
   public boolean isBlue(int red, int green, int blue) {
     return (blue > red &&
             blue > green);
   }
 
-  public void raiseArm(){
-    leftSlide.setPower(1);
-    rightSlide.setPower(1);
-    leftSlide.setTargetPosition(Slides_Medium);
-    rightSlide.setTargetPosition(Slides_Medium);
-    arm.setPower(.5);
-    arm.setTargetPosition(Arm_Medium);
-  }
-
-  public void lowerArm(){
-    Gripper.setPosition(Gripper_Release);
-    sleep(500);
-    arm.setPower(.5);
-    arm.setTargetPosition(Arm_Ground);
-    leftSlide.setPower(0.8);
-    rightSlide.setPower(0.8);
-    leftSlide.setTargetPosition(Slides_Start);
-    rightSlide.setTargetPosition(Slides_Start);
-    arm.setTargetPosition(Arm_Start);
-    Gripper.setPosition(Gripper_Grab);
-  }
 
 }
 

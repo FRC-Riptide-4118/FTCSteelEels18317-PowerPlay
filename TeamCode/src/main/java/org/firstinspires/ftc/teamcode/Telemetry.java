@@ -90,11 +90,11 @@ public class Telemetry extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-           /* // Lift/Arm Telemetry
+            // Lift/Arm Telemetry
             telemetry.addData("Left Lift Value:", leftSlide.getCurrentPosition());
             telemetry.addData("Left Lift Value:", rightSlide.getCurrentPosition());
             telemetry.addData("Arm Value:", arm.getCurrentPosition());
-            telemetry.update(); */
+            telemetry.update();
 
             // yellow, green, black
             // 671, 121, 000
