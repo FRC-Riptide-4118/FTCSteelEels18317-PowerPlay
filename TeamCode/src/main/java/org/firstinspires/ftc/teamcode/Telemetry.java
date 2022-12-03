@@ -96,8 +96,6 @@ public class Telemetry extends LinearOpMode {
             telemetry.addData("Arm Value:", arm.getCurrentPosition());
             telemetry.update();
 
-            // yellow, green, black
-            // 671, 121, 000
 
             // Color Sensor
             telemetry.addData("Red", colorSensor.red());
