@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "AutoLeftScoring")
+@Autonomous(name = "AutoLeftScoringCaveman")
 
-public class AutoLeftScoring extends LinearOpMode {
+public class AutoLeftScoringCaveman extends LinearOpMode {
 
   private ColorSensor colorSensor = null;
   private DcMotor  frontLeft  = null;
@@ -127,65 +127,24 @@ public class AutoLeftScoring extends LinearOpMode {
       leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      Reset_Encoders();
-      drivetrain(23, 23, 23, 23, 0.1, 0.1, 0.1, telemetry);
-      Reset_Encoders();
-
-      colorSensor.enableLed(true);  // Turn the LED off
-      if (isRed(colorSensor.red(), colorSensor.green(), colorSensor.blue())) { // yellow
-        // Scoring & Turning
-        raiseCone();
-        drivetrain(-12.5, 12.5, -12.5, 12.5, 0.2, 0.2, -0.2, telemetry);
-        Gripper.setPosition(Gripper_Release);
-        drivetrain(10, -10, 10, -10, 0.2, -0.2, 0.2, telemetry);
-        lowerCone();
-        // Move to zone 1
-        drivetrain(13, 13, 13, 13, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
-        drivetrain(-45, 45, 45, -45, 0.3, 0.3, 0.3, telemetry);
-        Reset_Encoders();
-        drivetrain(14, 14, 14, 14, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
-        colorSensor.enableLed(false);
-      } else if (isBlue(colorSensor.red(), colorSensor.green(), colorSensor.blue())) { // green
-        // Scoring & Turning
-        raiseCone();
-        drivetrain(-12.5, 12.5, -12.5, 12.5, 0.2, 0.2, -0.2, telemetry);
-        Gripper.setPosition(Gripper_Release);
-        drivetrain(10, -10, 10, -10, 0.2, -0.2, 0.2, telemetry);
-        lowerCone();
-        // move to zone 2
-        drivetrain(19, 19, 19, 19, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
-        colorSensor.enableLed(false);
-      } else if (isGreen(colorSensor.red(), colorSensor.green(), colorSensor.blue())){ // black
-        // Scoring & Turning
-        raiseCone();
-        drivetrain(-12.5, 12.5, -12.5, 12.5, 0.2, 0.2, -0.2, telemetry);
-        Gripper.setPosition(Gripper_Release);
-        drivetrain(10, -10, 10, -10, 0.2, -0.2, 0.2, telemetry);
-        lowerCone();
-        // move to zone 3
-        drivetrain(12, 12, 12, 12, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
-        drivetrain(47, 47, 47, 47, 0.3, -0.3, -0.3, telemetry);
-        Reset_Encoders();
-        drivetrain(17, 17, 17, 17, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
-        colorSensor.enableLed(false);
-      }
-      else {
-        // Scoring & Turning
-        raiseCone();
-        drivetrain(-12.5, 12.5, -12.5, 12.5, 0.2, 0.2, -0.2, telemetry);
-        Gripper.setPosition(Gripper_Release);
-        drivetrain(10, -10, 10, -10, 0.2, -0.2, 0.2, telemetry);
-        lowerCone();
-        // move to zone 2
-        drivetrain(19, 19, 19, 19, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
-        colorSensor.enableLed(false);
-      }
+      Gripper.setPosition(Gripper_Grab);
+      leftSlide.setPower(1);
+      rightSlide.setPower(1);
+      leftSlide.setTargetPosition(Slides_Medium);
+      rightSlide.setTargetPosition(Slides_Medium);
+      sleep(1000);
+      arm.setPower(.5);
+      arm.setTargetPosition(Arm_Medium);
+      Gripper.setPosition(Gripper_Release);
+      Gripper.setPosition(Gripper_Grab);
+      arm.setPower(.5);
+      arm.setTargetPosition(Arm_Ground);
+      leftSlide.setPower(0.8);
+      rightSlide.setPower(0.8);
+      leftSlide.setTargetPosition(Slides_Start);
+      rightSlide.setTargetPosition(Slides_Start);
+      arm.setTargetPosition(Arm_Start);
+      Gripper.setPosition(Gripper_Release);
     }
   }
 
@@ -270,49 +229,6 @@ public class AutoLeftScoring extends LinearOpMode {
   public boolean isBlue(int red, int green, int blue) {
     return (blue > red &&
             blue > green);
-  }
-
-  // Raising the Cone
-  public void raiseCone() {
-    raisingToMiddle = true;
-    Gripper.setPosition(Gripper_Grab);
-
-    leftSlide.setPower(1);
-    rightSlide.setPower(1);
-    leftSlide.setTargetPosition(Slides_Medium);
-    rightSlide.setTargetPosition(Slides_Medium);
-
-    // Raising
-    if(raisingToMiddle) {
-      if(leftSlide.getCurrentPosition() < -750) {
-        arm.setPower(.5);
-        arm.setTargetPosition(Arm_Medium);
-        raisingToMiddle = false;
-      }
-    }
-  }
-
-
-  // Lowering the Cone
-  public void lowerCone() {
-    returning = true;
-    Gripper.setPosition(Gripper_Grab);
-    arm.setPower(.5);
-    arm.setTargetPosition(Arm_Ground);
-    if (armInTimer.seconds() > 1.0) armInTimer.reset();
-
-    // Returning
-    if(returning) {
-      if(armInTimer.seconds() > 1.0) {
-        leftSlide.setPower(0.8);
-        rightSlide.setPower(0.8);
-        leftSlide.setTargetPosition(Slides_Start);
-        rightSlide.setTargetPosition(Slides_Start);
-        Gripper.setPosition(Gripper_Release);
-        arm.setTargetPosition(Arm_Start);
-        returning = false;
-      }
-    }
   }
 
 }

@@ -114,9 +114,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        // Leave the Gripper open for scoring
-        Gripper.setPosition(Gripper_Release);
-
         // PID Values
         leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
                 new PIDFCoefficients(5, 0, 0, 0));
