@@ -112,6 +112,19 @@ public class AutoLeftScoring extends LinearOpMode {
 
     if (opModeIsActive()) {
 
+      // Reset the slides
+      leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+      leftSlide.setTargetPosition(Slides_Start);
+      rightSlide.setTargetPosition(Slides_Start);
+      arm.setTargetPosition(Arm_Start);
+
+      leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
       // PID Values
       leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
               new PIDFCoefficients(5, 0, 0, 0));
