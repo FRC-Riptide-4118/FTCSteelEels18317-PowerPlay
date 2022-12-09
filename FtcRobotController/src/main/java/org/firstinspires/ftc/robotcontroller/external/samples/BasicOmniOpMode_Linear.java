@@ -74,6 +74,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
 
+    @Override
     public void runOpMode() {
 
         // Initialize the hardware variables. Note that the strings used here must correspond
