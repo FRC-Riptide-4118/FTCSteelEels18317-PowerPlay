@@ -132,7 +132,7 @@ public class Testing extends LinearOpMode {
         armInTimer = new ElapsedTime();
         armInTimer.reset();
 
-        while (opModeIsActive()) {
+        if (opModeIsActive()) {
 
             // Reset the slides
             leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -334,7 +334,7 @@ public class Testing extends LinearOpMode {
 
         // Returning
         if(returning) {
-            if(armInTimer.seconds() > 1.0) {
+            while(opModeIsActive() && armInTimer.seconds() > 1.0) {
                 leftSlide.setPower(0.8);
                 rightSlide.setPower(0.8);
                 leftSlide.setTargetPosition(Slides_Start);
