@@ -56,7 +56,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
     //Slides Encoder Values
     private static final int Slides_Start = 0;
     private static final int Slides_Low = -400;
-    private static final int Slides_Medium = -900;
+    private static final int Slides_Medium = -870;
     private static final int Slides_High = -1100;
 
     //Arm Encoder Values
@@ -223,7 +223,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 rightSlide.setTargetPosition(Slides_Medium);
             }
             if(raisingToMiddle) {
-                if(leftSlide.getCurrentPosition() < -750) {
+                if(leftSlide.getCurrentPosition() < -700) {
                     arm.setPower(.5);
                     arm.setTargetPosition(Arm_Medium);
                     raisingToMiddle = false;

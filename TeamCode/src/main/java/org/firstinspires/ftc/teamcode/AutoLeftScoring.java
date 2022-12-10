@@ -27,7 +27,7 @@ public class AutoLeftScoring extends LinearOpMode {
   //Slides Encoder Values
   private static final int Slides_Start = 0;
   private static final int Slides_Low = -400;
-  private static final int Slides_Medium = -900;
+  private static final int Slides_Medium = -860;
   private static final int Slides_High = -1100;
 
   //Arm Encoder Values
@@ -73,6 +73,7 @@ public class AutoLeftScoring extends LinearOpMode {
     rearLeft.setDirection(DcMotorSimple.Direction.FORWARD);
     frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
     rearRight.setDirection(DcMotorSimple.Direction.REVERSE);
+    rightSlide.setDirection(DcMotorSimple.Direction.REVERSE);
 
     Gripper.setPosition(Gripper_Grab);
     colorSensor.enableLed(false);
@@ -84,6 +85,25 @@ public class AutoLeftScoring extends LinearOpMode {
     DRIVE_COUNTS_PER_MM = (HD_COUNTS_PER_REV * DRIVE_GEAR_REDUCTION) / WHEEL_CIRCUMFERENCE_MM;
     DRIVE_COUNTS_PER_IN = DRIVE_COUNTS_PER_MM * 25.4;
     DRIVE_COUNTS_PER_IN = 2000/61;
+
+    // Reset the slides
+    leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+    leftSlide.setTargetPosition(Slides_Start);
+    rightSlide.setTargetPosition(Slides_Start);
+    arm.setTargetPosition(Arm_Start);
+
+    leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    // PID Values
+    leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+            new PIDFCoefficients(5, 0, 0, 0));
+    rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+            new PIDFCoefficients(5, 0, 0, 0));
 
     while (!isStarted()) {
       telemetry.addData("Red", colorSensor.red());
@@ -108,28 +128,7 @@ public class AutoLeftScoring extends LinearOpMode {
       telemetry.update();
     }
 
-    waitForStart();
-
     if (opModeIsActive()) {
-
-      // Reset the slides
-      leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-      leftSlide.setTargetPosition(Slides_Start);
-      rightSlide.setTargetPosition(Slides_Start);
-      arm.setTargetPosition(Arm_Start);
-
-      leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-      // PID Values
-      leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-              new PIDFCoefficients(5, 0, 0, 0));
-      rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-              new PIDFCoefficients(5, 0, 0, 0));
 
       armInTimer = new ElapsedTime();
       armInTimer.reset();
@@ -137,66 +136,108 @@ public class AutoLeftScoring extends LinearOpMode {
       waitForStart();
 
       // Running Code
-      leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      Reset_Encoders();
-      drivetrain(23, 23, 23, 23, 0.1, 0.1, 0.1, telemetry);
-      Reset_Encoders();
+      resetDriveEncoders();
+      drivetrain(26, 26, 26, 26, 0.1, 0.1, 0.1, telemetry);
+      resetDriveEncoders();
 
       colorSensor.enableLed(true);  // Turn the LED off
       if (isRed(colorSensor.red(), colorSensor.green(), colorSensor.blue())) { // yellow
         // Scoring & Turning
         raiseCone();
-        drivetrain(-12.5, 12.5, -12.5, 12.5, 0.2, 0.2, -0.2, telemetry);
+        drivetrain(11.5, 11.5, 11.5, 11.5, 0.2, 0.2, 0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-21, 21, -21, 21, 0.2, 0.2, -0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(6.2, 6.2, 6.2, 6.2, 0.2, 0.2, 0.2, telemetry);
+        resetDriveEncoders();
         Gripper.setPosition(Gripper_Release);
-        drivetrain(10, -10, 10, -10, 0.2, -0.2, 0.2, telemetry);
+        sleep(1000);
+        drivetrain(-6.2, -6.2, -6.2, -6.2, 0.2, -0.2, -0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(21, -21, 21, -21, 0.2, -0.2, 0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-11.5, -11.5, -11.5, -11.5, 0.2, -0.2, -0.2, telemetry);
+        resetDriveEncoders();
         lowerCone();
         // Move to zone 1
         drivetrain(13, 13, 13, 13, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
+        resetDriveEncoders();
         drivetrain(-45, 45, 45, -45, 0.3, 0.3, 0.3, telemetry);
-        Reset_Encoders();
+        resetDriveEncoders();
         drivetrain(14, 14, 14, 14, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
+        resetDriveEncoders();
         colorSensor.enableLed(false);
       } else if (isBlue(colorSensor.red(), colorSensor.green(), colorSensor.blue())) { // green
         // Scoring & Turning
         raiseCone();
-        drivetrain(-12.5, 12.5, -12.5, 12.5, 0.2, 0.2, -0.2, telemetry);
+        drivetrain(11.5, 11.5, 11.5, 11.5, 0.2, 0.2, 0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-21, 21, -21, 21, 0.2, 0.2, -0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(6.8, 6.8, 6.8, 6.8, 0.2, 0.2, 0.2, telemetry);
+        resetDriveEncoders();
         Gripper.setPosition(Gripper_Release);
-        drivetrain(10, -10, 10, -10, 0.2, -0.2, 0.2, telemetry);
+        sleep(1000);
+        drivetrain(-6.8, -6.8, -6.8, -6.8, 0.2, -0.2, -0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(21, -21, 21, -21, 0.2, -0.2, 0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-11.5, -11.5, -11.5, -11.5, 0.2, -0.2, -0.2, telemetry);
+        resetDriveEncoders();
         lowerCone();
         // move to zone 2
         drivetrain(19, 19, 19, 19, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
+        resetDriveEncoders();
         colorSensor.enableLed(false);
       } else if (isGreen(colorSensor.red(), colorSensor.green(), colorSensor.blue())){ // black
         // Scoring & Turning
         raiseCone();
-        drivetrain(-12.5, 12.5, -12.5, 12.5, 0.2, 0.2, -0.2, telemetry);
+        drivetrain(11.5, 11.5, 11.5, 11.5, 0.2, 0.2, 0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-21, 21, -21, 21, 0.2, 0.2, -0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(6.8, 6.8, 6.8, 6.8, 0.2, 0.2, 0.2, telemetry);
+        resetDriveEncoders();
         Gripper.setPosition(Gripper_Release);
-        drivetrain(10, -10, 10, -10, 0.2, -0.2, 0.2, telemetry);
+        sleep(1000);
+        drivetrain(-6.8, -6.8, -6.8, -6.8, 0.2, -0.2, -0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(21, -21, 21, -21, 0.2, -0.2, 0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-11.5, -11.5, -11.5, -11.5, 0.2, -0.2, -0.2, telemetry);
+        resetDriveEncoders();
         lowerCone();
         // move to zone 3
         drivetrain(12, 12, 12, 12, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
+        resetDriveEncoders();
         drivetrain(47, 47, 47, 47, 0.3, -0.3, -0.3, telemetry);
-        Reset_Encoders();
+        resetDriveEncoders();
         drivetrain(17, 17, 17, 17, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
+        resetDriveEncoders();
         colorSensor.enableLed(false);
       }
       else {
         // Scoring & Turning
+        // Scoring & Turning
         raiseCone();
-        drivetrain(-12.5, 12.5, -12.5, 12.5, 0.2, 0.2, -0.2, telemetry);
+        drivetrain(11.5, 11.5, 11.5, 11.5, 0.2, 0.2, 0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-21, 21, -21, 21, 0.2, 0.2, -0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(6.8, 6.8, 6.8, 6.8, 0.2, 0.2, 0.2, telemetry);
+        resetDriveEncoders();
         Gripper.setPosition(Gripper_Release);
-        drivetrain(10, -10, 10, -10, 0.2, -0.2, 0.2, telemetry);
+        sleep(1000);
+        drivetrain(-6.8, -6.8, -6.8, -6.8, 0.2, -0.2, -0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(21, -21, 21, -21, 0.2, -0.2, 0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-11.5, -11.5, -11.5, -11.5, 0.2, -0.2, -0.2, telemetry);
+        resetDriveEncoders();
         lowerCone();
         // move to zone 2
         drivetrain(19, 19, 19, 19, 0.3, 0.3, 0.3,  telemetry);
-        Reset_Encoders();
+        resetDriveEncoders();
         colorSensor.enableLed(false);
       }
     }
@@ -251,7 +292,7 @@ public class AutoLeftScoring extends LinearOpMode {
   }
 
   //Resetting Encoders
-  private void Reset_Encoders() {
+  private void resetDriveEncoders() {
     frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     rearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -286,8 +327,7 @@ public class AutoLeftScoring extends LinearOpMode {
   }
 
   // Raising the Cone
-  public void raiseCone() {
-    raisingToMiddle = true;
+  public void raiseCone () {
     Gripper.setPosition(Gripper_Grab);
 
     leftSlide.setPower(1);
@@ -296,36 +336,27 @@ public class AutoLeftScoring extends LinearOpMode {
     rightSlide.setTargetPosition(Slides_Medium);
 
     // Raising
-    if(raisingToMiddle) {
-      if(leftSlide.getCurrentPosition() < -750) {
-        arm.setPower(.5);
-        arm.setTargetPosition(Arm_Medium);
-        raisingToMiddle = false;
-      }
-    }
+    while (opModeIsActive() && leftSlide.getCurrentPosition() < -750);
+    arm.setPower(.5);
+    arm.setTargetPosition(Arm_Medium);
   }
 
 
   // Lowering the Cone
-  public void lowerCone() {
-    returning = true;
+  public void lowerCone () {
     Gripper.setPosition(Gripper_Grab);
+
     arm.setPower(.5);
     arm.setTargetPosition(Arm_Ground);
-    if (armInTimer.seconds() > 1.0) armInTimer.reset();
+    while(opModeIsActive() && arm.isBusy());
 
     // Returning
-    if(returning) {
-      if(armInTimer.seconds() > 1.0) {
-        leftSlide.setPower(0.8);
-        rightSlide.setPower(0.8);
-        leftSlide.setTargetPosition(Slides_Start);
-        rightSlide.setTargetPosition(Slides_Start);
-        Gripper.setPosition(Gripper_Release);
-        arm.setTargetPosition(Arm_Start);
-        returning = false;
-      }
-    }
+    leftSlide.setPower(0.8);
+    rightSlide.setPower(0.8);
+    leftSlide.setTargetPosition(Slides_Start);
+    rightSlide.setTargetPosition(Slides_Start);
+    Gripper.setPosition(Gripper_Release);
+    arm.setTargetPosition(Arm_Start);
   }
 
 }
