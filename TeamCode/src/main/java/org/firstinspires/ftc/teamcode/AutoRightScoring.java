@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "AutoLeftScoring")
+@Autonomous(name = "AutoRightScoring")
 
 public class AutoRightScoring extends LinearOpMode {
 
@@ -27,7 +27,7 @@ public class AutoRightScoring extends LinearOpMode {
   //Slides Encoder Values
   private static final int Slides_Start = 0;
   private static final int Slides_Low = -400;
-  private static final int Slides_Medium = -860;
+  private static final int Slides_Medium = -820;
   private static final int Slides_High = -1100;
 
   //Arm Encoder Values
@@ -144,23 +144,23 @@ public class AutoRightScoring extends LinearOpMode {
       if (isRed(colorSensor.red(), colorSensor.green(), colorSensor.blue())) { // yellow
         // Scoring & Turning
         raiseCone();
-        drivetrain(11.5, 11.5, 11.5, 11.5, 0.2, 0.2, 0.2, telemetry);
+        drivetrain(16.5, 16.5, 16.5, 16.5, 0.2, 0.2, 0.2, telemetry);
         resetDriveEncoders();
-        drivetrain(21, -21, 21, -21, 0.2, -0.2, 0.2, telemetry);
+        drivetrain(22, -22, 22, -22, 0.2, -0.2, 0.2, telemetry);
         resetDriveEncoders();
-        drivetrain(6.2, 6.2, 6.2, 6.2, 0.2, 0.2, 0.2, telemetry);
+        drivetrain(6.5, 6.5, 6.5, 6.5, 0.2, 0.2, 0.2, telemetry);
         resetDriveEncoders();
         Gripper.setPosition(Gripper_Release);
         sleep(1000);
-        drivetrain(-6.2, -6.2, -6.2, -6.2, 0.2, -0.2, -0.2, telemetry);
+        drivetrain(-6.5, -6.5, -6.5, -6.5, 0.2, -0.2, -0.2, telemetry);
         resetDriveEncoders();
-        drivetrain(-21, 21, -21, 21, 0.2, 0.2, -0.2, telemetry);
+        drivetrain(-19, 19, -19, 19, 0.2, 0.2, -0.2, telemetry);
         resetDriveEncoders();
         drivetrain(-11.5, -11.5, -11.5, -11.5, 0.2, -0.2, -0.2, telemetry);
         resetDriveEncoders();
         lowerCone();
         // Move to zone 1
-        drivetrain(13, 13, 13, 13, 0.3, 0.3, 0.3,  telemetry);
+        drivetrain(7, 7, 7, 7, 0.3, 0.3, 0.3,  telemetry);
         resetDriveEncoders();
         drivetrain(-45, 45, 45, -45, 0.3, 0.3, 0.3, telemetry);
         resetDriveEncoders();
@@ -170,17 +170,21 @@ public class AutoRightScoring extends LinearOpMode {
       } else if (isBlue(colorSensor.red(), colorSensor.green(), colorSensor.blue())) { // green
         // Scoring & Turning
         raiseCone();
-        drivetrain(11.5, 11.5, 11.5, 11.5, 0.2, 0.2, 0.2, telemetry);
+        drivetrain(16.5, 16.5, 16.5, 16.5, 0.2, 0.2, 0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-10, -10, -10, -10, 0.2, -0.2, -0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-5, -5, -5, -5, 0.2, -0.2, -0.2, telemetry);
         resetDriveEncoders();
         drivetrain(21, -21, 21, -21, 0.2, -0.2, 0.2, telemetry);
         resetDriveEncoders();
-        drivetrain(6.2, 6.2, 6.2, 6.2, 0.2, 0.2, 0.2, telemetry);
+        drivetrain(6.5, 6.5, 6.5, 6.5, 0.2, 0.2, 0.2, telemetry);
         resetDriveEncoders();
         Gripper.setPosition(Gripper_Release);
         sleep(1000);
-        drivetrain(-6.2, -6.2, -6.2, -6.2, 0.2, -0.2, -0.2, telemetry);
+        drivetrain(-6.5, -6.5, -6.5, -6.5, 0.2, -0.2, -0.2, telemetry);
         resetDriveEncoders();
-        drivetrain(-21, 21, -21, 21, 0.2, 0.2, -0.2, telemetry);
+        drivetrain(-19, 19, -19, 19, 0.2, 0.2, -0.2, telemetry);
         resetDriveEncoders();
         drivetrain(-11.5, -11.5, -11.5, -11.5, 0.2, -0.2, -0.2, telemetry);
         resetDriveEncoders();
@@ -192,17 +196,21 @@ public class AutoRightScoring extends LinearOpMode {
       } else if (isGreen(colorSensor.red(), colorSensor.green(), colorSensor.blue())){ // black
         // Scoring & Turning
         raiseCone();
-        drivetrain(11.5, 11.5, 11.5, 11.5, 0.2, 0.2, 0.2, telemetry);
+        drivetrain(16.5, 16.5, 16.5, 16.5, 0.2, 0.2, 0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-10, -10, -10, -10, 0.2, -0.2, -0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-5, -5, -5, -5, 0.2, -0.2, -0.2, telemetry);
         resetDriveEncoders();
         drivetrain(21, -21, 21, -21, 0.2, -0.2, 0.2, telemetry);
         resetDriveEncoders();
-        drivetrain(6.2, 6.2, 6.2, 6.2, 0.2, 0.2, 0.2, telemetry);
+        drivetrain(6.5, 6.5, 6.5, 6.5, 0.2, 0.2, 0.2, telemetry);
         resetDriveEncoders();
         Gripper.setPosition(Gripper_Release);
         sleep(1000);
-        drivetrain(-6.2, -6.2, -6.2, -6.2, 0.2, -0.2, -0.2, telemetry);
+        drivetrain(-6.5, -6.5, -6.5, -6.5, 0.2, -0.2, -0.2, telemetry);
         resetDriveEncoders();
-        drivetrain(-21, 21, -21, 21, 0.2, 0.2, -0.2, telemetry);
+        drivetrain(-19, 19, -19, 19, 0.2, 0.2, -0.2, telemetry);
         resetDriveEncoders();
         drivetrain(-11.5, -11.5, -11.5, -11.5, 0.2, -0.2, -0.2, telemetry);
         resetDriveEncoders();
@@ -219,17 +227,21 @@ public class AutoRightScoring extends LinearOpMode {
       else {
         // Scoring & Turning
         raiseCone();
-        drivetrain(11.5, 11.5, 11.5, 11.5, 0.2, 0.2, 0.2, telemetry);
+        drivetrain(16.5, 16.5, 16.5, 16.5, 0.2, 0.2, 0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-10, -10, -10, -10, 0.2, -0.2, -0.2, telemetry);
+        resetDriveEncoders();
+        drivetrain(-5, -5, -5, -5, 0.2, -0.2, -0.2, telemetry);
         resetDriveEncoders();
         drivetrain(21, -21, 21, -21, 0.2, -0.2, 0.2, telemetry);
         resetDriveEncoders();
-        drivetrain(6.2, 6.2, 6.2, 6.2, 0.2, 0.2, 0.2, telemetry);
+        drivetrain(6.5, 6.5, 6.5, 6.5, 0.2, 0.2, 0.2, telemetry);
         resetDriveEncoders();
         Gripper.setPosition(Gripper_Release);
         sleep(1000);
-        drivetrain(-6.2, -6.2, -6.2, -6.2, 0.2, -0.2, -0.2, telemetry);
+        drivetrain(-6.5, -6.5, -6.5, -6.5, 0.2, -0.2, -0.2, telemetry);
         resetDriveEncoders();
-        drivetrain(-21, 21, -21, 21, 0.2, 0.2, -0.2, telemetry);
+        drivetrain(-19, 19, -19, 19, 0.2, 0.2, -0.2, telemetry);
         resetDriveEncoders();
         drivetrain(-11.5, -11.5, -11.5, -11.5, 0.2, -0.2, -0.2, telemetry);
         resetDriveEncoders();
