@@ -52,6 +52,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
     public DcMotorEx rightSlide = null;
     public Servo Gripper = null;
     public DcMotor arm = null;
+    // public DcMotor Intake = null;
 
     //Slides Encoder Values
     private static final int Slides_Start = 0;
@@ -64,7 +65,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
     private static final int Arm_Ground = -100;
     private static final int Arm_Low = 420;
     private static final int Arm_Medium = 420;
-    private static final int Arm_High = 350;
+    private static final int Arm_High = 420;
 
     //Gripper Values
     private static final double Gripper_Release = 0.7;
@@ -73,6 +74,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
     private boolean raisingToLow = false;
     private boolean returning = false;
     private boolean raisingToMiddle = false;
+    private boolean raisingToHigh = false;
     private ElapsedTime armInTimer;
 
     // Toggling
@@ -89,6 +91,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
         Gripper = hardwareMap.get(Servo.class, "left_intake");
         arm = hardwareMap.get(DcMotor.class, "arm");
+        // Intake = hardwareMap.get(DcMotor.class, "Intake");
 
         // Reversing the motors
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -150,7 +153,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             rearLeft.setPower(v3 / maxPower * slowMode);
             rearRight.setPower(v4 / maxPower * slowMode);
 
-            /*-------INTAKE-------*/
+            /*-------Gripper-------*/
             boolean pressed = gamepad1.left_bumper;
             if (pressed & !pressedLastIteration) {
 
@@ -230,6 +233,24 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 }
             }
 
+            // High
+            /* if(gamepad1.b) {
+                raisingToHigh = true;
+                Gripper.setPosition(Gripper_Grab);
+
+                leftSlide.setPower(1);
+                rightSlide.setPower(1);
+                leftSlide.setTargetPosition(Slides_High);
+                rightSlide.setTargetPosition(Slides_High);
+            }
+            if(raisingToHigh) {
+                if(leftSlide.getCurrentPosition() < -700) {
+                    arm.setPower(.5);
+                    arm.setTargetPosition(Arm_High);
+                    raisingToHigh = false;
+                }
+            } */
+
             // Fine Control the Slides
             if(gamepad1.dpad_down) {
                 leftSlide.setTargetPosition(leftSlide.getCurrentPosition() + 50);
@@ -239,6 +260,10 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 leftSlide.setTargetPosition(leftSlide.getCurrentPosition() - 50);
                 rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - 50);
             }
+
+            /*-------Intake-------*/
+            // Intake.setPower(-gamepad1.left_trigger);
+            // Intake.setPower(gamepad1.right_trigger);
 
         }
     }
