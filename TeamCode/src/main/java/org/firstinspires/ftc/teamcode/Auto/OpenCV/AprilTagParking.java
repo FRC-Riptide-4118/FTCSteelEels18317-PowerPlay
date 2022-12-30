@@ -126,7 +126,7 @@ public class AprilTagParking extends LinearOpMode {
 
         Gripper.setPosition(Gripper_Grab);
 
-        HD_COUNTS_PER_REV = 537;
+        HD_COUNTS_PER_REV = 28;
         DRIVE_GEAR_REDUCTION = 20;
         WHEEL_CIRCUMFERENCE_MM = 101.6 * Math.PI;
         DRIVE_COUNTS_PER_MM = (HD_COUNTS_PER_REV * DRIVE_GEAR_REDUCTION) / WHEEL_CIRCUMFERENCE_MM;
@@ -235,6 +235,8 @@ public class AprilTagParking extends LinearOpMode {
             telemetry.update();
         }
 
+        /***Code***/
+        
         if (tagOfInterest.id == Left){
             // Left Code
 
