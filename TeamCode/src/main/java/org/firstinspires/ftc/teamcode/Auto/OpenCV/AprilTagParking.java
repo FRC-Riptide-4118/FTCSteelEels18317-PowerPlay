@@ -126,7 +126,7 @@ public class AprilTagParking extends LinearOpMode {
 
         Gripper.setPosition(Gripper_Grab);
 
-        HD_COUNTS_PER_REV = 537;
+        HD_COUNTS_PER_REV = 28;
         DRIVE_GEAR_REDUCTION = 20;
         WHEEL_CIRCUMFERENCE_MM = 101.6 * Math.PI;
         DRIVE_COUNTS_PER_MM = (HD_COUNTS_PER_REV * DRIVE_GEAR_REDUCTION) / WHEEL_CIRCUMFERENCE_MM;
@@ -235,6 +235,8 @@ public class AprilTagParking extends LinearOpMode {
             telemetry.update();
         }
 
+        /***Code***/
+        
         if (tagOfInterest.id == Left){
             // Left Code
 
@@ -264,3 +266,45 @@ public class AprilTagParking extends LinearOpMode {
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
 }
+
+//Resetting Encoders
+  private void Reset_Encoders() {
+    frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    rearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    rearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    frontLeftTarget = 0;
+    frontRightTarget = 0;
+    rearRightTarget = 0;
+    rearLeftTarget = 0;
+  }
+
+  // InchesToCounts
+  public int inchesToCounts(double inches) {
+    return (int) (inches * DRIVE_COUNTS_PER_IN);
+  }
+
+//Inches
+  private void drivetrain(double frontLeftInches, double frontRightInches, double rearLeftInches, double rearRightInches, double Power, double frPower, double rlPower, org.firstinspires.ftc.robotcore.external.Telemetry telemetry) {
+    if (opModeIsActive()) {
+      frontRightTarget = frontRight.getCurrentPosition() + inchesToCounts(frontRightInches);
+      rearRightTarget = rearRight.getCurrentPosition() + inchesToCounts(rearRightInches);
+      frontLeftTarget = frontLeft.getCurrentPosition() + inchesToCounts(frontLeftInches);
+      rearLeftTarget = rearLeft.getCurrentPosition() + inchesToCounts(rearLeftInches);
+
+      frontRight.setTargetPosition(frontRightTarget);
+      frontLeft.setTargetPosition(frontLeftTarget);
+      rearRight.setTargetPosition(rearRightTarget);
+      rearLeft.setTargetPosition(rearLeftTarget);
+
+      frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+      rearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+      rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+      frontLeft.setPower(Power);
+      rearLeft.setPower(rlPower);
+      rearRight.setPower(Power);
+      frontRight.setPower(frPower); 
+    }
+  }
