@@ -265,7 +265,8 @@ public class AprilTagParking extends LinearOpMode {
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
-}
+
+
 
 //Resetting Encoders
   private void Reset_Encoders() {
@@ -308,3 +309,4 @@ public class AprilTagParking extends LinearOpMode {
       frontRight.setPower(frPower); 
     }
   }
+}
