@@ -16,11 +16,16 @@ public class RRPathTest extends LinearOpMode {
 
         waitForStart();
 
-        Trajectory testing = drivetrain.trajectoryBuilder(new Pose2d(0.4,0, Math.toRadians(-3)), Math.toRadians(-3))
-                .splineToSplineHeading(new Pose2d(48,0.4, Math.toRadians(-2)), Math.toRadians(-2))
-                .splineToSplineHeading(new Pose2d(48,-35.6, Math.toRadians(0)), Math.toRadians(0))
-                .splineToSplineHeading(new Pose2d(41.2,-43.2, Math.toRadians(-90)), Math.toRadians(-90))
+        Trajectory testing = drivetrain.trajectoryBuilder(new Pose2d(4.4,-0.4, Math.toRadians(0)), Math.toRadians(0))
+                .splineToSplineHeading(new Pose2d(10.8,1.2, Math.toRadians(18)), Math.toRadians(18))
+                .splineToSplineHeading(new Pose2d(15.6,3.2, Math.toRadians(-8)), Math.toRadians(-8))
+                .splineToSplineHeading(new Pose2d(21.6,2.4, Math.toRadians(-30)), Math.toRadians(-30))
+                .splineToSplineHeading(new Pose2d(26.8,-0.4, Math.toRadians(-67)), Math.toRadians(-67))
+                .splineToSplineHeading(new Pose2d(28.4,-4.4, Math.toRadians(-86)), Math.toRadians(-86))
+                .splineToSplineHeading(new Pose2d(28.8,-9.6, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToSplineHeading(new Pose2d(29.2,-22.4, Math.toRadians(-81)), Math.toRadians(-81))
                 .build();
+
         drivetrain.followTrajectory(testing);
     }
 }
