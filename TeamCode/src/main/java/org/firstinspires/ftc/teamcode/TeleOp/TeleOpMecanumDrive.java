@@ -193,7 +193,8 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                     leftSlide.setTargetPosition(Slides_Start);
                     rightSlide.setTargetPosition(Slides_Start);
                     Gripper.setPosition(Gripper_Release);
-                    arm.setTargetPosition(Arm_Start);
+                    arm1.setTargetPosition(Arm_Start);
+                    arm2.setTargetPosition(Arm_Start);
                     returning = false;
                 }
             }
@@ -210,8 +211,8 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             }
             if(raisingToLow) {
                 if(leftSlide.getCurrentPosition() < -375) {
-                    arm.setPower(.5);
-                    arm.setTargetPosition(Arm_Low);
+                    arm1.setTargetPosition(Arm_Low);
+                    arm2.setTargetPosition(Arm_Low);
                     raisingToLow = false;
 
                 }
@@ -229,14 +230,14 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             }
             if(raisingToMiddle) {
                 if(leftSlide.getCurrentPosition() < -700) {
-                    arm.setPower(.5);
-                    arm.setTargetPosition(Arm_Medium);
+                    arm1.setTargetPosition(Arm_Medium);
+                    arm2.setTargetPosition(Arm_Medium);
                     raisingToMiddle = false;
                 }
             }
 
             // High
-            /* if(gamepad1.b) {
+            if(gamepad1.b) {
                 raisingToHigh = true;
                 Gripper.setPosition(Gripper_Grab);
 
@@ -247,11 +248,11 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             }
             if(raisingToHigh) {
                 if(leftSlide.getCurrentPosition() < -700) {
-                    arm.setPower(.5);
-                    arm.setTargetPosition(Arm_High);
+                    arm1.setTargetPosition(Arm_High);
+                    arm2.setTargetPosition(Arm_High);
                     raisingToHigh = false;
                 }
-            } */
+            } 
 
             // Fine Control the Slides
             if(gamepad1.dpad_down) {
