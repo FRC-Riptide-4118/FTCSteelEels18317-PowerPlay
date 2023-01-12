@@ -51,7 +51,8 @@ public class TeleOpMecanumDrive extends LinearOpMode {
     public DcMotorEx leftSlide = null;
     public DcMotorEx rightSlide = null;
     public Servo Gripper = null;
-    public DcMotor arm = null;
+    public Servo arm1 = null;
+    public Servo arm2 = null;
     // public DcMotor Intake = null;
 
     //Slides Encoder Values
@@ -62,10 +63,10 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
     //Arm Encoder Values
     private static final int Arm_Start = 0;
-    private static final int Arm_Ground = -100;
-    private static final int Arm_Low = 420;
-    private static final int Arm_Medium = 420;
-    private static final int Arm_High = 420;
+    private static final int Arm_Ground = .2;
+    private static final int Arm_Low = .6;
+    private static final int Arm_Medium = .6;
+    private static final int Arm_High = .6;
 
     //Gripper Values
     private static final double Gripper_Release = 0.7;
@@ -90,7 +91,8 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         leftSlide = hardwareMap.get(DcMotorEx.class, "left_slide");
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
         Gripper = hardwareMap.get(Servo.class, "left_intake");
-        arm = hardwareMap.get(DcMotor.class, "arm");
+        arm1 = hardwareMap.get(Servo.class, "arm1");
+        arm2 = hardwareMap.get(Servo.class, "arm2");
         // Intake = hardwareMap.get(DcMotor.class, "Intake");
 
         // Reversing the motors
@@ -179,8 +181,8 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             if(gamepad1.a) {
                 returning = true;
                 Gripper.setPosition(Gripper_Grab);
-                arm.setPower(.5);
-                arm.setTargetPosition(Arm_Ground);
+                arm1.setTargetPosition(Arm_Ground);
+                arm2.setTargetPosition(Arm_Ground);
                 if (armInTimer.seconds() > 1.0) armInTimer.reset();
             }
 
