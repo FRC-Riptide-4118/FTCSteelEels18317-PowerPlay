@@ -47,7 +47,8 @@ public class AprilTagParking extends LinearOpMode {
     private DcMotorEx leftSlide  = null;
     private DcMotorEx  rightSlide  = null;
     private Servo Gripper = null;
-    private DcMotor arm = null;
+    private Servo arm1 = null;
+    private Servo arm1 = null;
     private DcMotor Intake = null;
 
     //Slides Encoder Values
@@ -115,7 +116,8 @@ public class AprilTagParking extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotor.class, "front_right_wheel");
         rearRight = hardwareMap.get(DcMotor.class, "rear_right_wheel");
         Gripper = hardwareMap.get(Servo.class, "left_intake");
-        arm = hardwareMap.get(DcMotor.class, "arm");
+        arm1 = hardwareMap.get(Servo.class, "arm1");
+        arm2 = hardwareMap.get(Servo.class, "arm2");
         leftSlide = hardwareMap.get(DcMotorEx.class, "left_slide");
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
 
@@ -239,15 +241,22 @@ public class AprilTagParking extends LinearOpMode {
         
         if (tagOfInterest.id == Left){
             // Left Code
-
+            drivetrain(22, 22, 22, 22, .3, telemetry);
+            Reset_Encoders();
+            drivetrain(-22, 22, -22, 22, .3, telemetry);
+            Reset_Encoders();
         }
         else if (tagOfInterest == null || tagOfInterest.id == Middle) {
             // Middle Code
-
+            drivetrain(22, 22, 22, 22, .3, telemetry);
+            Reset_Encoders();
         }
         else if (tagOfInterest.id == Right) {
             // Right Code
-
+            drivetrain(22, 22, 22, 22, .3, telemetry);
+            Reset_Encoders();
+            drivetrain(22, -22, 22, -22, .3, telemetry);
+            Reset_Encoders();
         }
 
 
@@ -286,7 +295,7 @@ public class AprilTagParking extends LinearOpMode {
   }
 
 //Inches
-  private void drivetrain(double frontLeftInches, double frontRightInches, double rearLeftInches, double rearRightInches, double Power, double frPower, double rlPower, org.firstinspires.ftc.robotcore.external.Telemetry telemetry) {
+  private void drivetrain(double frontLeftInches, double frontRightInches, double rearLeftInches, double rearRightInches, double Power, org.firstinspires.ftc.robotcore.external.Telemetry telemetry) {
     if (opModeIsActive()) {
       frontRightTarget = frontRight.getCurrentPosition() + inchesToCounts(frontRightInches);
       rearRightTarget = rearRight.getCurrentPosition() + inchesToCounts(rearRightInches);
@@ -304,9 +313,9 @@ public class AprilTagParking extends LinearOpMode {
       frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
       frontLeft.setPower(Power);
-      rearLeft.setPower(rlPower);
+      rearLeft.setPower(Power);
       rearRight.setPower(Power);
-      frontRight.setPower(frPower); 
+      frontRight.setPower(Power); 
     }
   }
 }
