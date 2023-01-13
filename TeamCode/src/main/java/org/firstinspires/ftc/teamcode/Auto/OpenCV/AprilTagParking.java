@@ -44,17 +44,6 @@ public class AprilTagParking extends LinearOpMode {
     private DcMotor  rearRight  = null;
     private DcMotor  frontRight  = null;
     private DcMotor  rearLeft  = null;
-    private DcMotorEx leftSlide  = null;
-    private DcMotorEx  rightSlide  = null;
-    private Servo Gripper = null;
-    private Servo arm1 = null;
-    private Servo arm2 = null;
-    private DcMotor Intake = null;
-
-    private boolean raisingToLow = false;
-    private boolean returning = false;
-    private boolean raisingToMiddle = false;
-    private ElapsedTime armInTimer;
 
     int frontRightTarget;
     int frontLeftTarget;
@@ -98,18 +87,11 @@ public class AprilTagParking extends LinearOpMode {
         rearLeft = hardwareMap.get(DcMotor.class, "rear_left_wheel");
         frontRight = hardwareMap.get(DcMotor.class, "front_right_wheel");
         rearRight = hardwareMap.get(DcMotor.class, "rear_right_wheel");
-        Gripper = hardwareMap.get(Servo.class, "left_intake");
-        arm1 = hardwareMap.get(Servo.class, "arm1");
-        arm2 = hardwareMap.get(Servo.class, "arm2");
-        leftSlide = hardwareMap.get(DcMotorEx.class, "left_slide");
-        rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
 
         frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         rearLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         rearRight.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        Gripper.setPosition(Gripper_Grab);
 
         HD_COUNTS_PER_REV = 28;
         DRIVE_GEAR_REDUCTION = 20;
