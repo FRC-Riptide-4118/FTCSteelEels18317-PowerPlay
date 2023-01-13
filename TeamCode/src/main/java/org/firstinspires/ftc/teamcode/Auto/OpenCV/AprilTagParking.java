@@ -203,30 +203,27 @@ public class AprilTagParking extends LinearOpMode {
         }
 
         /***Code***/
-        
-        if (tagOfInterest.id == Left){
-            // Left Code
-            drivetrain(22, 22, 22, 22, .3, telemetry);
-            Reset_Encoders();
-            drivetrain(-22, 22, -22, 22, .3, telemetry);
-            Reset_Encoders();
-        }
-        else if (tagOfInterest == null || tagOfInterest.id == Middle) {
-            // Middle Code
-            drivetrain(22, 22, 22, 22, .3, telemetry);
-            Reset_Encoders();
-        }
-        else if (tagOfInterest.id == Right) {
-            // Right Code
-            drivetrain(22, 22, 22, 22, .3, telemetry);
-            Reset_Encoders();
-            drivetrain(22, -22, 22, -22, .3, telemetry);
-            Reset_Encoders();
-        }
 
-
-        /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
-        while (opModeIsActive()) {sleep(20);}
+        waitForStart();
+        while (opModeIsActive()) {
+            if (tagOfInterest.id == Left) {
+                // Left Code
+                drivetrain(22, 22, 22, 22, .3);
+                Reset_Encoders();
+                drivetrain(-22, 22, -22, 22, .3);
+                Reset_Encoders();
+            } else if (tagOfInterest == null || tagOfInterest.id == Middle) {
+                // Middle Code
+                drivetrain(100, 100, 100, 100, .3);
+                Reset_Encoders();
+            } else if (tagOfInterest.id == Right) {
+                // Right Code
+                drivetrain(22, 22, 22, 22, .3);
+                Reset_Encoders();
+                drivetrain(22, -22, 22, -22, .3);
+                Reset_Encoders();
+            }
+        }
     }
 
     void tagToTelemetry(AprilTagDetection detection)
@@ -260,7 +257,7 @@ public class AprilTagParking extends LinearOpMode {
   }
 
 //Inches
-  private void drivetrain(double frontLeftInches, double frontRightInches, double rearLeftInches, double rearRightInches, double Power, org.firstinspires.ftc.robotcore.external.Telemetry telemetry) {
+  private void drivetrain(double frontLeftInches, double frontRightInches, double rearLeftInches, double rearRightInches, double Power) {
     if (opModeIsActive()) {
       frontRightTarget = frontRight.getCurrentPosition() + inchesToCounts(frontRightInches);
       rearRightTarget = rearRight.getCurrentPosition() + inchesToCounts(rearRightInches);
