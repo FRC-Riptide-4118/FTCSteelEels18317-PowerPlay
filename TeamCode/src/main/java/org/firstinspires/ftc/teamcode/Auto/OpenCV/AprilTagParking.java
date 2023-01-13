@@ -272,8 +272,8 @@ public class AprilTagParking extends LinearOpMode {
       rearRight.setTargetPosition(rearRightTarget);
       rearLeft.setTargetPosition(rearLeftTarget);
 
-      frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-      rearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+      frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
