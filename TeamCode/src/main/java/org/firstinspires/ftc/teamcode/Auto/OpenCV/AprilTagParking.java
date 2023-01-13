@@ -48,7 +48,7 @@ public class AprilTagParking extends LinearOpMode {
     private DcMotorEx  rightSlide  = null;
     private Servo Gripper = null;
     private Servo arm1 = null;
-    private Servo arm1 = null;
+    private Servo arm2 = null;
     private DcMotor Intake = null;
 
     //Slides Encoder Values
