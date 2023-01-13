@@ -51,23 +51,6 @@ public class AprilTagParking extends LinearOpMode {
     private Servo arm2 = null;
     private DcMotor Intake = null;
 
-    //Slides Encoder Values
-    private static final int Slides_Start = 0;
-    private static final int Slides_Low = -400;
-    private static final int Slides_Medium = -900;
-    private static final int Slides_High = -1100;
-
-    //Arm Encoder Values
-    private static final int Arm_Start = 0;
-    private static final int Arm_Ground = -100;
-    private static final int Arm_Low = 420;
-    private static final int Arm_Medium = 420;
-    private static final int Arm_High = 350;
-
-    //Gripper Values
-    private static final double Gripper_Release = 0.7;
-    private static final double Gripper_Grab = 0;
-
     private boolean raisingToLow = false;
     private boolean returning = false;
     private boolean raisingToMiddle = false;
