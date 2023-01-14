@@ -264,6 +264,10 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 telemetry.addData("front right power", frontRight.getPower());
                 telemetry.addData("back left power", rearLeft.getPower());
                 telemetry.addData("back right power", rearRight.getPower());
+                telemetry.addLine();
+                telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
+                telemetry.addData("Left Stick X", gamepad1.left_stick_x);
+                telemetry.addData("Right Stick X", gamepad1.right_stick_x);
                 telemetry.update();
             }
 
