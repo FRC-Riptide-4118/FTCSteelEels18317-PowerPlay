@@ -204,23 +204,28 @@ public class AprilTagParking extends LinearOpMode {
 
         /***Code***/
 
-        waitForStart();
-        while (opModeIsActive()) {
+        if (opModeIsActive()) {
+            waitForStart();
+            Reset_Encoders();
             if (tagOfInterest.id == Left) {
                 // Left Code
-                drivetrain(22, 22, 22, 22, .3);
+                drivetrain(26, 26, 26, 26, .3);
                 Reset_Encoders();
-                drivetrain(-22, 22, -22, 22, .3);
+                drivetrain(-25, 25, 25, -25, .3);
+                Reset_Encoders();
+                drivetrain(5, 5, 5, 5, .3);
                 Reset_Encoders();
             } else if (tagOfInterest == null || tagOfInterest.id == Middle) {
                 // Middle Code
-                drivetrain(100, 100, 100, 100, .3);
+                drivetrain(30, 30,30, 30, .3);
                 Reset_Encoders();
             } else if (tagOfInterest.id == Right) {
                 // Right Code
-                drivetrain(22, 22, 22, 22, .3);
+                drivetrain(26, 26, 26, 26, .3);
                 Reset_Encoders();
-                drivetrain(22, -22, 22, -22, .3);
+                drivetrain(27, -27, -27, 27, .3);
+                Reset_Encoders();
+                drivetrain(5, 5, 5, 5, .3);
                 Reset_Encoders();
             }
         }
@@ -236,6 +241,8 @@ public class AprilTagParking extends LinearOpMode {
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
+
+
 
 
 
@@ -277,7 +284,27 @@ public class AprilTagParking extends LinearOpMode {
       frontLeft.setPower(Power);
       rearLeft.setPower(Power);
       rearRight.setPower(Power);
-      frontRight.setPower(Power); 
+      frontRight.setPower(Power);
+
+        while (opModeIsActive() && (/*frontRight.isBusy()/* ||*/ frontLeft.isBusy()) && (rearRight.isBusy() /*|| rearLeft.isBusy()*/)) {
+            // Color Sensor
+            telemetry.addData("front left pos", frontLeft.getCurrentPosition());
+            telemetry.addData("front right pos", frontRight.getCurrentPosition());
+            telemetry.addData("back left pos", rearLeft.getCurrentPosition());
+            telemetry.addData("back right pos", rearRight.getCurrentPosition());
+            telemetry.addLine();
+            telemetry.addData("front left power", frontLeft.getPower());
+            telemetry.addData("front right power", frontRight.getPower());
+            telemetry.addData("back left power", rearLeft.getPower());
+            telemetry.addData("back right power", rearRight.getPower());
+            telemetry.addLine();
+            telemetry.addData("front left target", frontLeft.getTargetPosition());
+            telemetry.addData("front right target", frontRight.getTargetPosition());
+            telemetry.addData("back left target", rearLeft.getTargetPosition());
+            telemetry.addData("back right target", rearRight.getTargetPosition());
+            telemetry.update();
+        }
     }
   }
+
 }
