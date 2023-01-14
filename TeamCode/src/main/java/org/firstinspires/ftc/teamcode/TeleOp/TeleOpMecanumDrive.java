@@ -88,12 +88,12 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         rearLeft = hardwareMap.get(DcMotor.class, "rear_left_wheel");
         frontRight = hardwareMap.get(DcMotor.class, "front_right_wheel");
         rearRight = hardwareMap.get(DcMotor.class, "rear_right_wheel");
-        leftSlide = hardwareMap.get(DcMotorEx.class, "left_slide");
-        rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
-        Gripper = hardwareMap.get(Servo.class, "Gripper");
-        arm1 = hardwareMap.get(Servo.class, "arm1");
-        arm2 = hardwareMap.get(Servo.class, "arm2");
-        // Intake = hardwareMap.get(DcMotor.class, "Intake");
+//        leftSlide = hardwareMap.get(DcMotorEx.class, "left_slide");
+//        rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
+//        Gripper = hardwareMap.get(Servo.class, "Gripper");
+//        arm1 = hardwareMap.get(Servo.class, "arm1");
+//        arm2 = hardwareMap.get(Servo.class, "arm2");
+//        // Intake = hardwareMap.get(DcMotor.class, "Intake");
 
         // Reversing the motors
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -101,27 +101,27 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         rearRight.setDirection(DcMotor.Direction.FORWARD);
 
-        leftSlide.setDirection(DcMotor.Direction.FORWARD);
-        rightSlide.setDirection(DcMotor.Direction.REVERSE);
-
-        // Reset the slides
-        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        leftSlide.setTargetPosition(Slides_Start);
-        rightSlide.setTargetPosition(Slides_Start);
-
-        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        // PID Values
-        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-                new PIDFCoefficients(5, 0, 0, 0));
-        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-                new PIDFCoefficients(5, 0, 0, 0));
-
-        armInTimer = new ElapsedTime();
-        armInTimer.reset();
+//        leftSlide.setDirection(DcMotor.Direction.FORWARD);
+//        rightSlide.setDirection(DcMotor.Direction.REVERSE);
+//
+//        // Reset the slides
+//        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//
+//        leftSlide.setTargetPosition(Slides_Start);
+//        rightSlide.setTargetPosition(Slides_Start);
+//
+//        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
+//        // PID Values
+//        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+//                new PIDFCoefficients(5, 0, 0, 0));
+//        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+//                new PIDFCoefficients(5, 0, 0, 0));
+//
+//        armInTimer = new ElapsedTime();
+//        armInTimer.reset();
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver1");
@@ -142,124 +142,123 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             final double v2 = r * Math.sin(robotAngle) - rightX;
             final double v3 = r * Math.sin(robotAngle) + rightX;
             final double v4 = r * Math.cos(robotAngle) - rightX;
-            double maxPower = Math.max(Math.max(Math.max(Math.abs(v1), Math.abs(v2)), Math.abs(v3)), Math.abs(v4));
-            double slowMode = gamepad1.left_trigger > 0.1 ? 0.5 : 1;
+            double slowMode = 1.0 - gamepad1.left_trigger;
 
-            frontLeft.setPower(v1 / maxPower * slowMode);
-            frontRight.setPower(v2 / maxPower * slowMode);
-            rearLeft.setPower(v3 / maxPower * slowMode);
-            rearRight.setPower(v4 / maxPower * slowMode);
+            frontLeft.setPower(v1 * slowMode);
+            frontRight.setPower(v2 * slowMode);
+            rearLeft.setPower(v3 * slowMode);
+            rearRight.setPower(v4 * slowMode);
 
-            /*-------Gripper-------*/
-            boolean pressed = gamepad1.left_bumper;
-            if (pressed & !pressedLastIteration) {
+//            /*-------Gripper-------*/
+//            boolean pressed = gamepad1.left_bumper;
+//            if (pressed & !pressedLastIteration) {
+//
+//                if(Gripper.getPosition() == Gripper_Grab) {
+//                    Gripper.setPosition(Gripper_Release);
+//                }
+//                else {
+//                    Gripper.setPosition(Gripper_Grab);
+//                }
+//            }
+//            pressedLastIteration = pressed;
+//
+//            if (gamepad1.left_bumper) {
+//                Gripper.setPosition(Gripper_Release);
+//            }
+//            if (gamepad1.right_bumper) {
+//                Gripper.setPosition(Gripper_Grab);
+//            }
+//
+//            /*-------Lift & Arm-------*/
+//
+//            // Ground
+//            if(gamepad1.a) {
+//                returning = true;
+//                Gripper.setPosition(Gripper_Grab);
+//                arm1.setPosition(Arm_Ground);
+//                arm2.setPosition(Arm_Ground);
+//                if (armInTimer.seconds() > 1.0) armInTimer.reset();
+//            }
+//
+//            if(returning) {
+//                if(armInTimer.seconds() > 1.0) {
+//                    leftSlide.setPower(0.5);
+//                    rightSlide.setPower(0.5);
+//                    leftSlide.setTargetPosition(Slides_Start);
+//                    rightSlide.setTargetPosition(Slides_Start);
+//                    Gripper.setPosition(Gripper_Release);
+//                    arm1.setPosition(Arm_Start);
+//                    arm2.setPosition(Arm_Start);
+//                    returning = false;
+//                }
+//            }
+//
+//            // Low
+//            if(gamepad1.x) {
+//                raisingToLow = true;
+//
+//                Gripper.setPosition(Gripper_Grab);
+//                leftSlide.setPower(1);
+//                rightSlide.setPower(1);
+//                leftSlide.setTargetPosition(Slides_Low);
+//                rightSlide.setTargetPosition(Slides_Low);
+//            }
+//            if(raisingToLow) {
+//                if(leftSlide.getCurrentPosition() < -375) {
+//                    arm1.setPosition(Arm_Low);
+//                    arm2.setPosition(Arm_Low);
+//                    raisingToLow = false;
+//
+//                }
+//            }
+//
+//            // Medium
+//            if(gamepad1.y) {
+//                raisingToMiddle = true;
+//                Gripper.setPosition(Gripper_Grab);
+//
+//                leftSlide.setPower(1);
+//                rightSlide.setPower(1);
+//                leftSlide.setTargetPosition(Slides_Medium);
+//                rightSlide.setTargetPosition(Slides_Medium);
+//            }
+//            if(raisingToMiddle) {
+//                if(leftSlide.getCurrentPosition() < -700) {
+//                    arm1.setPosition(Arm_Medium);
+//                    arm2.setPosition(Arm_Medium);
+//                    raisingToMiddle = false;
+//                }
+//            }
+//
+//            // High
+//            if(gamepad1.b) {
+//                raisingToHigh = true;
+//                Gripper.setPosition(Gripper_Grab);
+//
+//                leftSlide.setPower(1);
+//                rightSlide.setPower(1);
+//                leftSlide.setTargetPosition(Slides_High);
+//                rightSlide.setTargetPosition(Slides_High);
+//            }
+//            if(raisingToHigh) {
+//                if(leftSlide.getCurrentPosition() < -700) {
+//                    arm1.setPosition(Arm_High);
+//                    arm2.setPosition(Arm_High);
+//                    raisingToHigh = false;
+//                }
+//            }
+//
+//            // Fine Control the Slides
+//            if(gamepad1.dpad_down) {
+//                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() + 50);
+//                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() + 50);
+//            }
+//            if(gamepad1.dpad_up) {
+//                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() - 50);
+//                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - 50);
+//            }
 
-                if(Gripper.getPosition() == Gripper_Grab) {
-                    Gripper.setPosition(Gripper_Release);
-                }
-                else {
-                    Gripper.setPosition(Gripper_Grab);
-                }
-            }
-            pressedLastIteration = pressed;
 
-            if (gamepad1.left_bumper) {
-                Gripper.setPosition(Gripper_Release);
-            }
-            if (gamepad1.right_bumper) {
-                Gripper.setPosition(Gripper_Grab);
-            }
-
-            /*-------Lift & Arm-------*/
-
-            // Ground
-            if(gamepad1.a) {
-                returning = true;
-                Gripper.setPosition(Gripper_Grab);
-                arm1.setPosition(Arm_Ground);
-                arm2.setPosition(Arm_Ground);
-                if (armInTimer.seconds() > 1.0) armInTimer.reset();
-            }
-
-            if(returning) {
-                if(armInTimer.seconds() > 1.0) {
-                    leftSlide.setPower(0.5);
-                    rightSlide.setPower(0.5);
-                    leftSlide.setTargetPosition(Slides_Start);
-                    rightSlide.setTargetPosition(Slides_Start);
-                    Gripper.setPosition(Gripper_Release);
-                    arm1.setPosition(Arm_Start);
-                    arm2.setPosition(Arm_Start);
-                    returning = false;
-                }
-            }
-
-            // Low
-            if(gamepad1.x) {
-                raisingToLow = true;
-
-                Gripper.setPosition(Gripper_Grab);
-                leftSlide.setPower(1);
-                rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_Low);
-                rightSlide.setTargetPosition(Slides_Low);
-            }
-            if(raisingToLow) {
-                if(leftSlide.getCurrentPosition() < -375) {
-                    arm1.setPosition(Arm_Low);
-                    arm2.setPosition(Arm_Low);
-                    raisingToLow = false;
-
-                }
-            }
-
-            // Medium
-            if(gamepad1.y) {
-                raisingToMiddle = true;
-                Gripper.setPosition(Gripper_Grab);
-
-                leftSlide.setPower(1);
-                rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_Medium);
-                rightSlide.setTargetPosition(Slides_Medium);
-            }
-            if(raisingToMiddle) {
-                if(leftSlide.getCurrentPosition() < -700) {
-                    arm1.setPosition(Arm_Medium);
-                    arm2.setPosition(Arm_Medium);
-                    raisingToMiddle = false;
-                }
-            }
-
-            // High
-            if(gamepad1.b) {
-                raisingToHigh = true;
-                Gripper.setPosition(Gripper_Grab);
-
-                leftSlide.setPower(1);
-                rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_High);
-                rightSlide.setTargetPosition(Slides_High);
-            }
-            if(raisingToHigh) {
-                if(leftSlide.getCurrentPosition() < -700) {
-                    arm1.setPosition(Arm_High);
-                    arm2.setPosition(Arm_High);
-                    raisingToHigh = false;
-                }
-            }
-
-            // Fine Control the Slides
-            if(gamepad1.dpad_down) {
-                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() + 50);
-                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() + 50);
-            }
-            if(gamepad1.dpad_up) {
-                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() - 50);
-                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - 50);
-            }
-
-            while (opModeIsActive() && (frontRight.isBusy() || frontLeft.isBusy()) && (rearRight.isBusy() || rearLeft.isBusy())) {
                 telemetry.addData("front left power", frontLeft.getPower());
                 telemetry.addData("front right power", frontRight.getPower());
                 telemetry.addData("back left power", rearLeft.getPower());
@@ -268,8 +267,16 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
                 telemetry.addData("Left Stick X", gamepad1.left_stick_x);
                 telemetry.addData("Right Stick X", gamepad1.right_stick_x);
+                telemetry.addLine();
+                telemetry.addData("V1", v1);
+                telemetry.addData("V2", v2);
+                telemetry.addData("V3", v3);
+                telemetry.addData("V4", v4);
+                telemetry.addLine();
+                telemetry.addData("slowMode", slowMode);
+                telemetry.addData("Robot Angle", robotAngle);
                 telemetry.update();
-            }
+
 
             /*-------Intake-------*/
             // Intake.setPower(-gamepad1.left_trigger);
