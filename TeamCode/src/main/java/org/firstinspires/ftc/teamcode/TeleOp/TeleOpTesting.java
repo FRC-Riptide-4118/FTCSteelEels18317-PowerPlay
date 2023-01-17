@@ -1,27 +1,31 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Arm1_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Arm1_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Arm1_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Arm1_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Arm1_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Arm2_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Arm2_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Arm2_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Arm2_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Arm2_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Gripper_Grab;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Gripper_Release;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Slides_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.ServoConstants.Slides_Start;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Front;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Ground;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_High;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Low;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Medium;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Scoring;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Start;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Front;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Ground;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_High;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Low;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Medium;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Scoring;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_High;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Low;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -57,11 +61,11 @@ public class TeleOpTesting extends LinearOpMode {
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
         // Intake = hardwareMap.get(DcMotor.class, "Intake");
 
-//        arm2.setPosition(Arm2_Start);
-//        arm1.setPosition(Arm1_Start);
+        arm1.setPosition(Arm1_Front);
+        arm2.setPosition(Arm2_Front);
         Gripper.setPosition(Gripper_Grab);
 
-        leftSlide.setDirection(DcMotor.Direction.FORWARD);
+        leftSlide.setDirection(DcMotor.Direction.REVERSE);
         rightSlide.setDirection(DcMotor.Direction.REVERSE);
 
         // Reset the slides
@@ -83,39 +87,75 @@ public class TeleOpTesting extends LinearOpMode {
             /*-------Arm-------*/
             // Ground
             if(gamepad1.a) {
-//                arm1.setPosition(Arm1_Ground);
-//                arm2.setPosition(Arm2_Ground);
-                leftSlide.setPower(.3);
-                rightSlide.setPower(.3);
-                leftSlide.setTargetPosition(Slides_Low);
-                rightSlide.setTargetPosition(Slides_Low);
+                arm1.setPosition(Arm1_Ground);
+                arm2.setPosition(Arm2_Ground);
+//                leftSlide.setPower(.7);
+//                rightSlide.setPower(.7);
+//                leftSlide.setTargetPosition(Slides_Start);
+//                rightSlide.setTargetPosition(Slides_Start);
             }
 
             // Low
             if(gamepad1.x) {
-//                arm1.setPosition(Arm1_Low);
-//                arm2.setPosition(Arm2_Low);
+                arm1.setPosition(Arm1_Front);
+                arm2.setPosition(Arm2_Front);
+//                leftSlide.setPower(.7);
+//                rightSlide.setPower(.7);
 //                leftSlide.setTargetPosition(Slides_Low);
 //                rightSlide.setTargetPosition(Slides_Low);
             }
 
-
             // Medium
             if(gamepad1.y) {
-//                arm1.setPosition(Arm1_Medium);
-//                arm2.setPosition(Arm2_Medium);
+                arm1.setPosition(Arm1_Scoring);
+                arm2.setPosition(Arm2_Scoring);
+//                leftSlide.setPower(.7);
+//                rightSlide.setPower(.7);
 //                leftSlide.setTargetPosition(Slides_Medium);
 //                rightSlide.setTargetPosition(Slides_Medium);
             }
 
-
             // High
             if(gamepad1.b) {
-//                arm1.setPosition(Arm1_High);
-//                arm2.setPosition(Arm2_High);
-//                leftSlide.setTargetPosition(Slides_Medium);
-//                rightSlide.setTargetPosition(Slides_Medium);
+                arm1.setPosition(Arm1_Medium);
+                arm2.setPosition(Arm2_Medium);
+//                leftSlide.setPower(.7);
+//                rightSlide.setPower(.7);
+//                leftSlide.setTargetPosition(Slides_High);
+//                rightSlide.setTargetPosition(Slides_High);
+            }
 
+            /*-------Slides-------*/
+            // Ground
+            if(gamepad2.a) {
+                leftSlide.setPower(.7);
+                rightSlide.setPower(.7);
+                leftSlide.setTargetPosition(Slides_Start);
+                rightSlide.setTargetPosition(Slides_Start);
+            }
+
+            // Low
+            if(gamepad2.x) {
+                leftSlide.setPower(.7);
+                rightSlide.setPower(.7);
+                leftSlide.setTargetPosition(Slides_Low);
+                rightSlide.setTargetPosition(Slides_Low);
+            }
+
+            // Medium
+            if(gamepad2.y) {
+                leftSlide.setPower(.7);
+                rightSlide.setPower(.7);
+                leftSlide.setTargetPosition(Slides_Medium);
+                rightSlide.setTargetPosition(Slides_Medium);
+            }
+
+            // High
+            if(gamepad2.b) {
+                leftSlide.setPower(.7);
+                rightSlide.setPower(.7);
+                leftSlide.setTargetPosition(Slides_High);
+                rightSlide.setTargetPosition(Slides_High);
             }
 
             if (gamepad1.dpad_up) {
@@ -138,6 +178,15 @@ public class TeleOpTesting extends LinearOpMode {
                 telemetry.update();
 
 
+            // Fine Control the Slides
+            if(gamepad2.dpad_up) {
+                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() + 50);
+                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() + 50);
+            }
+            if(gamepad2.dpad_down) {
+                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() - 50);
+                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - 50);
+            }
 
             /*-------Intake-------*/
             // Intake.setPower(-gamepad1.left_trigger);
