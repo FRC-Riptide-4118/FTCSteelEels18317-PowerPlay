@@ -209,7 +209,7 @@ public class AprilTagParking extends LinearOpMode {
             Reset_Encoders();
             if (tagOfInterest.id == Left) {
                 // Left Code
-                drivetrain(26, 26, 26, 26, .3);
+                drivetrain(26, 26, 26, 26, 0.3);
                 Reset_Encoders();
                 drivetrain(-25, 25, 25, -25, .3);
                 Reset_Encoders();
@@ -217,11 +217,12 @@ public class AprilTagParking extends LinearOpMode {
                 Reset_Encoders();
             } else if (tagOfInterest == null || tagOfInterest.id == Middle) {
                 // Middle Code
-                drivetrain(30, 30,30, 30, .3);
+                drivetrain(30, 30, 30, 30, 0.3);
                 Reset_Encoders();
+
             } else if (tagOfInterest.id == Right) {
                 // Right Code
-                drivetrain(26, 26, 26, 26, .3);
+                drivetrain(26, 26, 26, 26, 0.3);
                 Reset_Encoders();
                 drivetrain(27, -27, -27, 27, .3);
                 Reset_Encoders();
@@ -241,10 +242,17 @@ public class AprilTagParking extends LinearOpMode {
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
-
-
-
-
+    private void Score_PreloadedCone() {
+        drivetrain(26, 26, 26, 26, 0.3);
+        Reset_Encoders();
+        drivetrain(-5, 5, -5, 5, 0.3);
+        Reset_Encoders();
+        sleep(200);
+        drivetrain(5, -5, 5, -5, 0.3);
+        Reset_Encoders();
+        drivetrain(-52, -52, -52, -52, 0.3);
+        Reset_Encoders();
+    }
 
 //Resetting Encoders
   private void Reset_Encoders() {

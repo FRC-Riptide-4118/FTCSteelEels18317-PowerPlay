@@ -2,18 +2,12 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Front;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Low;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Medium;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Scoring;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Start;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Front;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Low;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Medium;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Scoring;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_High;
@@ -29,10 +23,10 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "TeleOp", group = "Robot")
+@TeleOp(name = "TestLeftSlide", group = "Robot")
 
 @Config
-public class TeleOpTesting extends LinearOpMode {
+public class SlidesTesting extends LinearOpMode {
 
     /* Declare OpMode members. */
     public Servo Gripper = null;
@@ -75,8 +69,8 @@ public class TeleOpTesting extends LinearOpMode {
         // Slides
         leftSlide.setTargetPosition(Slides_Start);
         rightSlide.setTargetPosition(Slides_Start);
-        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -84,91 +78,29 @@ public class TeleOpTesting extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            /*-------Arm-------*/
-            // Ground
-            if(gamepad1.a) {
-                arm1.setPosition(Arm1_Ground);
-                arm2.setPosition(Arm2_Ground);
-//                leftSlide.setPower(.7);
-//                rightSlide.setPower(.7);
-//                leftSlide.setTargetPosition(Slides_Start);
-//                rightSlide.setTargetPosition(Slides_Start);
-            }
-
-            // Low
-            if(gamepad1.x) {
-                arm1.setPosition(Arm1_Front);
-                arm2.setPosition(Arm2_Front);
-//                leftSlide.setPower(.7);
-//                rightSlide.setPower(.7);
-//                leftSlide.setTargetPosition(Slides_Low);
-//                rightSlide.setTargetPosition(Slides_Low);
-            }
-
-            // Medium
-            if(gamepad1.y) {
-                arm1.setPosition(Arm1_Scoring);
-                arm2.setPosition(Arm2_Scoring);
-//                leftSlide.setPower(.7);
-//                rightSlide.setPower(.7);
-//                leftSlide.setTargetPosition(Slides_Medium);
-//                rightSlide.setTargetPosition(Slides_Medium);
-            }
-
-            // High
-            if(gamepad1.b) {
-                arm1.setPosition(Arm1_Medium);
-                arm2.setPosition(Arm2_Medium);
-//                leftSlide.setPower(.7);
-//                rightSlide.setPower(.7);
-//                leftSlide.setTargetPosition(Slides_High);
-//                rightSlide.setTargetPosition(Slides_High);
-            }
-
             /*-------Slides-------*/
             // Ground
             if(gamepad2.a) {
                 leftSlide.setPower(1);
-                rightSlide.setPower(1);
                 leftSlide.setTargetPosition(Slides_Start);
-                rightSlide.setTargetPosition(Slides_Start);
             }
 
             // Low
             if(gamepad2.x) {
                 leftSlide.setPower(1);
-                rightSlide.setPower(1);
                 leftSlide.setTargetPosition(Slides_Low);
-                rightSlide.setTargetPosition(Slides_Low);
             }
 
             // Medium
             if(gamepad2.y) {
                 leftSlide.setPower(1);
-                rightSlide.setPower(1);
                 leftSlide.setTargetPosition(Slides_Medium);
-                rightSlide.setTargetPosition(Slides_Medium);
             }
 
             // High
             if(gamepad2.b) {
                 leftSlide.setPower(1);
-                rightSlide.setPower(1);
                 leftSlide.setTargetPosition(Slides_High);
-                rightSlide.setTargetPosition(Slides_High);
-            }
-
-            if(gamepad2.right_bumper) {
-                arm1.setPosition(Arm1_Ground);
-                arm2.setPosition(Arm2_Ground);
-            }
-
-            if (gamepad1.dpad_up) {
-                Gripper.setPosition(Gripper_Grab);
-            }
-
-            if (gamepad1.dpad_down) {
-                Gripper.setPosition(Gripper_Release);
             }
 
 
@@ -185,12 +117,10 @@ public class TeleOpTesting extends LinearOpMode {
 
             // Fine Control the Slides
             if(gamepad2.dpad_up) {
-                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() + 50);
-                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() + 50);
+                leftSlide.setPower(1);
             }
             if(gamepad2.dpad_down) {
-                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() - 50);
-                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - 50);
+                leftSlide.setPower(-1);
             }
 
             /*-------Intake-------*/
