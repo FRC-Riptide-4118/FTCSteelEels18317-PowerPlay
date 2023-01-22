@@ -24,7 +24,6 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 public class BlakeRobotHardware
 {
-
     // Hardware map (this will be set to the hardwareMap of the current
     // OpMode once the RobotHardware class is instantiated
     HardwareMap hardwareMap;
@@ -40,7 +39,12 @@ public class BlakeRobotHardware
     public Servo arm1 = null;
     public Servo arm2 = null;
 
-    // Robot constants can go here as well
+    // Robot constants
+    int HD_COUNTS_PER_REV = 28;
+    int DRIVE_GEAR_REDUCTION = 20;
+    double WHEEL_CIRCUMFERENCE_MM = 101.6 * Math.PI;
+    double DRIVE_COUNTS_PER_MM = (HD_COUNTS_PER_REV * DRIVE_GEAR_REDUCTION) / WHEEL_CIRCUMFERENCE_MM;
+    double DRIVE_COUNTS_PER_IN = DRIVE_COUNTS_PER_MM * 25.4;
 
     /**
      * Simple constructor to set the hardware map for this
@@ -139,4 +143,8 @@ public class BlakeRobotHardware
         rearRight   .setPower(drive + strafe - twist);
     }
 
+    // InchesToCounts
+    public int inchesToCounts(double inches) {
+        return (int) (inches * DRIVE_COUNTS_PER_IN);
+    }
 }
