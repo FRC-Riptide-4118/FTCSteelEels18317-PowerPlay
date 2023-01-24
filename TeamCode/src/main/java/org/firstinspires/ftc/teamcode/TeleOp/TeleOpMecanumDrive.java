@@ -146,8 +146,10 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             double drive = -gamepad1.left_stick_y;
             double strafe = gamepad1.left_stick_x;
             double twist = gamepad1.right_stick_x;
+            double SlowMode = 1.0 - gamepad1.left_trigger;
 
             hardware.setMecanumPower(drive, strafe, twist);
+
 
             /*-------Gripper-------*/
             boolean pressed = gamepad1.left_bumper;
