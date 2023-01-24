@@ -7,27 +7,29 @@ public class MotorValuesConstants {
 
     //Slides Encoder Values
     public static int Slides_Start = 0;
-    public static int Slides_Low = 50;
-    public static int Slides_Medium = 100;
+    public static int Slides_Ground = 5;
+    public static int Slides_Low = 700;
+    public static int Slides_Medium = 1300;
     public static int Slides_High = 200;
 
     // Encoder Values
-    public static double Arm1_Start = .3;
-    public static double Arm2_Start = .7;
-    public static double Arm1_Ground = .3;
-    public static double Arm2_Ground = .7;
-    public static double Arm1_Low = .9;
-    public static double Arm2_Low = .1;
-    public static double Arm1_Medium = .5;
-    public static double Arm2_Medium = .5;
-    public static double Arm1_High = .9;
-    public static double Arm2_High = .1;
-    public static double Arm1_Scoring = .1;
-    public static double Arm2_Scoring = .9;
-    public static double Arm1_Front = 0;
-    public static double Arm2_Front = 1;
+    public static double Arm1_Start = 0.2;
+    public static double Arm2_Start = 0.8;
+    public static double Arm1_Ground = 0.2;
+    public static double Arm2_Ground = 0.8;
+    public static double Arm1_Low = 0.85;
+    public static double Arm2_Low = 0.15;
+    public static double Arm1_Medium = 0.85;
+    public static double Arm2_Medium = 0.15;
+    public static double Arm1_High = 0.85;
+    public static double Arm2_High = 0.15;
+    public static double Arm1_Scoring = 0.85;
+    public static double Arm2_Scoring = 0.15;
+    public static double Arm1_Front = 0.85;
+    public static double Arm2_Front = 0.15;
 
-    // .5 .5 is scoring out the back
+    // .2 .8 is GROUND/START
+    // .85 and .15 for SCORING
 
 
 
