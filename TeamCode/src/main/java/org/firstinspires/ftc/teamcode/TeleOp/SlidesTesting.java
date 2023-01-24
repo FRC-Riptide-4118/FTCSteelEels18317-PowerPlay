@@ -23,7 +23,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "TestLeftSlide", group = "Robot")
+@TeleOp(name = "TestSlide", group = "Robot")
 
 @Config
 public class SlidesTesting extends LinearOpMode {
@@ -82,25 +82,34 @@ public class SlidesTesting extends LinearOpMode {
             // Ground
             if(gamepad2.a) {
                 leftSlide.setPower(1);
+                rightSlide.setPower(1);
                 leftSlide.setTargetPosition(Slides_Start);
+                rightSlide.setTargetPosition(Slides_Start);
             }
 
             // Low
             if(gamepad2.x) {
                 leftSlide.setPower(1);
+                rightSlide.setPower(1);
                 leftSlide.setTargetPosition(Slides_Low);
+                rightSlide.setTargetPosition(Slides_Low);
+
             }
 
             // Medium
             if(gamepad2.y) {
                 leftSlide.setPower(1);
+                rightSlide.setPower(1);
                 leftSlide.setTargetPosition(Slides_Medium);
+                rightSlide.setTargetPosition(Slides_Medium);
             }
 
             // High
             if(gamepad2.b) {
                 leftSlide.setPower(1);
+                rightSlide.setPower(1);
                 leftSlide.setTargetPosition(Slides_High);
+                rightSlide.setTargetPosition(Slides_High);
             }
 
 
@@ -118,9 +127,11 @@ public class SlidesTesting extends LinearOpMode {
             // Fine Control the Slides
             if(gamepad2.dpad_up) {
                 leftSlide.setPower(1);
+                rightSlide.setPower(1);
             }
             if(gamepad2.dpad_down) {
                 leftSlide.setPower(-1);
+                rightSlide.setPower(-1);
             }
 
             /*-------Intake-------*/
