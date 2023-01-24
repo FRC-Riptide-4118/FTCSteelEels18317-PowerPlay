@@ -10,7 +10,7 @@ public class MotorValuesConstants {
     public static int Slides_Ground = 5;
     public static int Slides_Low = 700;
     public static int Slides_Medium = 1300;
-    public static int Slides_High = 200;
+    public static int Slides_High = 1800;
 
     // Encoder Values
     public static double Arm1_Start = 0.2;

@@ -48,6 +48,7 @@ import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Me
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Ground;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_High;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Low;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
@@ -112,10 +113,10 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // PID Values
-        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-                new PIDFCoefficients(5, 0, 0, 0));
-        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-                new PIDFCoefficients(5, 0, 0, 0));
+//        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+//                new PIDFCoefficients(5, 0, 0, 0));
+//        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+//                new PIDFCoefficients(5, 0, 0, 0));
 
         armInTimer = new ElapsedTime();
         armInTimer.reset();
@@ -181,8 +182,8 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 if(armInTimer.seconds() > 1.0) {
                     leftSlide.setPower(0.5);
                     rightSlide.setPower(0.5);
-                    leftSlide.setTargetPosition(Slides_Start);
-                    rightSlide.setTargetPosition(Slides_Start);
+                    leftSlide.setTargetPosition(Slides_Ground);
+                    rightSlide.setTargetPosition(Slides_Ground);
                     Gripper.setPosition(Gripper_Release);
                     arm1.setPosition(Arm1_Start);
                     arm2.setPosition(Arm2_Start);
@@ -201,7 +202,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 rightSlide.setTargetPosition(Slides_Low);
             }
             if(raisingToLow) {
-                if(leftSlide.getCurrentPosition() < -375) {
+                if(leftSlide.getCurrentPosition() > 600) {
                     arm1.setPosition(Arm1_Low);
                     arm2.setPosition(Arm2_Low);
                     raisingToLow = false;
@@ -220,7 +221,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 rightSlide.setTargetPosition(Slides_Medium);
             }
             if(raisingToMiddle) {
-                if(leftSlide.getCurrentPosition() < -700) {
+                if(leftSlide.getCurrentPosition() > 1100) {
                     arm1.setPosition(Arm1_Medium);
                     arm2.setPosition(Arm2_Medium);
                     raisingToMiddle = false;
@@ -238,7 +239,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 rightSlide.setTargetPosition(Slides_High);
             }
             if(raisingToHigh) {
-                if(leftSlide.getCurrentPosition() < -700) {
+                if(leftSlide.getCurrentPosition() > 1800) {
                     arm1.setPosition(Arm1_High);
                     arm2.setPosition(Arm2_High);
                     raisingToHigh = false;
