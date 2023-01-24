@@ -245,38 +245,37 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - 50);
             }
 
-                telemetry.addData("front left power", frontLeft.getPower());
-                telemetry.addData("front right power", frontRight.getPower());
-                telemetry.addData("back left power", rearLeft.getPower());
-                telemetry.addData("back right power", rearRight.getPower());
-                telemetry.addLine();
-                telemetry.addData("front left pos", frontLeft.getCurrentPosition());
-                telemetry.addData("front right pos", frontRight.getCurrentPosition());
-                telemetry.addData("back left pos", rearLeft.getCurrentPosition());
-                telemetry.addData("back right pos", rearRight.getCurrentPosition());
-                telemetry.addLine();
-                telemetry.addData("front left tarpos", frontLeft.getTargetPosition());
-                telemetry.addData("front right tarpos", frontRight.getTargetPosition());
-                telemetry.addData("back left tarpos", rearLeft.getTargetPosition());
-                telemetry.addData("back right tarpos", rearRight.getTargetPosition());
-                telemetry.addLine();
-                telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
-                telemetry.addData("Left Stick X", gamepad1.left_stick_x);
-                telemetry.addData("Right Stick X", gamepad1.right_stick_x);
-                telemetry.addLine();
-                telemetry.addData("V1", v1);
-                telemetry.addData("V2", v2);
-                telemetry.addData("V3", v3);
-                telemetry.addData("V4", v4);
-                telemetry.addLine();
-                telemetry.addData("slowMode", slowMode);
-                telemetry.addData("Robot Angle", robotAngle);
-                telemetry.update();
-
             /*-------Intake-------*/
             // Intake.setPower(-gamepad1.left_trigger);
             // Intake.setPower(gamepad1.right_trigger);
 
+            telemetry.addData("front left power", frontLeft.getPower());
+            telemetry.addData("front right power", frontRight.getPower());
+            telemetry.addData("back left power", rearLeft.getPower());
+            telemetry.addData("back right power", rearRight.getPower());
+            telemetry.addLine();
+            telemetry.addData("front left pos", frontLeft.getCurrentPosition());
+            telemetry.addData("front right pos", frontRight.getCurrentPosition());
+            telemetry.addData("back left pos", rearLeft.getCurrentPosition());
+            telemetry.addData("back right pos", rearRight.getCurrentPosition());
+            telemetry.addLine();
+            telemetry.addData("front left tarpos", frontLeft.getTargetPosition());
+            telemetry.addData("front right tarpos", frontRight.getTargetPosition());
+            telemetry.addData("back left tarpos", rearLeft.getTargetPosition());
+            telemetry.addData("back right tarpos", rearRight.getTargetPosition());
+            telemetry.addLine();
+            telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
+            telemetry.addData("Left Stick X", gamepad1.left_stick_x);
+            telemetry.addData("Right Stick X", gamepad1.right_stick_x);
+            telemetry.addLine();
+            telemetry.addData("V1", v1);
+            telemetry.addData("V2", v2);
+            telemetry.addData("V3", v3);
+            telemetry.addData("V4", v4);
+            telemetry.addLine();
+            telemetry.addData("slowMode", slowMode);
+            telemetry.addData("Robot Angle", robotAngle);
+            telemetry.update();
         }
     }
 }
