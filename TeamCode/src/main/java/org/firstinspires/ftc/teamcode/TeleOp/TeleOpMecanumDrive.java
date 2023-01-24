@@ -160,13 +160,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             }
             pressedLastIteration = pressed;
 
-            if (gamepad1.left_bumper) {
-                Gripper.setPosition(Gripper_Release);
-            }
-            if (gamepad1.right_bumper) {
-                Gripper.setPosition(Gripper_Grab);
-            }
-
             /*-------Lift & Arm-------*/
 
             // Ground
