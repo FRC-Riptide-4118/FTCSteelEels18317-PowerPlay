@@ -103,6 +103,10 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         rightSlide.setDirection(DcMotor.Direction.REVERSE);
 
         // Reset the slides
+
+        arm1.setPosition(Arm1_Start);
+        arm2.setPosition(Arm2_Start);
+
         leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
