@@ -54,6 +54,8 @@ import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
 
+import org.firstinspires.ftc.teamcode.BlakeStuff.BlakeRobotHardware;
+
 @TeleOp(name = "TeleOpMecanumDrive", group = "Robot")
 
 public class TeleOpMecanumDrive extends LinearOpMode {
@@ -78,6 +80,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
     // Toggling
     boolean pressedLastIteration = false;
+    BlakeRobotHardware hardware;
 
     @Override
     public void runOpMode() {
@@ -125,6 +128,9 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         armInTimer = new ElapsedTime();
         armInTimer.reset();
 
+        hardware = new BlakeRobotHardware(hardwareMap);
+        hardware.init();
+
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver1");
         telemetry.update();
@@ -137,19 +143,11 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
             /*-------Drivetrain-------*/
             // Gamepad controls
-            double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-            double robotAngle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-            double rightX = gamepad1.right_stick_x;
-            final double v1 = r * Math.cos(robotAngle) + rightX;
-            final double v2 = r * Math.sin(robotAngle) - rightX;
-            final double v3 = r * Math.sin(robotAngle) + rightX;
-            final double v4 = r * Math.cos(robotAngle) - rightX;
-            double slowMode = 1.0 - gamepad1.left_trigger;
+            double drive = -gamepad1.left_stick_y;
+            double strafe = gamepad1.left_stick_x;
+            double twist = gamepad1.right_stick_x;
 
-            frontLeft.setPower(v1 * slowMode);
-            frontRight.setPower(v2 * slowMode);
-            rearLeft.setPower(v3 * slowMode);
-            rearRight.setPower(v4 * slowMode);
+            hardware.setMecanumPower(drive, strafe, twist);
 
             /*-------Gripper-------*/
             boolean pressed = gamepad1.left_bumper;
@@ -271,14 +269,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
             telemetry.addData("Left Stick X", gamepad1.left_stick_x);
             telemetry.addData("Right Stick X", gamepad1.right_stick_x);
-            telemetry.addLine();
-            telemetry.addData("V1", v1);
-            telemetry.addData("V2", v2);
-            telemetry.addData("V3", v3);
-            telemetry.addData("V4", v4);
-            telemetry.addLine();
-            telemetry.addData("slowMode", slowMode);
-            telemetry.addData("Robot Angle", robotAngle);
             telemetry.update();
         }
     }
