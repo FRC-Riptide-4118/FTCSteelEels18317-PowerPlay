@@ -187,7 +187,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             // Low
             if(gamepad1.x) {
                 raisingToLow = true;
-
                 Gripper.setPosition(Gripper_Grab);
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
@@ -199,7 +198,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                     arm1.setPosition(Arm1_Low);
                     arm2.setPosition(Arm2_Low);
                     raisingToLow = false;
-
                 }
             }
 
@@ -207,7 +205,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             if(gamepad1.y) {
                 raisingToMiddle = true;
                 Gripper.setPosition(Gripper_Grab);
-
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
                 leftSlide.setTargetPosition(Slides_Medium);
@@ -225,7 +222,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             if(gamepad1.b) {
                 raisingToHigh = true;
                 Gripper.setPosition(Gripper_Grab);
-
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
                 leftSlide.setTargetPosition(Slides_High);
