@@ -1,4 +1,4 @@
-package orgpackage org.firstinspires.ftc.teamcode.RoadRunner.drive;
+package org.firstinspires.ftc.teamcode.RoadRunner.drive;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -22,9 +22,9 @@ public class RRPathTest extends LinearOpMode {
 
             drive.setPoseEstimate(startPose);
 
-            Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                    .forward(5)
-                    .splineTo(new Vector2d(-31, -28), Math.toRadians(45))
+            Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
+                    .splineTo(new Vector2d(-16, -16), Math.toRadians(90))
+                    .splineTo(new Vector2d(-16, -12), Math.toRadians(50))
                     .build();
 
             Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
@@ -34,4 +34,5 @@ public class RRPathTest extends LinearOpMode {
             drive.followTrajectory(traj1);
         }
     }
+
 
