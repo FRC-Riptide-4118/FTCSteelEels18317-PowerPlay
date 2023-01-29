@@ -247,34 +247,4 @@ public class RRStackScoring extends LinearOpMode {
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
 
-    // Raising the Cone
-    public void raiseCone () {
-        Gripper.setPosition(Gripper_Grab);
-
-        leftSlide.setPower(0.8);
-        rightSlide.setPower(0.8);
-        leftSlide.setTargetPosition(Slides_High);
-        rightSlide.setTargetPosition(Slides_High);
-
-        // Raising
-        while (opModeIsActive() && leftSlide.getCurrentPosition() > 1800);
-        arm1.setPosition(Arm1_High);
-        arm2.setPosition(Arm2_High);
-    }
-
-
-    // Lowering the Cone
-    public void lowerCone () {
-
-        arm1.setPosition(Arm1_Start);
-        arm2.setPosition(Arm2_Start);
-        sleep(500);
-
-        // Returning
-        leftSlide.setPower(0.8);
-        rightSlide.setPower(0.8);
-        leftSlide.setTargetPosition(Slides_Start);
-        rightSlide.setTargetPosition(Slides_Start);
-        Gripper.setPosition(Gripper_Release);
-    }
 }
