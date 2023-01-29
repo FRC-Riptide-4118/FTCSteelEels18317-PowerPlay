@@ -10,7 +10,7 @@ public class MotorValuesConstants {
     public static int Slides_Ground = 5;
     public static int Slides_Low = 700;
     public static int Slides_Medium = 1300;
-    public static int Slides_High = 1800;
+    public static int Slides_High = 1950;
 
     // Encoder Values
     public static double Arm1_Start = 0.2;
@@ -35,5 +35,5 @@ public class MotorValuesConstants {
 
     // Gripper Values
     public static double Gripper_Grab = 0;
-    public static double Gripper_Release = 0.4;
+    public static double Gripper_Release = 0.275;
 }

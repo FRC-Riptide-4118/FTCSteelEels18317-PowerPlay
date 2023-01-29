@@ -26,6 +26,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -60,9 +61,14 @@ public class TeleOpTesting extends LinearOpMode {
         leftSlide = hardwareMap.get(DcMotorEx.class, "left_slide");
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
         // Intake = hardwareMap.get(DcMotor.class, "Intake");
-//
-//        arm1.setPosition(Arm1_Front);
-//        arm2.setPosition(Arm2_Front);
+
+        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+                new PIDFCoefficients(5, 0, 0, 0));
+        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+                new PIDFCoefficients(5, 0, 0, 0));
+
+        arm1.setPosition(Arm1_Start);
+        arm2.setPosition(Arm2_Start);
 //        Gripper.setPosition(Gripper_Grab);
 
         leftSlide.setDirection(DcMotor.Direction.REVERSE);

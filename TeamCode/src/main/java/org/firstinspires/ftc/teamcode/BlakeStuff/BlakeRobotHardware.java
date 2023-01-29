@@ -134,13 +134,14 @@ public class BlakeRobotHardware
      * @param drive the amount of forward motion
      * @param strafe the amount of sideways motion
      * @param twist the amount of rotational motion
+     * @param slowMode the amount of slowing to apply
      */
-    public void setMecanumPower(double drive, double strafe, double twist)
+    public void setMecanumPower(double drive, double strafe, double twist, double slowMode)
     {
-        frontLeft   .setPower(drive + strafe + twist);
-        frontRight  .setPower(drive - strafe - twist);
-        rearLeft    .setPower(drive - strafe + twist);
-        rearRight   .setPower(drive + strafe - twist);
+        frontLeft   .setPower((drive + strafe + twist) * slowMode);
+        frontRight  .setPower((drive - strafe - twist) * slowMode);
+        rearLeft    .setPower((drive - strafe + twist) * slowMode);
+        rearRight   .setPower((drive + strafe - twist) * slowMode);
     }
 
     // InchesToCounts

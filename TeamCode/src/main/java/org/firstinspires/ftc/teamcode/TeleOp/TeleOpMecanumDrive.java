@@ -120,10 +120,10 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // PID Values
-//        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-//                new PIDFCoefficients(5, 0, 0, 0));
-//        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-//                new PIDFCoefficients(5, 0, 0, 0));
+        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+                new PIDFCoefficients(5, 0, 0, 0));
+        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+                new PIDFCoefficients(5, 0, 0, 0));
 
         armInTimer = new ElapsedTime();
         armInTimer.reset();
@@ -146,9 +146,9 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             double drive = -gamepad1.left_stick_y;
             double strafe = gamepad1.left_stick_x;
             double twist = gamepad1.right_stick_x;
-            double SlowMode = 1.0 - gamepad1.left_trigger;
+            double slowMode = Math.abs(1.25 - gamepad1.left_trigger);
 
-            hardware.setMecanumPower(drive, strafe, twist);
+            hardware.setMecanumPower(drive, strafe, twist, slowMode);
 
 
             /*-------Gripper-------*/
@@ -253,6 +253,9 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             // Intake.setPower(-gamepad1.left_trigger);
             // Intake.setPower(gamepad1.right_trigger);
 
+            telemetry.addData("left pos", leftSlide.getCurrentPosition());
+            telemetry.addData("right pos", rightSlide.getCurrentPosition());
+            telemetry.addLine();
             telemetry.addData("front left power", frontLeft.getPower());
             telemetry.addData("front right power", frontRight.getPower());
             telemetry.addData("back left power", rearLeft.getPower());

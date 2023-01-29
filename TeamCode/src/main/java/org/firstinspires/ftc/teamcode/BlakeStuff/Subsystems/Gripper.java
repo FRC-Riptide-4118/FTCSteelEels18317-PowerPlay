@@ -22,6 +22,9 @@ public class Gripper extends SubsystemBase {
         gripper = hwMap.get(Servo.class, "Gripper");
     }
 
+    public static void setPosition(double gripper_grab) {
+    }
+
     /**
      * Runs once each time the command scheduler runs.
      */

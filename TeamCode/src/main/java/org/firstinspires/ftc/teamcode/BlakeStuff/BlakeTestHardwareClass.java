@@ -29,7 +29,7 @@ public class BlakeTestHardwareClass extends LinearOpMode
             double strafe = gamepad1.left_stick_x;
             double twist = -gamepad1.right_stick_x;
 
-            hardware.setMecanumPower(drive, strafe, twist);
+            hardware.setMecanumPower(drive, strafe, twist, 1.0);
 
 
             // Telemetry

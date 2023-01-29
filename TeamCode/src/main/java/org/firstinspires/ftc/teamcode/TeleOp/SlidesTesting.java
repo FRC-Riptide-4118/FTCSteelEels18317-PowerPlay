@@ -4,10 +4,12 @@ import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Fr
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Ground;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Medium;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Scoring;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Start;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Front;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Ground;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Medium;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Scoring;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_High;
@@ -20,8 +22,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.Auto.Testing.PID;
 
 @TeleOp(name = "TestSlide", group = "Robot")
 
@@ -55,8 +60,8 @@ public class SlidesTesting extends LinearOpMode {
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
         // Intake = hardwareMap.get(DcMotor.class, "Intake");
 //
-//        arm1.setPosition(Arm1_Front);
-//        arm2.setPosition(Arm2_Front);
+        arm1.setPosition(Arm1_Start);
+        arm2.setPosition(Arm2_Start);
 //        Gripper.setPosition(Gripper_Grab);
 
         leftSlide.setDirection(DcMotor.Direction.REVERSE);
@@ -71,6 +76,12 @@ public class SlidesTesting extends LinearOpMode {
         rightSlide.setTargetPosition(Slides_Start);
         leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        // PID Values
+        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+                new PIDFCoefficients(5, 0, 0, 0));
+        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+                new PIDFCoefficients(5, 0, 0, 0));
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();

@@ -31,6 +31,8 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequenceRunner;
+import org.firstinspires.ftc.teamcode.RoadRunner.util.AxisDirection;
+import org.firstinspires.ftc.teamcode.RoadRunner.util.BNO055IMUUtil;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.LynxModuleUtil;
 
 import java.util.ArrayList;
@@ -43,8 +45,8 @@ import java.util.List;
  */
 @Config
 public class SampleMecanumDrive extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(5, 0, 0);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(5, 0, 0);
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0.01, 0, 0);
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(0.5, 0, 0);
 
     public static double LATERAL_MULTIPLIER = 1;
 
@@ -105,7 +107,8 @@ public class SampleMecanumDrive extends MecanumDrive {
         // and the placement of the dot/orientation from https://docs.revrobotics.com/rev-control-system/control-system-overview/dimensions#imu-location
         //
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
-        // BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Y);
+
+        BNO055IMUUtil.remapZAxis(imu, AxisDirection.POS_X);
 
         leftFront = hardwareMap.get(DcMotorEx.class, "front_left_wheel");
         leftRear = hardwareMap.get(DcMotorEx.class, "rear_left_wheel");
@@ -313,6 +316,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         //
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
         // BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Y);
+
     }
 
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {
