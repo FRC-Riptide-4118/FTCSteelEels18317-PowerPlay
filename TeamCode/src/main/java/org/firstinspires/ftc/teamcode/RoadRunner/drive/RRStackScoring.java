@@ -17,6 +17,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -102,7 +103,7 @@ public class RRStackScoring extends LinearOpMode {
                 .build();
 
         Trajectory Forward = drive.trajectoryBuilder(Back.end())
-                .forward(13)
+                .forward(12)
                 .build();
 
         Pose2d forwardAfterTurn = new Pose2d(
