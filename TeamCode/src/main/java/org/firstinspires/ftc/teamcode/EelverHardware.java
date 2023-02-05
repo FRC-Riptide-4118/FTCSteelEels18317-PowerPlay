@@ -23,6 +23,11 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
+import org.openftc.apriltag.AprilTagDetection;
+import org.openftc.easyopencv.OpenCvCamera;
 
 public class EelverHardware {
 
@@ -39,6 +44,7 @@ public class EelverHardware {
     public Servo conePush = null;
 
 
+//    OpenCV class
     public void init(HardwareMap hardwareMap)
     {
         /*------- Initialize hardware -------*/

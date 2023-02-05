@@ -20,11 +20,14 @@ import java.util.ArrayList;
 @Autonomous(name = "Left_RRScorePreLoaded")
 public class Left_RRScorePreLoad extends LinearOpMode {
 
+    public ElapsedTime timer;
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
     // Time
     public ElapsedTime timer;
+
+    static final double FEET_PER_METER = 3.28084;
 
 
     double fx = 578.272;
@@ -41,8 +44,6 @@ public class Left_RRScorePreLoad extends LinearOpMode {
     int Right = 3;
 
     AprilTagDetection tagOfInterest = null;
-
-    static final double FEET_PER_METER = 3.28084;
 
     @Override
 
