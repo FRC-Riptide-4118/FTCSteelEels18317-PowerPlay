@@ -134,15 +134,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
             if(returning) {
                 if(armInTimer.seconds() > 1.0) {
-//                    if(leftSlide.getCurrentPosition() < (leftSlidePrevPos - 100)){
-//                        leftSlide.setPower(0.3);
-//                        rightSlide.setPower(0.3);s
-//                    }
-//                    else {
-//                        leftSlide.setPower(0.7);
-//                        rightSlide.setPower(0.7);
-//                    }
-//                  leftSlidePrevPos = leftSlide.getTargetPosition();
                     hardware.setSlidesPower(0.7);
                     hardware.slidesToStart();
                     hardware.releaseCone();
