@@ -1,21 +1,30 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Cone1;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_High;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Low;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Medium;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Start;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Cone1;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_High;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Low;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Medium;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Ground;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_High;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Low;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class EelverHardware {
-
-    HardwareMap hardwareMap;
 
     // Hardware components (motors, sensors, servos, etc)
     public DcMotor frontLeft = null;
@@ -27,9 +36,10 @@ public class EelverHardware {
     public Servo Gripper = null;
     public Servo arm1 = null;
     public Servo arm2 = null;
+    public Servo conePush = null;
 
 
-    public void init(HardwareMap hwMap)
+    public void init(HardwareMap hardwareMap)
     {
         /*------- Initialize hardware -------*/
         frontLeft =     hardwareMap.get(DcMotor.class, "front_left_wheel");
@@ -41,6 +51,7 @@ public class EelverHardware {
         Gripper =       hardwareMap.get(Servo.class, "Gripper");
         arm1 =          hardwareMap.get(Servo.class, "arm1");
         arm2 =          hardwareMap.get(Servo.class, "arm2");
+        // conePush =      hardwareMap.get(Servo.class, "cone");
 
         /*------- Do hardware setup -------*/
 
@@ -73,8 +84,13 @@ public class EelverHardware {
         arm2.setPosition(Arm2_Start + 0.01);
         arm1.setPosition(Arm1_Start);
         arm2.setPosition(Arm2_Start);
-    }
 
+        // PID Values
+        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+                new PIDFCoefficients(5, 0, 0, 0));
+        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+                new PIDFCoefficients(5, 0, 0, 0));
+    }
 
     public void gripCone()
     {
@@ -83,13 +99,31 @@ public class EelverHardware {
 
     public void releaseCone()
     {
-        Gripper.setPosition(Gripper_Grab);
+        Gripper.setPosition(Gripper_Release);
     }
 
     public void armToStart()
     {
         arm1.setPosition(Arm1_Start);
         arm2.setPosition(Arm2_Start);
+    }
+
+    public void armToCone1()
+    {
+        arm1.setPosition(Arm1_Cone1);
+        arm2.setPosition(Arm2_Cone1);
+    }
+
+    public void armToLow()
+    {
+        arm1.setPosition(Arm1_Low);
+        arm2.setPosition(Arm2_Low);
+    }
+
+    public void armToMedium()
+    {
+        arm1.setPosition(Arm1_Medium);
+        arm2.setPosition(Arm2_Medium);
     }
 
     public void armToHigh()
@@ -112,11 +146,22 @@ public class EelverHardware {
         rightSlide.setPower(power);
     }
 
-
     public void slidesToStart()
     {
-        leftSlide.setTargetPosition(Slides_Start);
-        rightSlide.setTargetPosition(Slides_Start);
+        leftSlide.setTargetPosition(Slides_Ground);
+        rightSlide.setTargetPosition(Slides_Ground);
+    }
+
+    public void slidesToLow()
+    {
+        leftSlide.setTargetPosition(Slides_Low);
+        rightSlide.setTargetPosition(Slides_Low);
+    }
+
+    public void slidesToMedium()
+    {
+        leftSlide.setTargetPosition(Slides_Medium);
+        rightSlide.setTargetPosition(Slides_Medium);
     }
 
     public void slidesToHigh()
@@ -129,4 +174,18 @@ public class EelverHardware {
     {
         return leftSlide.isBusy() || rightSlide.isBusy();
     }
+
+    public boolean MoveCone()
+    {
+        return leftSlide.isBusy() || rightSlide.isBusy();
+    }
+
+    public void setMecanumPower(double drive, double strafe, double twist, double slowMode)
+    {
+        frontLeft   .setPower((drive + strafe + twist) * slowMode);
+        frontRight  .setPower((drive - strafe - twist) * slowMode);
+        rearLeft    .setPower((drive - strafe + twist) * slowMode);
+        rearRight   .setPower((drive + strafe - twist) * slowMode);
+    }
+
 }

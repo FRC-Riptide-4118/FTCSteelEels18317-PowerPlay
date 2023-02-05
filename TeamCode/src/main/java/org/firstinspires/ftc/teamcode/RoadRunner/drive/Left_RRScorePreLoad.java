@@ -1,30 +1,14 @@
 package org.firstinspires.ftc.teamcode.RoadRunner.drive;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
-import org.firstinspires.ftc.teamcode.Auto.Testing.PID;
-import org.firstinspires.ftc.teamcode.BlakeStuff.Subsystems.Gripper;
 import org.firstinspires.ftc.teamcode.EelverHardware;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -33,11 +17,15 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "RRScoringStack")
-public class RRStackScoring extends LinearOpMode {
+@Autonomous(name = "Left_RRScorePreLoaded")
+public class Left_RRScorePreLoad extends LinearOpMode {
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
+
+    // Time
+    public ElapsedTime timer;
+
 
     double fx = 578.272;
     double fy = 578.272;
@@ -83,6 +71,7 @@ public class RRStackScoring extends LinearOpMode {
             }
         });
 
+        timer = new ElapsedTime();
         hardware.init(hardwareMap); // Edited by Blake Sanders 1/31/22
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
@@ -92,7 +81,7 @@ public class RRStackScoring extends LinearOpMode {
 
         Trajectory High_Junction = drive.trajectoryBuilder(startPose)
                 .back(35)
-                .splineTo(new Vector2d(35, 16), Math.toRadians(225))
+                .splineTo(new Vector2d(35, 15), Math.toRadians(226))
                 .build();
 
         Trajectory Back = drive.trajectoryBuilder(High_Junction.end())
@@ -100,7 +89,7 @@ public class RRStackScoring extends LinearOpMode {
                 .build();
 
         Trajectory Forward = drive.trajectoryBuilder(Back.end())
-                .forward(12)
+                .forward(10)
                 .build();
 
         Pose2d forwardAfterTurn = new Pose2d(
@@ -109,22 +98,8 @@ public class RRStackScoring extends LinearOpMode {
                 Math.toRadians(0));
 
         Trajectory Forward2 = drive.trajectoryBuilder(forwardAfterTurn)
-                .forward(20)
+                .forward(22)
                 .build();
-
-        Trajectory Back2 = drive.trajectoryBuilder(Forward2.end())
-                .back(6)
-                .build();
-
-        Pose2d afterConePickup = new Pose2d(
-                Forward.end().component1(),
-                Forward.end().component2(),
-                Math.toRadians(0));
-
-        Trajectory High_Junction2 = drive.trajectoryBuilder(Forward2.end())
-                .splineTo(new Vector2d(35, 16), Math.toRadians(45))
-                .build();
-
 
         Trajectory trajMiddle = drive.trajectoryBuilder(Forward2.end())
                 .back(24)
@@ -133,7 +108,6 @@ public class RRStackScoring extends LinearOpMode {
         Trajectory trajRight = drive.trajectoryBuilder(Forward2.end())
                 .back(45)
                 .build();
-
 
 
 
@@ -204,35 +178,26 @@ public class RRStackScoring extends LinearOpMode {
 
         drive.followTrajectory(High_Junction);
 
-        while(opModeIsActive() && hardware.slidesAreBusy());
+        timer.reset();
+        while(opModeIsActive() && hardware.slidesAreBusy() && timer.seconds() < 2);
 
         hardware.armToHigh();
 
         drive.followTrajectory(Back);
+        hardware.MoveCone();
         hardware.releaseCone();
         sleep(200);
         drive.followTrajectory(Forward);
 
-        hardware.armToCone1();
+        hardware.armToStart();
         sleep(500);
         // Returning
-        hardware.setSlidesPower(0.8);
+        hardware.setSlidesPower(0.6);
         hardware.slidesToStart();
         hardware.releaseCone();
 
         drive.turn(Math.toRadians(-45));
         drive.followTrajectory(Forward2);
-
-        hardware.gripCone();
-        sleep(200);
-        hardware.setSlidesPower(0.8);
-        hardware.slidesToHigh();
-
-        drive.followTrajectory(High_Junction2);
-
-        hardware.setSlidesPower(0.8);
-        hardware.slidesToStart();
-
 
 //        hardware.setSlidesPower(1);
 //        hardware.slidesToHigh();

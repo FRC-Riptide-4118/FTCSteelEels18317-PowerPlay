@@ -53,8 +53,8 @@ import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Low;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
-
-import org.firstinspires.ftc.teamcode.BlakeStuff.BlakeRobotHardware;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.TeleOpSlides_Ground;
+import org.firstinspires.ftc.teamcode.EelverHardware;
 
 @TeleOp(name = "TeleOpMecanumDrive", group = "Robot")
 
@@ -78,58 +78,18 @@ public class TeleOpMecanumDrive extends LinearOpMode {
     private boolean raisingToHigh = false;
     private ElapsedTime armInTimer;
 
+    int leftSlidePrevPos;
+
     // Toggling
     boolean pressedLastIteration = false;
-    BlakeRobotHardware hardware;
 
     @Override
     public void runOpMode() {
-        // Define and Initialize Motors
-        frontLeft = hardwareMap.get(DcMotor.class, "front_left_wheel");
-        rearLeft = hardwareMap.get(DcMotor.class, "rear_left_wheel");
-        frontRight = hardwareMap.get(DcMotor.class, "front_right_wheel");
-        rearRight = hardwareMap.get(DcMotor.class, "rear_right_wheel");
-        leftSlide = hardwareMap.get(DcMotorEx.class, "left_slide");
-        rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
-        Gripper = hardwareMap.get(Servo.class, "Gripper");
-        arm1 = hardwareMap.get(Servo.class, "arm1");
-        arm2 = hardwareMap.get(Servo.class, "arm2");
-        // Intake = hardwareMap.get(DcMotor.class, "Intake");
-
-        // Reversing the motors
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        rearLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
-        rearRight.setDirection(DcMotor.Direction.FORWARD);
-
-        leftSlide.setDirection(DcMotor.Direction.REVERSE);
-        rightSlide.setDirection(DcMotor.Direction.REVERSE);
-
-        // Reset the slides
-
-        arm1.setPosition(Arm1_Start);
-        arm2.setPosition(Arm2_Start);
-
-        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        leftSlide.setTargetPosition(Slides_Start);
-        rightSlide.setTargetPosition(Slides_Start);
-
-        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        // PID Values
-        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-                new PIDFCoefficients(5, 0, 0, 0));
-        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-                new PIDFCoefficients(5, 0, 0, 0));
+        EelverHardware hardware = new EelverHardware();
+        hardware.init(hardwareMap);
 
         armInTimer = new ElapsedTime();
         armInTimer.reset();
-
-        hardware = new BlakeRobotHardware(hardwareMap);
-        hardware.init();
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver1");
@@ -150,40 +110,44 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
             hardware.setMecanumPower(drive, strafe, twist, slowMode);
 
-
             /*-------Gripper-------*/
             boolean pressed = gamepad1.left_bumper;
             if (pressed & !pressedLastIteration) {
 
                 if(Gripper.getPosition() == Gripper_Grab) {
-                    Gripper.setPosition(Gripper_Release);
+                    hardware.releaseCone();
                 }
                 else {
-                    Gripper.setPosition(Gripper_Grab);
+                    hardware.gripCone();
                 }
             }
             pressedLastIteration = pressed;
 
             /*-------Lift & Arm-------*/
-
             // Ground
             if(gamepad1.a) {
                 returning = true;
-                Gripper.setPosition(Gripper_Grab);
-                arm1.setPosition(Arm1_Ground);
-                arm2.setPosition(Arm2_Ground);
+                hardware.gripCone();
+                hardware.armToStart();
                 if (armInTimer.seconds() > 1.0) armInTimer.reset();
             }
 
             if(returning) {
                 if(armInTimer.seconds() > 1.0) {
-                    leftSlide.setPower(0.5);
-                    rightSlide.setPower(0.5);
-                    leftSlide.setTargetPosition(Slides_Ground);
-                    rightSlide.setTargetPosition(Slides_Ground);
-                    Gripper.setPosition(Gripper_Release);
-                    arm1.setPosition(Arm1_Start);
-                    arm2.setPosition(Arm2_Start);
+//                    if(leftSlide.getCurrentPosition() < (leftSlidePrevPos - 100)){
+//                        leftSlide.setPower(0.3);
+//                        rightSlide.setPower(0.3);s
+//                    }
+//                    else {
+//                        leftSlide.setPower(0.7);
+//                        rightSlide.setPower(0.7);
+//                    }
+//                  leftSlidePrevPos = leftSlide.getTargetPosition();
+                    hardware.setSlidesPower(0.7);
+                    hardware.slidesToStart();
+                    hardware.releaseCone();
+                    hardware.armToStart();
+                    hardware.armToStart();
                     returning = false;
                 }
             }
@@ -191,16 +155,13 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             // Low
             if(gamepad1.x) {
                 raisingToLow = true;
-                Gripper.setPosition(Gripper_Grab);
-                leftSlide.setPower(1);
-                rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_Low);
-                rightSlide.setTargetPosition(Slides_Low);
+                hardware.gripCone();
+                hardware.setSlidesPower(1);
+                hardware.slidesToLow();
             }
             if(raisingToLow) {
                 if(leftSlide.getCurrentPosition() > 600) {
-                    arm1.setPosition(Arm1_Low);
-                    arm2.setPosition(Arm2_Low);
+                    hardware.armToLow();
                     raisingToLow = false;
                 }
             }
@@ -208,16 +169,13 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             // Medium
             if(gamepad1.y) {
                 raisingToMiddle = true;
-                Gripper.setPosition(Gripper_Grab);
-                leftSlide.setPower(1);
-                rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_Medium);
-                rightSlide.setTargetPosition(Slides_Medium);
+                hardware.gripCone();
+                hardware.setSlidesPower(1);
+                hardware.slidesToMedium();
             }
             if(raisingToMiddle) {
-                if(leftSlide.getCurrentPosition() > 1100) {
-                    arm1.setPosition(Arm1_Medium);
-                    arm2.setPosition(Arm2_Medium);
+                if(leftSlide.getCurrentPosition() > 600) {
+                    hardware.armToMedium();
                     raisingToMiddle = false;
                 }
             }
@@ -225,34 +183,30 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             // High
             if(gamepad1.b) {
                 raisingToHigh = true;
-                Gripper.setPosition(Gripper_Grab);
-                leftSlide.setPower(1);
-                rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_High);
-                rightSlide.setTargetPosition(Slides_High);
+                hardware.gripCone();
+                hardware.setSlidesPower(1);
+                hardware.slidesToHigh();
             }
             if(raisingToHigh) {
-                if(leftSlide.getCurrentPosition() > 1800) {
-                    arm1.setPosition(Arm1_High);
-                    arm2.setPosition(Arm2_High);
+                if(leftSlide.getCurrentPosition() > 600) {
+                    hardware.armToHigh();
                     raisingToHigh = false;
                 }
             }
 
             // Fine Control the Slides
             if(gamepad1.dpad_down) {
+                leftSlidePrevPos = leftSlide.getTargetPosition();
                 leftSlide.setTargetPosition(leftSlide.getCurrentPosition() + 50);
                 rightSlide.setTargetPosition(rightSlide.getCurrentPosition() + 50);
             }
             if(gamepad1.dpad_up) {
+                leftSlidePrevPos = leftSlide.getTargetPosition();
                 leftSlide.setTargetPosition(leftSlide.getCurrentPosition() - 50);
                 rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - 50);
             }
 
             /*-------Intake-------*/
-            // Intake.setPower(-gamepad1.left_trigger);
-            // Intake.setPower(gamepad1.right_trigger);
-
             telemetry.addData("left pos", leftSlide.getCurrentPosition());
             telemetry.addData("right pos", rightSlide.getCurrentPosition());
             telemetry.addLine();

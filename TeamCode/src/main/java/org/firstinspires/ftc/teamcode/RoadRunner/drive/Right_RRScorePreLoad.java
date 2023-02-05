@@ -1,33 +1,30 @@
 package org.firstinspires.ftc.teamcode.RoadRunner.drive;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.EelverHardware;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-
 import java.util.ArrayList;
 
-@Autonomous(name = "RRPathTest")
-public class RRPathTest extends LinearOpMode {
+@Autonomous(name = "Right_RRScorePreLoaded")
+public class Right_RRScorePreLoad extends LinearOpMode {
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
+
+    // Timer
+    public ElapsedTime timer;
 
     double fx = 578.272;
     double fy = 578.272;
@@ -46,13 +43,11 @@ public class RRPathTest extends LinearOpMode {
 
     static final double FEET_PER_METER = 3.28084;
 
-    public DcMotorEx leftSlide = null;
-    public DcMotorEx rightSlide = null;
-
-
     @Override
 
     public void runOpMode() {
+
+        EelverHardware hardware = new EelverHardware();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -60,6 +55,7 @@ public class RRPathTest extends LinearOpMode {
 
         camera.setPipeline(aprilTagDetectionPipeline);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+
         {
             @Override
             public void onOpened()
@@ -74,48 +70,47 @@ public class RRPathTest extends LinearOpMode {
             }
         });
 
-        leftSlide = hardwareMap.get(DcMotorEx.class, "left_slide");
-        rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
-        leftSlide.setDirection(DcMotor.Direction.REVERSE);
-        rightSlide.setDirection(DcMotor.Direction.REVERSE);
-        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        // Slides
-        leftSlide.setTargetPosition(Slides_Start);
-        rightSlide.setTargetPosition(Slides_Start);
-        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
+        hardware.init(hardwareMap); // Edited by Blake Sanders 1/31/22
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-//        Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
-//                .forward(40)
-//                .build();
-        Pose2d startPose = new Pose2d(37, 65, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-37, 65, Math.toRadians(90));
 
         drive.setPoseEstimate(startPose);
 
         Trajectory High_Junction = drive.trajectoryBuilder(startPose)
                 .back(35)
-                .splineTo(new Vector2d(35, 15), Math.toRadians(225))
+                .splineTo(new Vector2d(-35, 15), Math.toRadians(305))
                 .build();
 
-        Trajectory trajLeft = drive.trajectoryBuilder(startPose)
-                .back(35)
-                .splineTo(new Vector2d(61, 15), Math.toRadians(360))
+        Trajectory Back = drive.trajectoryBuilder(High_Junction.end())
+                .back(7.5)
                 .build();
 
-        Trajectory trajMiddle = drive.trajectoryBuilder(startPose)
-                .back(35)
-                .splineTo(new Vector2d(35, 15), Math.toRadians(360))
+        Trajectory Forward = drive.trajectoryBuilder(Back.end())
+                .forward(8.5)
                 .build();
 
-        Trajectory trajRight = drive.trajectoryBuilder(startPose)
-                .back(35)
-                .splineTo(new Vector2d(13, 13), Math.toRadians(360))
+        Pose2d forwardAfterTurn = new Pose2d(
+                Forward.end().component1(),
+                Forward.end().component2(),
+                Math.toRadians(180));
+
+        Trajectory Forward2 = drive.trajectoryBuilder(forwardAfterTurn)
+                .forward(22)
                 .build();
+
+        Trajectory trajMiddle = drive.trajectoryBuilder(Forward2.end())
+                .back(24)
+                .build();
+
+        Trajectory trajRight = drive.trajectoryBuilder(Forward2.end())
+                .back(44)
+                .build();
+
+
+
+        hardware.gripCone();
+        hardware.armWiggle();
 
         while (!isStarted() && !isStopRequested())
         {
@@ -176,37 +171,49 @@ public class RRPathTest extends LinearOpMode {
             sleep(20);
         }
 
+        hardware.setSlidesPower(1);
+        hardware.slidesToHigh();
+
+        drive.followTrajectory(High_Junction);
+
+        timer.reset();
+        while(opModeIsActive() && hardware.slidesAreBusy() && timer.seconds() < 2);
+
+        hardware.armToHigh();
+
+        drive.followTrajectory(Back);
+        hardware.releaseCone();
+        sleep(200);
+        drive.followTrajectory(Forward);
+
+        hardware.armToStart();
+        sleep(500);
+        // Returning
+        hardware.setSlidesPower(0.8);
+        hardware.slidesToStart();
+        hardware.releaseCone();
+
+        drive.turn(Math.toRadians(45));
+        drive.followTrajectory(Forward2);
+
+//        hardware.setSlidesPower(1);
+//        hardware.slidesToHigh();
+
+
         if (tagOfInterest.id == Left) {
-            // Left Code
-            drive.followTrajectory(High_Junction);
-
-        } else if (tagOfInterest == null || tagOfInterest.id == Middle) {
-            // Middle Code
-            drive.followTrajectory(High_Junction);
-
-        } else if (tagOfInterest.id == Right) {
             // Right Code
-            drive.followTrajectory(High_Junction);
+            drive.followTrajectory(trajRight);
+
+        } else if (tagOfInterest.id == Middle) {
+            // Middle Code
+            drive.followTrajectory(trajMiddle);
+
+        } else if (tagOfInterest == null || tagOfInterest.id == Right) {
+            // Do nothing
 
         } else {
-            // Middle Code
-            drive.followTrajectory(High_Junction);
-
+            // Do nothing
         }
-
-
-//        leftSlide.setPower(1);
-//        rightSlide.setPower(1);
-//        leftSlide.setTargetPosition(Slides_Medium);
-//        rightSlide.setTargetPosition(Slides_Medium);
-//
-//
-//        while(leftSlide.isBusy() || rightSlide.isBusy());
-
-
-        while(leftSlide.isBusy() || rightSlide.isBusy());
-
-
 
     }
 
@@ -220,6 +227,5 @@ public class RRPathTest extends LinearOpMode {
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
-
 
 }
