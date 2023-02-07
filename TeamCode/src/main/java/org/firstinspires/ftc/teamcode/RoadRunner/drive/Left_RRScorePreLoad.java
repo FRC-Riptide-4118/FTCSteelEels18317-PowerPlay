@@ -20,15 +20,12 @@ import java.util.ArrayList;
 @Autonomous(name = "Left_RRScorePreLoaded")
 public class Left_RRScorePreLoad extends LinearOpMode {
 
-    public ElapsedTime timer;
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
     // Time
     public ElapsedTime timer;
-
     static final double FEET_PER_METER = 3.28084;
-
 
     double fx = 578.272;
     double fy = 578.272;
@@ -110,6 +107,11 @@ public class Left_RRScorePreLoad extends LinearOpMode {
                 .back(45)
                 .build();
 
+        Trajectory High_Junction1 = drive.trajectoryBuilder(startPose)
+                .back(35)
+                .splineTo(new Vector2d(35, 15), Math.toRadians(226))
+                .build();
+
 
 
         hardware.gripCone();
@@ -174,28 +176,28 @@ public class Left_RRScorePreLoad extends LinearOpMode {
             sleep(20);
         }
 
-        hardware.setSlidesPower(1);
-        hardware.slidesToHigh();
-
+//        hardware.setSlidesPower(1);
+//        hardware.slidesToHigh();
+//
         drive.followTrajectory(High_Junction);
+//
+//        timer.reset();
+//        while(opModeIsActive() && hardware.slidesAreBusy() && timer.seconds() < 2);
 
-        timer.reset();
-        while(opModeIsActive() && hardware.slidesAreBusy() && timer.seconds() < 2);
-
-        hardware.armToHigh();
+//        hardware.armToHigh();
 
         drive.followTrajectory(Back);
-        hardware.MoveCone();
-        hardware.releaseCone();
+//        hardware.MoveCone();
+//        hardware.releaseCone();
         sleep(200);
         drive.followTrajectory(Forward);
 
-        hardware.armToStart();
+//        hardware.armToStart();
         sleep(500);
         // Returning
-        hardware.setSlidesPower(0.6);
-        hardware.slidesToStart();
-        hardware.releaseCone();
+//        hardware.setSlidesPower(0.6);
+//        hardware.slidesToStart();
+//        hardware.releaseCone();
 
         drive.turn(Math.toRadians(-45));
         drive.followTrajectory(Forward2);
