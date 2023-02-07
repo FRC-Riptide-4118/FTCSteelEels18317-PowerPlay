@@ -45,8 +45,8 @@ import java.util.List;
  */
 @Config
 public class SampleMecanumDrive extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0.5);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(7, 0, 0);
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(6, 0, 0);
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(7, 0, 0.5);
 
     public static double LATERAL_MULTIPLIER = 1;
 
@@ -108,7 +108,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         //
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
 
-        BNO055IMUUtil.remapZAxis(imu, AxisDirection.POS_X);
+//        BNO055IMUUtil.remapZAxis(imu, AxisDirection.POS_X);
 
         leftFront = hardwareMap.get(DcMotorEx.class, "front_left_wheel");
         leftRear = hardwareMap.get(DcMotorEx.class, "rear_left_wheel");

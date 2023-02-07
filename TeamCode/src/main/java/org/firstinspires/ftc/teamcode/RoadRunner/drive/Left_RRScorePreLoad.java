@@ -79,7 +79,7 @@ public class Left_RRScorePreLoad extends LinearOpMode {
 
         Trajectory High_Junction = drive.trajectoryBuilder(startPose)
                 .back(35)
-                .splineTo(new Vector2d(35, 15), Math.toRadians(226))
+                .splineTo(new Vector2d(35, 17), Math.toRadians(45))
                 .build();
 
         Trajectory Back = drive.trajectoryBuilder(High_Junction.end())
@@ -107,9 +107,9 @@ public class Left_RRScorePreLoad extends LinearOpMode {
                 .back(45)
                 .build();
 
-        Trajectory High_Junction1 = drive.trajectoryBuilder(startPose)
-                .back(35)
-                .splineTo(new Vector2d(35, 15), Math.toRadians(226))
+        Trajectory High_Junction1 = drive.trajectoryBuilder(Forward2.end())
+                .back(5)
+                .splineTo(new Vector2d(35, 17), Math.toRadians(45))
                 .build();
 
 
@@ -117,64 +117,67 @@ public class Left_RRScorePreLoad extends LinearOpMode {
         hardware.gripCone();
         hardware.armWiggle();
 
-        while (!isStarted() && !isStopRequested())
-        {
-            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
-            if(currentDetections.size() != 0)
-            {
-                boolean tagFound = false;
+        waitForStart();
 
-                for(AprilTagDetection tag : currentDetections)
-                {
-                    if(tag.id == Left || tag.id == Middle || tag.id == Right)
-                    {
-                        tagOfInterest = tag;
-                        tagFound = true;
-                        break;
-                    }
-                }
-
-                if(tagFound)
-                {
-                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
-                    tagToTelemetry(tagOfInterest);
-                }
-                else
-                {
-                    telemetry.addLine("Don't see tag of interest :(");
-
-                    if(tagOfInterest == null)
-                    {
-                        telemetry.addLine("(The tag has never been seen)");
-                    }
-                    else
-                    {
-                        telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-                        tagToTelemetry(tagOfInterest);
-                    }
-                }
-
-            }
-            else
-            {
-                telemetry.addLine("Don't see tag of interest :(");
-
-                if(tagOfInterest == null)
-                {
-                    telemetry.addLine("(The tag has never been seen)");
-                }
-                else
-                {
-                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-                    tagToTelemetry(tagOfInterest);
-                }
-
-            }
-
-            telemetry.update();
-            sleep(20);
-        }
+//        while (!isStarted() && !isStopRequested())
+//        {
+//            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+//
+//            if(currentDetections.size() != 0)
+//            {
+//                boolean tagFound = false;
+//
+//                for(AprilTagDetection tag : currentDetections)
+//                {
+//                    if(tag.id == Left || tag.id == Middle || tag.id == Right)
+//                    {
+//                        tagOfInterest = tag;
+//                        tagFound = true;
+//                        break;
+//                    }
+//                }
+//
+//                if(tagFound)
+//                {
+//                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
+//                    tagToTelemetry(tagOfInterest);
+//                }
+//                else
+//                {
+//                    telemetry.addLine("Don't see tag of interest :(");
+//
+//                    if(tagOfInterest == null)
+//                    {
+//                        telemetry.addLine("(The tag has never been seen)");
+//                    }
+//                    else
+//                    {
+//                        telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+//                        tagToTelemetry(tagOfInterest);
+//                    }
+//                }
+//
+//            }
+//            else
+//            {
+//                telemetry.addLine("Don't see tag of interest :(");
+//
+//                if(tagOfInterest == null)
+//                {
+//                    telemetry.addLine("(The tag has never been seen)");
+//                }
+//                else
+//                {
+//                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+//                    tagToTelemetry(tagOfInterest);
+//                }
+//
+//            }
+//
+//            telemetry.update();
+//            sleep(20);
+//        }
 
 //        hardware.setSlidesPower(1);
 //        hardware.slidesToHigh();
@@ -201,37 +204,38 @@ public class Left_RRScorePreLoad extends LinearOpMode {
 
         drive.turn(Math.toRadians(-45));
         drive.followTrajectory(Forward2);
+        drive.followTrajectory(High_Junction1);
 
 //        hardware.setSlidesPower(1);
 //        hardware.slidesToHigh();
 
 
-        if (tagOfInterest == null || tagOfInterest.id == Left) {
-            // Do nothing
-
-        } else if (tagOfInterest.id == Middle) {
-            // Middle Code
-            drive.followTrajectory(trajMiddle);
-
-        } else if (tagOfInterest.id == Right) {
-            // Right Code
-            drive.followTrajectory(trajRight);
-
-        } else {
-            // Do nothing
-        }
-
+//        if (tagOfInterest == null || tagOfInterest.id == Left) {
+//            // Do nothing
+//
+//        } else if (tagOfInterest.id == Middle) {
+//            // Middle Code
+//            drive.followTrajectory(trajMiddle);
+//
+//        } else if (tagOfInterest.id == Right) {
+//            // Right Code
+//            drive.followTrajectory(trajRight);
+//
+//        } else {
+//            // Do nothing
+//        }
+//
     }
 
-    void tagToTelemetry(AprilTagDetection detection)
-    {
-        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
-        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
-        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
-        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
-    }
+//    void tagToTelemetry(AprilTagDetection detection)
+//    {
+//        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
+//        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
+//        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
+//        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
+//        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
+//        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
+//        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+//    }
 
 }
