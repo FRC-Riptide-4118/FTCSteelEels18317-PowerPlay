@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.EelverHardware;
+import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -77,9 +78,14 @@ public class Left_RRScorePreLoad extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
 
-        Trajectory High_Junction = drive.trajectoryBuilder(startPose)
+        TrajectorySequence High_Junction = drive.trajectorySequenceBuilder(startPose)
                 .back(35)
-                .splineTo(new Vector2d(35, 17), Math.toRadians(45))
+                .splineTo(new Vector2d(35, 12), Math.toRadians(225))
+                .addDisplacementMarker(() -> {})
+                .waitSeconds(0.5)
+                .forward(7.75)
+                .turn(Math.toRadians(-45))
+                .forward(20)
                 .build();
 
         Trajectory Back = drive.trajectoryBuilder(High_Junction.end())
@@ -182,29 +188,30 @@ public class Left_RRScorePreLoad extends LinearOpMode {
 //        hardware.setSlidesPower(1);
 //        hardware.slidesToHigh();
 //
-        drive.followTrajectory(High_Junction);
-//
+        drive.followTrajectorySequence(High_Junction);
+        return;
+        //
 //        timer.reset();
 //        while(opModeIsActive() && hardware.slidesAreBusy() && timer.seconds() < 2);
 
 //        hardware.armToHigh();
 
-        drive.followTrajectory(Back);
+//        drive.followTrajectory(Back);
 //        hardware.MoveCone();
 //        hardware.releaseCone();
-        sleep(200);
-        drive.followTrajectory(Forward);
+//        sleep(200);
+//        drive.followTrajectory(Forward);
 
 //        hardware.armToStart();
-        sleep(500);
+//        sleep(500);
         // Returning
 //        hardware.setSlidesPower(0.6);
 //        hardware.slidesToStart();
 //        hardware.releaseCone();
 
-        drive.turn(Math.toRadians(-45));
-        drive.followTrajectory(Forward2);
-        drive.followTrajectory(High_Junction1);
+//        drive.turn(Math.toRadians(-45));
+//        drive.followTrajectory(Forward2);
+//        drive.followTrajectory(High_Junction1);
 
 //        hardware.setSlidesPower(1);
 //        hardware.slidesToHigh();
