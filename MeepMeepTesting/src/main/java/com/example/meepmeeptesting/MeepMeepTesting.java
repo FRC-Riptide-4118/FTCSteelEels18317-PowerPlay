@@ -15,11 +15,14 @@ public class MeepMeepTesting {
                 .setConstraints(46, 46, Math.toRadians(180), Math.toRadians(180), 12)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(37, 65, Math.toRadians(90)))
-                                .back(35)
+                                .setReversed(true)
                                 .splineTo(new Vector2d(35, 12), Math.toRadians(225))
                                 .addDisplacementMarker(() -> {})
+                                .waitSeconds(0.5)
+                                .setReversed(false)
+                                .forward(7.75)
                                 .turn(Math.toRadians(-45))
-                                .forward(35)
+                                .forward(20)
                                 .build()
                 );
 
