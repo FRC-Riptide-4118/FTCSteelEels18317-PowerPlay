@@ -17,18 +17,18 @@ import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Low;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake1_in;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake1_out;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake2_in;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake2_out;
+
+
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
-import org.openftc.apriltag.AprilTagDetection;
-import org.openftc.easyopencv.OpenCvCamera;
 
 public class EelverHardware {
 
@@ -39,14 +39,15 @@ public class EelverHardware {
     public DcMotor rearLeft = null;
     public DcMotorEx leftSlide = null;
     public DcMotorEx rightSlide = null;
-    public Servo Gripper = null;
+    public Servo gripper = null;
     public Servo arm1 = null;
     public Servo arm2 = null;
     public Servo conePush = null;
     public DcMotor Intake = null;
+    public Servo Intake1 = null;
+    public Servo Intake2 = null;
 
-
-//    OpenCV class
+    //    OpenCV class
     public void init(HardwareMap hardwareMap)
     {
         /*------- Initialize hardware -------*/
@@ -56,11 +57,13 @@ public class EelverHardware {
         rearRight =     hardwareMap.get(DcMotor.class, "rear_right_wheel");
         leftSlide =     hardwareMap.get(DcMotorEx.class, "left_slide");
         rightSlide =    hardwareMap.get(DcMotorEx.class, "right_slide");
-        Gripper =       hardwareMap.get(Servo.class, "Gripper");
+        gripper =       hardwareMap.get(Servo.class, "Gripper");
         arm1 =          hardwareMap.get(Servo.class, "arm1");
         arm2 =          hardwareMap.get(Servo.class, "arm2");
         // conePush =      hardwareMap.get(Servo.class, "cone");
         Intake =        hardwareMap.get(DcMotor.class, "Intake");
+        Intake1 =       hardwareMap.get(Servo.class, "Intake1");
+        Intake2 =       hardwareMap.get(Servo.class, "Intake2");
 
         /*------- Do hardware setup -------*/
 
@@ -106,12 +109,12 @@ public class EelverHardware {
 
     public void gripCone()
     {
-        Gripper.setPosition(Gripper_Grab);
+        gripper.setPosition(Gripper_Grab);
     }
 
     public void releaseCone()
     {
-        Gripper.setPosition(Gripper_Release);
+        gripper.setPosition(Gripper_Release);
     }
 
     public void armToStart()
@@ -201,10 +204,20 @@ public class EelverHardware {
     }
 
     public void intakeIn() {
-        Intake.setPower(.8);
+        Intake.setPower(.5);
     }
 
     public void intakeOut() {
-        Intake.setPower(-.8);
+        Intake.setPower(-.5);
+    }
+
+    public void intakeServoIn() {
+        Intake1.setPosition(Intake1_in);
+        Intake2.setPosition(Intake2_in);
+    }
+
+    public void intakeServoOut() {
+        Intake1.setPosition(Intake1_out);
+        Intake2.setPosition(Intake2_out);
     }
 }

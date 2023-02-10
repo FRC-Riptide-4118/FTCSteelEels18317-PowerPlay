@@ -31,7 +31,10 @@ public class MotorValuesConstants {
     public static double Arm1_Cone1 = 0;
     public static double Arm2_Cone1 = 1;
     public static double Move_Cone = 0.5;
-
+    public static double Intake1_out = 0.9;
+    public static double Intake2_out = 0.28;
+    public static double Intake1_in = 0.3;
+    public static double Intake2_in = 0.75;
     // .2 .8 is GROUND/START
     // .85 and .15 for SCORING
 
@@ -39,5 +42,5 @@ public class MotorValuesConstants {
 
     // Gripper Values
     public static double Gripper_Grab = 0;
-    public static double Gripper_Release = 0.275;
+    public static double Gripper_Release = 0.25;
 }

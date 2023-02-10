@@ -31,46 +31,15 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
+
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.TeleOpSlides_Ground;
+
 import org.firstinspires.ftc.teamcode.EelverHardware;
 
 @TeleOp(name = "TeleOpMecanumDrive", group = "Robot")
 
 public class TeleOpMecanumDrive extends LinearOpMode {
-
-    /* Declare OpMode members. */
-    public DcMotor frontLeft = null;
-    public DcMotor rearRight = null;
-    public DcMotor frontRight = null;
-    public DcMotor rearLeft = null;
-    public DcMotorEx leftSlide = null;
-    public DcMotorEx rightSlide = null;
-    public Servo Gripper = null;
-    public Servo arm1 = null;
-    public Servo arm2 = null;
-    // public DcMotor Intake = null;
 
     private boolean raisingToLow = false;
     private boolean returning = false;
@@ -114,7 +83,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             boolean pressed = gamepad1.left_bumper;
             if (pressed & !pressedLastIteration) {
 
-                if(Gripper.getPosition() == Gripper_Grab) {
+                if(hardware.gripper.getPosition() == Gripper_Grab) {
                     hardware.releaseCone();
                 }
                 else {
@@ -151,7 +120,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 hardware.slidesToLow();
             }
             if(raisingToLow) {
-                if(leftSlide.getCurrentPosition() > 600) {
+                if(hardware.leftSlide.getCurrentPosition() > 600) {
                     hardware.armToLow();
                     raisingToLow = false;
                 }
@@ -165,7 +134,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 hardware.slidesToMedium();
             }
             if(raisingToMiddle) {
-                if(leftSlide.getCurrentPosition() > 600) {
+                if(hardware.leftSlide.getCurrentPosition() > 600) {
                     hardware.armToMedium();
                     raisingToMiddle = false;
                 }
@@ -179,7 +148,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 hardware.slidesToHigh();
             }
             if(raisingToHigh) {
-                if(leftSlide.getCurrentPosition() > 600) {
+                if(hardware.leftSlide.getCurrentPosition() > 600) {
                     hardware.armToHigh();
                     raisingToHigh = false;
                 }
@@ -187,23 +156,35 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
             // Fine Control the Slides
             if(gamepad1.dpad_down) {
-                leftSlidePrevPos = leftSlide.getTargetPosition();
-                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() + 50);
-                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() + 50);
+                leftSlidePrevPos = hardware.leftSlide.getTargetPosition();
+                hardware.leftSlide.setTargetPosition(hardware.leftSlide.getCurrentPosition() + 50);
+                hardware.rightSlide.setTargetPosition(hardware.rightSlide.getCurrentPosition() + 50);
             }
             if(gamepad1.dpad_up) {
-                leftSlidePrevPos = leftSlide.getTargetPosition();
-                leftSlide.setTargetPosition(leftSlide.getCurrentPosition() - 50);
-                rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - 50);
+                leftSlidePrevPos = hardware.leftSlide.getTargetPosition();
+                hardware.leftSlide.setTargetPosition(hardware.leftSlide.getCurrentPosition() - 50);
+                hardware.rightSlide.setTargetPosition(hardware.rightSlide.getCurrentPosition() - 50);
             }
 
             /*------- Intake -------*/
-            if(gamepad1.right_trigger < .75) {
+            if(gamepad1.right_trigger > .75) {
                 hardware.intakeIn();
             }
 
             if(gamepad1.right_bumper) {
                 hardware.intakeOut();
+            }
+
+            if(gamepad1.dpad_left) {
+                hardware.intakeServoIn();
+            }
+
+            if(gamepad1.dpad_right) {
+                hardware.intakeServoOut();
+            }
+
+            else {
+                hardware.Intake.setPower(0);
             }
         }
     }
