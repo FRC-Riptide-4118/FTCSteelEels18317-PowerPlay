@@ -20,6 +20,7 @@ import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -42,6 +43,7 @@ public class EelverHardware {
     public Servo arm1 = null;
     public Servo arm2 = null;
     public Servo conePush = null;
+    public DcMotor Intake = null;
 
 
 //    OpenCV class
@@ -58,6 +60,7 @@ public class EelverHardware {
         arm1 =          hardwareMap.get(Servo.class, "arm1");
         arm2 =          hardwareMap.get(Servo.class, "arm2");
         // conePush =      hardwareMap.get(Servo.class, "cone");
+        Intake =        hardwareMap.get(DcMotor.class, "Intake");
 
         /*------- Do hardware setup -------*/
 
@@ -96,6 +99,9 @@ public class EelverHardware {
                 new PIDFCoefficients(5, 0, 0, 0));
         rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
                 new PIDFCoefficients(5, 0, 0, 0));
+
+        // Intake
+        Intake.     setDirection(DcMotor.Direction.REVERSE);
     }
 
     public void gripCone()
@@ -194,4 +200,11 @@ public class EelverHardware {
         rearRight   .setPower((drive + strafe - twist) * slowMode);
     }
 
+    public void intakeIn() {
+        Intake.setPower(.8);
+    }
+
+    public void intakeOut() {
+        Intake.setPower(-.8);
+    }
 }

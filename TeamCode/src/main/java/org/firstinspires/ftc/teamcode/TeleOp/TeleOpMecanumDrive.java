@@ -197,7 +197,18 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - 50);
             }
 
+            /*------- Intake -------*/
+            if(gamepad1.right_trigger < .75) {
+                hardware.intakeIn();
+            }
+
+            if(gamepad1.right_bumper) {
+                hardware.intakeOut();
+            }
         }
     }
+
+
+
 }
 
