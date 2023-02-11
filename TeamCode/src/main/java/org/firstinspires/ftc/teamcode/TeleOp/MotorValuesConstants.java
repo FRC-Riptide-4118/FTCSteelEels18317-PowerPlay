@@ -38,8 +38,6 @@ public class MotorValuesConstants {
     // .2 .8 is GROUND/START
     // .85 and .15 for SCORING
 
-
-
     // Gripper Values
     public static double Gripper_Grab = 0;
     public static double Gripper_Release = 0.25;
