@@ -14,7 +14,7 @@ public class Gripper extends SubsystemBase {
     public Servo gripper = null;
 
     public Gripper(HardwareMap hardwareMap) {
-        gripper =       hardwareMap.get(Servo.class, "Gripper");
+        gripper = hardwareMap.get(Servo.class, "Gripper");
     }
 
     public boolean isGripping() {
