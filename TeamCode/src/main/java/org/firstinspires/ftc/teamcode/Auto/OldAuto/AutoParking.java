@@ -16,13 +16,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class AutoParking extends LinearOpMode {
 
   private ColorSensor colorSensor = null;
-  private DcMotor  frontLeft  = null;
-  private DcMotor  rearRight  = null;
-  private DcMotor  frontRight  = null;
-  private DcMotor  rearLeft  = null;
-  private DcMotorEx  leftSlide  = null;
-  private DcMotorEx  rightSlide  = null;
-  private Servo  Gripper = null;
+  private DcMotor frontLeft  = null;
+  private DcMotor rearRight  = null;
+  private DcMotor frontRight  = null;
+  private DcMotor rearLeft  = null;
+  private DcMotorEx leftSlide  = null;
+  private DcMotorEx rightSlide  = null;
+  private Servo Gripper = null;
   private DcMotor arm = null;
 
   //Slides Encoder Values

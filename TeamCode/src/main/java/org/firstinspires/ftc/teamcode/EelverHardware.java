@@ -1,22 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Cone1;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Cone1;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake1_in;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake1_out;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake2_in;
@@ -80,22 +68,22 @@ public class EelverHardware {
         leftSlide.  setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlide. setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftSlide.  setTargetPosition(Slides_Start);
-        rightSlide. setTargetPosition(Slides_Start);
+        leftSlide.  setTargetPosition(Slides.Start);
+        rightSlide. setTargetPosition(Slides.Start);
 
         leftSlide.  setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightSlide. setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Arm servos
-        arm1.setPosition(Arm1_Start);
-        arm2.setPosition(Arm2_Start);
+        arm1.setPosition(Arm1.Start);
+        arm2.setPosition(Arm2.Start);
 
         // Wiggle the arm servos so they (hopefully) don't
         // misbehave on the first two real commands
-        arm1.setPosition(Arm1_Start + 0.01);
-        arm2.setPosition(Arm2_Start + 0.01);
-        arm1.setPosition(Arm1_Start);
-        arm2.setPosition(Arm2_Start);
+        arm1.setPosition(Arm1.Start + 0.01);
+        arm2.setPosition(Arm2.Start + 0.01);
+        arm1.setPosition(Arm1.Start);
+        arm2.setPosition(Arm2.Start);
 
         // PID Values
         leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
@@ -119,39 +107,39 @@ public class EelverHardware {
 
     public void armToStart()
     {
-        arm1.setPosition(Arm1_Start);
-        arm2.setPosition(Arm2_Start);
+        arm1.setPosition(Arm1.Start);
+        arm2.setPosition(Arm2.Start);
     }
 
     public void armToCone1()
     {
-        arm1.setPosition(Arm1_Cone1);
-        arm2.setPosition(Arm2_Cone1);
+        arm1.setPosition(Arm1.Cone1);
+        arm2.setPosition(Arm2.Cone1);
     }
 
     public void armToLow()
     {
-        arm1.setPosition(Arm1_Low);
-        arm2.setPosition(Arm2_Low);
+        arm1.setPosition(Arm1.Low);
+        arm2.setPosition(Arm2.Low);
     }
 
     public void armToMedium()
     {
-        arm1.setPosition(Arm1_Medium);
-        arm2.setPosition(Arm2_Medium);
+        arm1.setPosition(Arm1.Medium);
+        arm2.setPosition(Arm2.Medium);
     }
 
     public void armToHigh()
     {
-        arm1.setPosition(Arm1_High);
-        arm2.setPosition(Arm2_High);
+        arm1.setPosition(Arm1.High);
+        arm2.setPosition(Arm2.High);
     }
 
     public void armWiggle()
     {
         armToStart();
-        arm1.setPosition(Arm1_Start + 0.01);
-        arm2.setPosition(Arm2_Start + 0.01);
+        arm1.setPosition(Arm1.Start + 0.01);
+        arm2.setPosition(Arm2.Start + 0.01);
         armToStart();
     }
 
@@ -163,26 +151,26 @@ public class EelverHardware {
 
     public void slidesToStart()
     {
-        leftSlide.setTargetPosition(Slides_Ground);
-        rightSlide.setTargetPosition(Slides_Ground);
+        leftSlide.setTargetPosition(Slides.Ground);
+        rightSlide.setTargetPosition(Slides.Ground);
     }
 
     public void slidesToLow()
     {
-        leftSlide.setTargetPosition(Slides_Low);
-        rightSlide.setTargetPosition(Slides_Low);
+        leftSlide.setTargetPosition(Slides.Low);
+        rightSlide.setTargetPosition(Slides.Low);
     }
 
     public void slidesToMedium()
     {
-        leftSlide.setTargetPosition(Slides_Medium);
-        rightSlide.setTargetPosition(Slides_Medium);
+        leftSlide.setTargetPosition(Slides.Medium);
+        rightSlide.setTargetPosition(Slides.Medium);
     }
 
     public void slidesToHigh()
     {
-        leftSlide.setTargetPosition(Slides_High);
-        rightSlide.setTargetPosition(Slides_High);
+        leftSlide.setTargetPosition(Slides.High);
+        rightSlide.setTargetPosition(Slides.High);
     }
 
     public boolean slidesAreBusy()
