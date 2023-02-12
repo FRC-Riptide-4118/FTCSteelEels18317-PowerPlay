@@ -186,6 +186,7 @@ public class TeleOpTesting extends LinearOpMode {
                 telemetry.addLine();
                 telemetry.addData("left target", leftSlide.getTargetPosition());
                 telemetry.addData("right target", rightSlide.getTargetPosition());
+
                 telemetry.update();
 
 
