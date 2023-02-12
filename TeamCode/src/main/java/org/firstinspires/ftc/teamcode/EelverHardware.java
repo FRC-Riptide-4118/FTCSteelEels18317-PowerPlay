@@ -44,8 +44,8 @@ public class EelverHardware {
     public Servo arm2 = null;
     public Servo conePush = null;
     public DcMotor Intake = null;
-    public Servo Intake1 = null;
-    public Servo Intake2 = null;
+    public Servo intakeLeft = null;
+    public Servo intakeRight = null;
 
     //    OpenCV class
     public void init(HardwareMap hardwareMap)
@@ -62,8 +62,8 @@ public class EelverHardware {
         arm2 =          hardwareMap.get(Servo.class, "arm2");
         // conePush =      hardwareMap.get(Servo.class, "cone");
         Intake =        hardwareMap.get(DcMotor.class, "Intake");
-        Intake1 =       hardwareMap.get(Servo.class, "Intake1");
-        Intake2 =       hardwareMap.get(Servo.class, "Intake2");
+        intakeLeft =       hardwareMap.get(Servo.class, "intakeLeft");
+        intakeRight =       hardwareMap.get(Servo.class, "intakeRight");
 
         /*------- Do hardware setup -------*/
 
@@ -212,12 +212,12 @@ public class EelverHardware {
     }
 
     public void intakeServoIn() {
-        Intake1.setPosition(Intake1_in);
-        Intake2.setPosition(Intake2_in);
+        intakeLeft.setPosition(Intake1_in);
+        intakeRight.setPosition(Intake2_in);
     }
 
     public void intakeServoOut() {
-        Intake1.setPosition(Intake1_out);
-        Intake2.setPosition(Intake2_out);
+        intakeLeft.setPosition(Intake1_out);
+        intakeRight.setPosition(Intake2_out);
     }
 }
