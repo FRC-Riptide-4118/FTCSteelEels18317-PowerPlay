@@ -20,6 +20,9 @@ public class ScoringTeleOp extends CommandBase {
     private boolean returning       = false;
     private boolean raisingToMiddle = false;
     private boolean raisingToHigh   = false;
+    private boolean atHigh          = false;
+    private boolean atMid           = false;
+    private boolean atLow           = false;
 
     private ElapsedTime armInTimer;
 
@@ -51,16 +54,37 @@ public class ScoringTeleOp extends CommandBase {
         if(m_gamepad1.a) {
             returning = true;
             m_arm.armToStart();
-            if (armInTimer.seconds() > 1.0) armInTimer.reset();
         }
 
         if(returning) {
-            if(armInTimer.seconds() > 1.0) {
+            if(atHigh && (armInTimer.seconds() > 0.25)) {
                 m_slides.setSlidesPower(0.7);
                 m_slides.slidesToStart();
                 m_arm.armToStart();
                 m_arm.armToStart();
                 returning = false;
+                atHigh = false;
+                armInTimer.reset();
+            }
+
+            if(atMid && (armInTimer.seconds() > 0.5)) {
+                m_slides.setSlidesPower(0.7);
+                m_slides.slidesToStart();
+                m_arm.armToStart();
+                m_arm.armToStart();
+                returning = false;
+                atMid = false;
+                armInTimer.reset();
+            }
+
+            if(atLow && (armInTimer.seconds() > 1.0)) {
+                m_slides.setSlidesPower(0.7);
+                m_slides.slidesToStart();
+                m_arm.armToStart();
+                m_arm.armToStart();
+                returning = false;
+                atLow = false;
+                armInTimer.reset();
             }
         }
 
@@ -74,6 +98,9 @@ public class ScoringTeleOp extends CommandBase {
             if(m_slides.leftSlide.getCurrentPosition() > 600) {
                 m_arm.armScoring();
                 raisingToLow = false;
+                atLow = true;
+                atMid = false;
+                atHigh = false;
             }
         }
 
@@ -87,6 +114,9 @@ public class ScoringTeleOp extends CommandBase {
             if(m_slides.leftSlide.getCurrentPosition() > 600) {
                 m_arm.armScoring();
                 raisingToMiddle = false;
+                atLow = false;
+                atMid = true;
+                atHigh = false;
             }
         }
 
@@ -100,6 +130,9 @@ public class ScoringTeleOp extends CommandBase {
             if(m_slides.leftSlide.getCurrentPosition() > 600) {
                 m_arm.armScoring();
                 raisingToHigh = false;
+                atLow = false;
+                atMid = false;
+                atHigh = true;
             }
         }
     }
