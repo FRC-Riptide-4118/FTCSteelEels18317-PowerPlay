@@ -5,29 +5,33 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
-import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
+import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class ArmTeleOp extends CommandBase {
+public class ScoringTeleOp extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Arm m_arm;
-    private final Gamepad m_gamepad1;
-    private boolean raisingToLow = false;
-    private boolean returning = false;
+    private final Arm        m_arm;
+    private final Gamepad    m_gamepad1;
+    private final Slides     m_slides;
+
+    private boolean raisingToLow    = false;
+    private boolean returning       = false;
     private boolean raisingToMiddle = false;
-    private boolean raisingToHigh = false;
+    private boolean raisingToHigh   = false;
+
     private ElapsedTime armInTimer;
 
     /**
      * Creates a new ExampleCommand.
-     *
-     * @param arm The subsystem used by this command.
+     *  @param arm    The subsystem used by this command.
+     *  @param slides The subsystem used by this command.
      */
-    public ArmTeleOp(Arm arm, Gamepad gamepad1) {
+    public ScoringTeleOp(Arm arm, Slides slides, Gamepad gamepad1) {
         m_arm        = arm;
         m_gamepad1   = gamepad1;
+        m_slides     = slides;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(arm);
         armInTimer = new ElapsedTime();
@@ -37,68 +41,64 @@ public class ArmTeleOp extends CommandBase {
     @Override
     public void initialize() {
             m_arm.armToStart();
+            m_slides.slidesToStart();
     }
 
     @Override
     public void execute() {
         /*-------Lift & Arm-------*/
         // Ground
-        if(gamepad1.a) {
+        if(m_gamepad1.a) {
             returning = true;
-            hardware.gripCone();
-            hardware.armToStart();
+            m_arm.armToStart();
             if (armInTimer.seconds() > 1.0) armInTimer.reset();
         }
 
         if(returning) {
             if(armInTimer.seconds() > 1.0) {
-                hardware.setSlidesPower(0.7);
-                hardware.slidesToStart();
-                hardware.releaseCone();
-                hardware.armToStart();
-                hardware.armToStart();
+                m_slides.setSlidesPower(0.7);
+                m_slides.slidesToStart();
+                m_arm.armToStart();
+                m_arm.armToStart();
                 returning = false;
             }
         }
 
         // Low
-        if(gamepad1.x) {
+        if(m_gamepad1.x) {
             raisingToLow = true;
-            hardware.gripCone();
-            hardware.setSlidesPower(1);
-            hardware.slidesToLow();
+            m_slides.setSlidesPower(1);
+            m_slides.slidesToLow();
         }
         if(raisingToLow) {
-            if(hardware.leftSlide.getCurrentPosition() > 600) {
-                hardware.armToLow();
+            if(m_slides.leftSlide.getCurrentPosition() > 600) {
+                m_arm.armScoring();
                 raisingToLow = false;
             }
         }
 
         // Medium
-        if(gamepad1.y) {
+        if(m_gamepad1.y) {
             raisingToMiddle = true;
-            hardware.gripCone();
-            hardware.setSlidesPower(1);
-            hardware.slidesToMedium();
+            m_slides.setSlidesPower(1);
+            m_slides.slidesToMedium();
         }
         if(raisingToMiddle) {
-            if(hardware.leftSlide.getCurrentPosition() > 600) {
-                hardware.armToMedium();
+            if(m_slides.leftSlide.getCurrentPosition() > 600) {
+                m_arm.armScoring();
                 raisingToMiddle = false;
             }
         }
-aa
+
         // High
-        if(gamepad1.b) {
+        if(m_gamepad1.b) {
             raisingToHigh = true;
-            hardware.gripCone();
-            hardware.setSlidesPower(1);
-            hardware.slidesToHigh();
+            m_slides.setSlidesPower(1);
+            m_slides.slidesToHigh();
         }
         if(raisingToHigh) {
-            if(hardware.leftSlide.getCurrentPosition() > 600) {
-                hardware.armToHigh();
+            if(m_slides.leftSlide.getCurrentPosition() > 600) {
+                m_arm.armScoring();
                 raisingToHigh = false;
             }
         }
