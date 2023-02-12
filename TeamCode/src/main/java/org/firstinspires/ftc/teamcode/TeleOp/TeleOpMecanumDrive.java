@@ -167,9 +167,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             }
 
             /*------- Intake -------*/
-            if(gamepad1.right_trigger > .75) {
-                hardware.intakeIn();
-            }
+            hardware.intake(gamepad1.right_trigger);
 
             if(gamepad1.right_bumper) {
                 hardware.intakeOut();
@@ -184,7 +182,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             }
 
             else {
-                hardware.Intake.setPower(0);
+                hardware.intake(0);
             }
         }
     }

@@ -203,6 +203,10 @@ public class EelverHardware {
         rearRight   .setPower((drive + strafe - twist) * slowMode);
     }
 
+    public void intake(double power) {
+        Intake.setPower(power);
+    }
+
     public void intakeIn() {
         Intake.setPower(.5);
     }
