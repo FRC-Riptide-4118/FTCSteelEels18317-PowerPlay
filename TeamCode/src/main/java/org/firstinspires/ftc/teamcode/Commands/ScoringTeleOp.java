@@ -33,7 +33,7 @@ public class ScoringTeleOp extends CommandBase {
         m_gamepad1   = gamepad1;
         m_slides     = slides;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(arm);
+        addRequirements(arm, slides);
         armInTimer = new ElapsedTime();
         armInTimer.reset();
     }
@@ -104,9 +104,9 @@ public class ScoringTeleOp extends CommandBase {
         }
     }
 
-//    @Override
-//    public boolean isFinished() {
-//        return false;
-//    }
+   @Override
+   public boolean isFinished() {
+       return m_slides.leftSlide.getCurrentPosition() > 1950;
+   }
 
 }
