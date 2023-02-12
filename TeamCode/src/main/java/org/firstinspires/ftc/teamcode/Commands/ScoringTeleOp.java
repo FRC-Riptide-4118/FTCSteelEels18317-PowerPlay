@@ -106,7 +106,9 @@ public class ScoringTeleOp extends CommandBase {
 
    @Override
    public boolean isFinished() {
-       return m_slides.leftSlide.getCurrentPosition() > 1950;
+       return (
+               (m_slides.leftSlide.getCurrentPosition() > 1950)
+       );
    }
 
 }

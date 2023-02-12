@@ -32,8 +32,11 @@ public class Arm extends SubsystemBase {
         armToStart();
     }
 
-    public void armToStart()
-    {
+    public boolean ArmScoring() {
+        return arm1.getPosition() == Arm1_Scoring;
+    }
+
+    public void armToStart() {
         arm1.setPosition(Arm1_Start);
         arm2.setPosition(Arm2_Start);
     }
