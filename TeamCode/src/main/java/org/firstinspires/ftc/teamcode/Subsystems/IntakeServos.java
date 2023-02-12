@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake1_in;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake1_out;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeLeft_out;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake2_in;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake2_out;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeRight_out;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -29,8 +27,12 @@ public class IntakeServos extends SubsystemBase {
     }
 
     public void intakeServoOut() {
-        intakeLeft.setPosition(Intake1_out);
-        intakeRight.setPosition(Intake2_out);
+        intakeLeft.setPosition(IntakeLeft_out);
+        intakeRight.setPosition(IntakeRight_out);
+    }
+
+    public boolean intakeServosIn() {
+        return intakeLeft.getPosition() == Intake1_in;
     }
 
     @Override

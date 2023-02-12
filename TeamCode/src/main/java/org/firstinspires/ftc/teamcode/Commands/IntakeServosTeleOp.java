@@ -14,8 +14,6 @@ public class IntakeServosTeleOp extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Gripper m_gripper;
     private final IntakeServos m_intakeServos;
-    private final Gamepad m_gamepad1;
-    private boolean pressedLastIteration = false;
 
     /**
      * Creates a new ExampleCommand.
@@ -26,7 +24,6 @@ public class IntakeServosTeleOp extends CommandBase {
     public IntakeServosTeleOp(IntakeServos intakeServos, Gripper gripper, Gamepad gamepad1) {
         m_gripper         = gripper;
         m_intakeServos    = intakeServos;
-        m_gamepad1        = gamepad1;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(intakeServos, gripper);
     }
@@ -38,7 +35,7 @@ public class IntakeServosTeleOp extends CommandBase {
 
     @Override
     public void execute() {
-        if (m_gripper.isGripping()) {
+        if (m_gripper.isGripping() || m_gripper.Distance() == true) {
             m_intakeServos.intakeServoOut();
         }
         else {
