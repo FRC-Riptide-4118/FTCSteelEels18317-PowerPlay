@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Commands;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
-
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -30,7 +28,7 @@ public class GripperTeleOp extends CommandBase {
 
     @Override
     public void initialize() {
-
+        m_gripper.releaseCone();
     }
 
     @Override
