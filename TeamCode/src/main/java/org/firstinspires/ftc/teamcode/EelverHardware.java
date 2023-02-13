@@ -47,7 +47,6 @@ public class EelverHardware {
     public Servo intakeLeft = null;
     public Servo intakeRight = null;
 
-    //    OpenCV class
     public void init(HardwareMap hardwareMap)
     {
         /*------- Initialize hardware -------*/

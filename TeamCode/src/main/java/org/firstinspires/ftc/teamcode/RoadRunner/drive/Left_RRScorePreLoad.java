@@ -226,8 +226,7 @@ public class Left_RRScorePreLoad extends LinearOpMode {
 //        hardware.slidesToHigh();
 //
         drive.followTrajectorySequence(High_Junction);
-        return;
-        //
+
 //        timer.reset();
 //        while(opModeIsActive() && hardware.slidesAreBusy() && timer.seconds() < 2);
 
