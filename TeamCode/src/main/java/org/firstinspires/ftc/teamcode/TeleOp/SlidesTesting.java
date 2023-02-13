@@ -53,9 +53,9 @@ public class SlidesTesting extends LinearOpMode {
     @Override
     public void runOpMode() {
         // Define and Initialize Motors
-        Gripper = hardwareMap.get(Servo.class, "Gripper");
-        arm1 = hardwareMap.get(Servo.class, "arm1");
-        arm2 = hardwareMap.get(Servo.class, "arm2");
+//        Gripper = hardwareMap.get(Servo.class, "Gripper");
+//        arm1 = hardwareMap.get(Servo.class, "arm1");
+//        arm2 = hardwareMap.get(Servo.class, "arm2");
         leftSlide = hardwareMap.get(DcMotorEx.class, "left_slide");
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
         // Intake = hardwareMap.get(DcMotor.class, "Intake");

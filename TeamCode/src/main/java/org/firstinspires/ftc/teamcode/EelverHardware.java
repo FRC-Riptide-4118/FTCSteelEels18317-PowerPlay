@@ -105,6 +105,7 @@ public class EelverHardware {
 
         // Intake
         Intake.     setDirection(DcMotor.Direction.REVERSE);
+        intakeServoOut();
     }
 
     public void gripCone()

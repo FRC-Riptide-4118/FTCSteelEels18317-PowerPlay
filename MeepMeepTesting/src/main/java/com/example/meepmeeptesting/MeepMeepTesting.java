@@ -15,7 +15,6 @@ public class MeepMeepTesting {
                 .setConstraints(46, 46, Math.toRadians(180), Math.toRadians(180), 12)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(37, 65, Math.toRadians(90)))
-
                                 .setReversed(true)
 //                                .back(5)
                                 .splineToSplineHeading(new Pose2d(36, 14, Math.toRadians(50)), Math.toRadians(90))
