@@ -18,8 +18,6 @@ public class Arm extends SubsystemBase {
     public static double Arm2_Start        = 0.8;
     public static double Arm1_Scoring      = 0.85;
     public static double Arm2_Scoring      = 0.15;
-    public static double Arm1_Front        = 0.85;
-    public static double Arm2_Front        = 0.15;
     public static double Arm1_Cone1        = 0;
     public static double Arm2_Cone1        = 1;
 

@@ -33,12 +33,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Commands.ArmTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.GripperTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.ScoringTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.IntakeTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.IntakeServosTeleOp;
 
+import org.firstinspires.ftc.teamcode.Commands.SlidesTeleOp;
 import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
@@ -55,10 +57,13 @@ public class TeleOpCommandsTesting extends LinearOpMode {
     public void runOpMode() {
 
         GripperTeleOp gripperTeleOp             = new GripperTeleOp(new Gripper(hardwareMap), gamepad1);
+        ArmTeleOp armTeleOp                     = new ArmTeleOp(new Arm(hardwareMap), gamepad1);
         DrivetrainTeleOp drivetrainTeleOp       = new DrivetrainTeleOp(new Drivetrain(hardwareMap), gamepad1);
         ScoringTeleOp scoringTeleOp             = new ScoringTeleOp(new Arm(hardwareMap), new Slides(hardwareMap), gamepad1);
         IntakeTeleOp intakeTeleOp               = new IntakeTeleOp(new Intake(hardwareMap), new Gripper(hardwareMap), gamepad1);
         IntakeServosTeleOp intakeServosTeleOp   = new IntakeServosTeleOp(new IntakeServos(hardwareMap), new Gripper(hardwareMap), gamepad1);
+        SlidesTeleOp slidesTeleOp               = new SlidesTeleOp(new Slides(hardwareMap), gamepad1);
+
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver1");
@@ -83,6 +88,7 @@ public class TeleOpCommandsTesting extends LinearOpMode {
         intakeTeleOp.initialize();
         scoringTeleOp.initialize();
         intakeServosTeleOp.initialize();
+        armTeleOp.initialize();
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -101,17 +107,9 @@ public class TeleOpCommandsTesting extends LinearOpMode {
             /*-------Lift & Arm-------*/
             scoringTeleOp.execute();
 
-            // Fine Control the Slides
-//            if(gamepad1.dpad_down) {
-//                leftSlidePrevPos = hardware.leftSlide.getTargetPosition();
-//                hardware.leftSlide.setTargetPosition(hardware.leftSlide.getCurrentPosition() + 50);
-//                hardware.rightSlide.setTargetPosition(hardware.rightSlide.getCurrentPosition() + 50);
-//            }
-//            if(gamepad1.dpad_up) {
-//                leftSlidePrevPos = hardware.leftSlide.getTargetPosition();
-//                hardware.leftSlide.setTargetPosition(hardware.leftSlide.getCurrentPosition() - 50);
-//                hardware.rightSlide.setTargetPosition(hardware.rightSlide.getCurrentPosition() - 50);
-//            }
+            // Stack Scoring
+            armTeleOp.execute();
+            slidesTeleOp.execute();
 
             /*------- Intake -------*/
             intakeTeleOp.execute();
