@@ -1,25 +1,10 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Front;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Scoring;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Front;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Scoring;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -65,8 +50,8 @@ public class TeleOpTesting extends LinearOpMode {
         rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
                 new PIDFCoefficients(5, 0, 0, 0));
 
-        arm1.setPosition(Arm1_Start);
-        arm2.setPosition(Arm2_Start);
+        arm1.setPosition(Arm1.Start);
+        arm2.setPosition(Arm2.Start);
 //        Gripper.setPosition(Gripper_Grab);
 
         leftSlide.setDirection(DcMotor.Direction.REVERSE);
@@ -77,8 +62,8 @@ public class TeleOpTesting extends LinearOpMode {
         rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Slides
-        leftSlide.setTargetPosition(Slides_Start);
-        rightSlide.setTargetPosition(Slides_Start);
+        leftSlide.setTargetPosition(Slides.Start);
+        rightSlide.setTargetPosition(Slides.Start);
         leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -91,26 +76,26 @@ public class TeleOpTesting extends LinearOpMode {
             /*-------Arm-------*/
             // Ground
             if(gamepad1.a) {
-                arm1.setPosition(Arm1_Ground);
-                arm2.setPosition(Arm2_Ground);
+                arm1.setPosition(Arm1.Ground);
+                arm2.setPosition(Arm2.Ground);
             }
 
             // Low
             if(gamepad1.x) {
-                arm1.setPosition(Arm1_Front);
-                arm2.setPosition(Arm2_Front);
+                arm1.setPosition(Arm1.Front);
+                arm2.setPosition(Arm2.Front);
             }
 
             // Medium
             if(gamepad1.y) {
-                arm1.setPosition(Arm1_Scoring);
-                arm2.setPosition(Arm2_Scoring);
+                arm1.setPosition(Arm1.Scoring);
+                arm2.setPosition(Arm2.Scoring);
             }
 
             // High
             if(gamepad1.b) {
-                arm1.setPosition(Arm1_Medium);
-                arm2.setPosition(Arm2_Medium);
+                arm1.setPosition(Arm1.Medium);
+                arm2.setPosition(Arm2.Medium);
             }
 
             /*-------Slides-------*/
@@ -118,37 +103,37 @@ public class TeleOpTesting extends LinearOpMode {
             if(gamepad2.a) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_Start);
-                rightSlide.setTargetPosition(Slides_Start);
+                leftSlide.setTargetPosition(Slides.Start);
+                rightSlide.setTargetPosition(Slides.Start);
             }
 
             // Low
             if(gamepad2.x) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_Low);
-                rightSlide.setTargetPosition(Slides_Low);
+                leftSlide.setTargetPosition(Slides.Low);
+                rightSlide.setTargetPosition(Slides.Low);
             }
 
             // Medium
             if(gamepad2.y) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_Medium);
-                rightSlide.setTargetPosition(Slides_Medium);
+                leftSlide.setTargetPosition(Slides.Medium);
+                rightSlide.setTargetPosition(Slides.Medium);
             }
 
             // High
             if(gamepad2.b) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_High);
-                rightSlide.setTargetPosition(Slides_High);
+                leftSlide.setTargetPosition(Slides.High);
+                rightSlide.setTargetPosition(Slides.High);
             }
 
             if(gamepad2.right_bumper) {
-                arm1.setPosition(Arm1_Ground);
-                arm2.setPosition(Arm2_Ground);
+                arm1.setPosition(Arm1.Ground);
+                arm2.setPosition(Arm2.Ground);
             }
 
             if (gamepad1.dpad_up) {

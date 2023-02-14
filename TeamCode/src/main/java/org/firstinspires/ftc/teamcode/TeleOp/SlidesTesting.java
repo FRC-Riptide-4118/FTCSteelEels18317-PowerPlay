@@ -1,21 +1,10 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Front;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Scoring;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Front;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Scoring;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -60,8 +49,8 @@ public class SlidesTesting extends LinearOpMode {
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
         // Intake = hardwareMap.get(DcMotor.class, "Intake");
 //
-        arm1.setPosition(Arm1_Start);
-        arm2.setPosition(Arm2_Start);
+        arm1.setPosition(Arm1.Start);
+        arm2.setPosition(Arm2.Start);
 //        Gripper.setPosition(Gripper_Grab);
 
         leftSlide.setDirection(DcMotor.Direction.REVERSE);
@@ -72,8 +61,8 @@ public class SlidesTesting extends LinearOpMode {
         rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Slides
-        leftSlide.setTargetPosition(Slides_Start);
-        rightSlide.setTargetPosition(Slides_Start);
+        leftSlide.setTargetPosition(Slides.Start);
+        rightSlide.setTargetPosition(Slides.Start);
         leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -94,16 +83,16 @@ public class SlidesTesting extends LinearOpMode {
             if(gamepad2.a) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_Start);
-                rightSlide.setTargetPosition(Slides_Start);
+                leftSlide.setTargetPosition(Slides.Start);
+                rightSlide.setTargetPosition(Slides.Start);
             }
 
             // Low
             if(gamepad2.x) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_Low);
-                rightSlide.setTargetPosition(Slides_Low);
+                leftSlide.setTargetPosition(Slides.Low);
+                rightSlide.setTargetPosition(Slides.Low);
 
             }
 
@@ -111,16 +100,16 @@ public class SlidesTesting extends LinearOpMode {
             if(gamepad2.y) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_Medium);
-                rightSlide.setTargetPosition(Slides_Medium);
+                leftSlide.setTargetPosition(Slides.Medium);
+                rightSlide.setTargetPosition(Slides.Medium);
             }
 
             // High
             if(gamepad2.b) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides_High);
-                rightSlide.setTargetPosition(Slides_High);
+                leftSlide.setTargetPosition(Slides.High);
+                rightSlide.setTargetPosition(Slides.High);
             }
 
 
