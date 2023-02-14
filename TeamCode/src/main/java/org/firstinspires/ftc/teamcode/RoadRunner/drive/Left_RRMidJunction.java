@@ -16,10 +16,8 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import java.util.ArrayList;
-
-@Autonomous(name = "Left_RRScorePreLoaded")
-public class Left_RRScorePreLoad extends LinearOpMode {
+@Autonomous(name = "Left_RRMidJunction")
+public class Left_RRMidJunction extends LinearOpMode {
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -75,85 +73,85 @@ public class Left_RRScorePreLoad extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startPose          = new Pose2d(37, 65, Math.toRadians(90));
-        Pose2d closeHighJunction  = new Pose2d(31, 8, Math.toRadians(225));
+        Pose2d closeMidJunction  = new Pose2d(31, 16, Math.toRadians(135));
         Pose2d Stack              = new Pose2d(63, 16, Math.toRadians(3));
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence High_Junction = drive.trajectorySequenceBuilder(startPose)
-                .back(35)
+                .back(55)
                 //Pre-Load
-                .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
+                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(1, hardware::releaseCone)
                 .waitSeconds(0.5)
                 //Stack 1
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
                 .waitSeconds(0.5)
                 .setReversed(true)
-                .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
+                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
                 .waitSeconds(0.5)
                 .setReversed(false)
-                //Stack 2
-                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .waitSeconds(0.5)
-                .setReversed(true)
-                .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
-                .waitSeconds(0.5)
-                .setReversed(false)
-                //Stack 3
-                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .waitSeconds(0.5)
-                .setReversed(true)
-                .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
-                .waitSeconds(0.5)
-                .setReversed(false)
-                //Stack 4
-                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .waitSeconds(0.5)
-                .setReversed(true)
-                .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
-                .waitSeconds(0.5)
-                .setReversed(false)
-                //Stack 5
-                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .waitSeconds(0.5)
-                .setReversed(true)
-                .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
-                .waitSeconds(0.5)
-                .setReversed(false)
-                //Back to Stack
-                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .waitSeconds(0.5)
+//                //Stack 2
+//                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
+//                .waitSeconds(0.5)
+//                .setReversed(true)
+//                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
+//                .waitSeconds(0.5)
+//                .setReversed(false)
+//                //Stack 3
+//                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
+//                .waitSeconds(0.5)
+//                .setReversed(true)
+//                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
+//                .waitSeconds(0.5)
+//                .setReversed(false)
+//                //Stack 4
+//                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
+//                .waitSeconds(0.5)
+//                .setReversed(true)
+//                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
+//                .waitSeconds(0.5)
+//                .setReversed(false)
+//                //Stack 5
+//                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
+//                .waitSeconds(0.5)
+//                .setReversed(true)
+//                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
+//                .waitSeconds(0.5)
+//                .setReversed(false)
+//                //Back to Stack
+//                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
+//                .waitSeconds(0.5)
                 .build();
-
-        Trajectory Back = drive.trajectoryBuilder(High_Junction.end())
-                .back(10)
-                .build();
-
-        Trajectory Forward = drive.trajectoryBuilder(Back.end())
-                .forward(10)
-                .build();
-
-        Pose2d forwardAfterTurn = new Pose2d(
-                Forward.end().component1(),
-                Forward.end().component2(),
-                Math.toRadians(0));
-
-        Trajectory Forward2 = drive.trajectoryBuilder(forwardAfterTurn)
-                .forward(22)
-                .build();
-
-        Trajectory trajMiddle = drive.trajectoryBuilder(Forward2.end())
-                .back(24)
-                .build();
-
-        Trajectory trajRight = drive.trajectoryBuilder(Forward2.end())
-                .back(45)
-                .build();
-
-        Trajectory High_Junction1 = drive.trajectoryBuilder(Forward2.end())
-                .back(5)
-                .splineTo(new Vector2d(35, 17), Math.toRadians(45))
-                .build();
+//
+//        Trajectory Back = drive.trajectoryBuilder(High_Junction.end())
+//                .back(10)
+//                .build();
+//
+//        Trajectory Forward = drive.trajectoryBuilder(Back.end())
+//                .forward(10)
+//                .build();
+//
+//        Pose2d forwardAfterTurn = new Pose2d(
+//                Forward.end().component1(),
+//                Forward.end().component2(),
+//                Math.toRadians(0));
+//
+//        Trajectory Forward2 = drive.trajectoryBuilder(forwardAfterTurn)
+//                .forward(22)
+//                .build();
+//
+//        Trajectory trajMiddle = drive.trajectoryBuilder(Forward2.end())
+//                .back(24)
+//                .build();
+//
+//        Trajectory trajRight = drive.trajectoryBuilder(Forward2.end())
+//                .back(45)
+//                .build();
+//
+//        Trajectory High_Junction1 = drive.trajectoryBuilder(Forward2.end())
+//                .back(5)
+//                .splineTo(new Vector2d(35, 17), Math.toRadians(45))
+//                .build();
 
 
 
@@ -226,7 +224,8 @@ public class Left_RRScorePreLoad extends LinearOpMode {
 //        hardware.slidesToHigh();
 //
         drive.followTrajectorySequence(High_Junction);
-
+        return;
+        //
 //        timer.reset();
 //        while(opModeIsActive() && hardware.slidesAreBusy() && timer.seconds() < 2);
 

@@ -11,9 +11,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp(name = "TeleOp", group = "Robot")
 
@@ -26,13 +29,7 @@ public class TeleOpTesting extends LinearOpMode {
     public Servo arm2 = null;
     public DcMotorEx leftSlide = null;
     public DcMotorEx rightSlide = null;
-    // public DcMotor Intake = null;
-
-    private boolean raisingToLow = false;
-    private boolean returning = false;
-    private boolean raisingToMiddle = false;
-    private boolean raisingToHigh = false;
-    private ElapsedTime armInTimer;
+    public  DistanceSensor distanceSensor = null;
 
     // Toggling
     boolean pressedLastIteration = false;
@@ -40,11 +37,12 @@ public class TeleOpTesting extends LinearOpMode {
     @Override
     public void runOpMode() {
         // Define and Initialize Motors
-        Gripper = hardwareMap.get(Servo.class, "Gripper");
-        arm1 = hardwareMap.get(Servo.class, "arm1");
-        arm2 = hardwareMap.get(Servo.class, "arm2");
-        leftSlide = hardwareMap.get(DcMotorEx.class, "left_slide");
-        rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
+        Gripper          = hardwareMap.get(Servo.class, "Gripper");
+        arm1             = hardwareMap.get(Servo.class, "arm1");
+        arm2             = hardwareMap.get(Servo.class, "arm2");
+        leftSlide        = hardwareMap.get(DcMotorEx.class, "left_slide");
+        rightSlide       = hardwareMap.get(DcMotorEx.class, "right_slide");
+        distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
         // Intake = hardwareMap.get(DcMotor.class, "Intake");
 
         leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
@@ -80,40 +78,24 @@ public class TeleOpTesting extends LinearOpMode {
             if(gamepad1.a) {
                 arm1.setPosition(Arm1.Ground);
                 arm2.setPosition(Arm2.Ground);
-//                leftSlide.setPower(.7);
-//                rightSlide.setPower(.7);
-//                leftSlide.setTargetPosition(Slides_Start);
-//                rightSlide.setTargetPosition(Slides_Start);
             }
 
             // Low
             if(gamepad1.x) {
                 arm1.setPosition(Arm1.Front);
                 arm2.setPosition(Arm2.Front);
-//                leftSlide.setPower(.7);
-//                rightSlide.setPower(.7);
-//                leftSlide.setTargetPosition(Slides_Low);
-//                rightSlide.setTargetPosition(Slides_Low);
             }
 
             // Medium
             if(gamepad1.y) {
                 arm1.setPosition(Arm1.Scoring);
                 arm2.setPosition(Arm2.Scoring);
-//                leftSlide.setPower(.7);
-//                rightSlide.setPower(.7);
-//                leftSlide.setTargetPosition(Slides_Medium);
-//                rightSlide.setTargetPosition(Slides_Medium);
             }
 
             // High
             if(gamepad1.b) {
                 arm1.setPosition(Arm1.Medium);
                 arm2.setPosition(Arm2.Medium);
-//                leftSlide.setPower(.7);
-//                rightSlide.setPower(.7);
-//                leftSlide.setTargetPosition(Slides_High);
-//                rightSlide.setTargetPosition(Slides_High);
             }
 
             /*-------Slides-------*/
@@ -162,7 +144,8 @@ public class TeleOpTesting extends LinearOpMode {
                 Gripper.setPosition(Gripper_Release);
             }
 
-
+                telemetry.addData("Gripper Distance", distanceSensor.getDistance(DistanceUnit.CM));
+                telemetry.addLine();
                 telemetry.addData("left pos", leftSlide.getCurrentPosition());
                 telemetry.addData("right pos", rightSlide.getCurrentPosition());
                 telemetry.addLine();
@@ -183,10 +166,6 @@ public class TeleOpTesting extends LinearOpMode {
                 leftSlide.setTargetPosition(leftSlide.getCurrentPosition() - 50);
                 rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - 50);
             }
-
-            /*-------Intake-------*/
-            // Intake.setPower(-gamepad1.left_trigger);
-            // Intake.setPower(gamepad1.right_trigger);
 
         }
     }

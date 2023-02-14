@@ -5,10 +5,10 @@ import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake1_in;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake1_out;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake2_in;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake2_out;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeLeft_in;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeLeft_out;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeRight_in;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeRight_out;
 
 
 
@@ -32,8 +32,8 @@ public class EelverHardware {
     public Servo arm2 = null;
     public Servo conePush = null;
     public DcMotor Intake = null;
-    public Servo Intake1 = null;
-    public Servo Intake2 = null;
+    public Servo intakeLeft = null;
+    public Servo intakeRight = null;
 
     //    OpenCV class
     public void init(HardwareMap hardwareMap)
@@ -50,8 +50,8 @@ public class EelverHardware {
         arm2 =          hardwareMap.get(Servo.class, "arm2");
         // conePush =      hardwareMap.get(Servo.class, "cone");
         Intake =        hardwareMap.get(DcMotor.class, "Intake");
-        Intake1 =       hardwareMap.get(Servo.class, "Intake1");
-        Intake2 =       hardwareMap.get(Servo.class, "Intake2");
+        intakeLeft =       hardwareMap.get(Servo.class, "intakeLeft");
+        intakeRight =       hardwareMap.get(Servo.class, "intakeRight");
 
         /*------- Do hardware setup -------*/
 
@@ -93,6 +93,7 @@ public class EelverHardware {
 
         // Intake
         Intake.     setDirection(DcMotor.Direction.REVERSE);
+        intakeServoOut();
     }
 
     public void gripCone()
@@ -191,6 +192,10 @@ public class EelverHardware {
         rearRight   .setPower((drive + strafe - twist) * slowMode);
     }
 
+    public void intake(double power) {
+        Intake.setPower(power);
+    }
+
     public void intakeIn() {
         Intake.setPower(.5);
     }
@@ -200,12 +205,12 @@ public class EelverHardware {
     }
 
     public void intakeServoIn() {
-        Intake1.setPosition(Intake1_in);
-        Intake2.setPosition(Intake2_in);
+        intakeLeft.setPosition(IntakeLeft_in);
+        intakeRight.setPosition(IntakeRight_in);
     }
 
     public void intakeServoOut() {
-        Intake1.setPosition(Intake1_out);
-        Intake2.setPosition(Intake2_out);
+        intakeLeft.setPosition(IntakeLeft_out);
+        intakeRight.setPosition(IntakeRight_out);
     }
 }
