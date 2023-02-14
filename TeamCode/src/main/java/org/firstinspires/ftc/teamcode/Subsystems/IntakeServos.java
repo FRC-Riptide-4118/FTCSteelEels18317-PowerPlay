@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake1_in;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeLeft_out;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake2_in;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeRight_out;
-
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+@Config
 public class IntakeServos extends SubsystemBase {
     /**
      * Creates a new ExampleSubsystem.
@@ -16,14 +13,20 @@ public class IntakeServos extends SubsystemBase {
     public Servo intakeLeft = null;
     public Servo intakeRight = null;
 
+    // Intake Servo Values
+    public static double IntakeLeft_out    = 0.9;
+    public static double IntakeRight_out   = 0.28;
+    public static double IntakeLeft_in     = 0.3;
+    public static double IntakeRight_in    = 0.75;
+
     public IntakeServos(HardwareMap hardwareMap) {
         intakeLeft =       hardwareMap.get(Servo.class, "intakeLeft");
         intakeRight =       hardwareMap.get(Servo.class, "intakeRight");
     }
 
     public void intakeServoIn() {
-        intakeLeft.setPosition(Intake1_in);
-        intakeRight.setPosition(Intake2_in);
+        intakeLeft.setPosition(IntakeLeft_in);
+        intakeRight.setPosition(IntakeRight_in);
     }
 
     public void intakeServoOut() {
@@ -32,7 +35,7 @@ public class IntakeServos extends SubsystemBase {
     }
 
     public boolean intakeServosIn() {
-        return intakeLeft.getPosition() == Intake1_in;
+        return intakeLeft.getPosition() == IntakeLeft_in;
     }
 
     @Override

@@ -1,22 +1,24 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
-
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.apache.commons.math3.ml.distance.DistanceMeasure;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+@Config
 public class Gripper extends SubsystemBase {
     /**
      * Creates a new ExampleSubsystem.
      */
     public  Servo          gripper        = null;
     public  DistanceSensor distanceSensor = null;
+
+    // Gripper Values
+    public static double Gripper_Grab = 0;
+    public static double Gripper_Release = 0.25;
 
     public boolean Distance() {
         return distanceSensor.getDistance(DistanceUnit.CM) <= 1.5;

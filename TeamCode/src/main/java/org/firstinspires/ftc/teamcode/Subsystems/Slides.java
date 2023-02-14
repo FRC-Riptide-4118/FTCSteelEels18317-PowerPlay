@@ -1,23 +1,27 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Ground;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_High;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Low;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
-
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+@Config
 public class Slides extends SubsystemBase {
     /**
      * Creates a new ExampleSubsystem.
      */
     public DcMotorEx leftSlide = null;
     public DcMotorEx rightSlide = null;
+
+    //Slides Encoder Values
+    public static int Slides_Start         = 0;
+    public static int Slides_Ground        = 5;
+    public static int TeleOpSlides_Ground  = 10;
+    public static int Slides_Low           = 700;
+    public static int Slides_Medium        = 1300;
+    public static int Slides_High          = 1950;
 
     public Slides(HardwareMap hardwareMap) {
         leftSlide =  hardwareMap.get(DcMotorEx.class, "left_slide");

@@ -33,8 +33,8 @@ public class MotorValuesConstants {
     public static double Move_Cone         = 0.5;
     public static double IntakeLeft_out    = 0.9;
     public static double IntakeRight_out   = 0.28;
-    public static double Intake1_in        = 0.3;
-    public static double Intake2_in        = 0.75;
+    public static double IntakeLeft_in     = 0.3;
+    public static double IntakeRight_in    = 0.75;
     // .2 .8 is GROUND/START
     // .85 and .15 for SCORING
 

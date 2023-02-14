@@ -1,22 +1,27 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Cone1;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Scoring;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Cone1;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Scoring;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
-
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+@Config
 public class Arm extends SubsystemBase {
     /**
      * Creates a new ExampleSubsystem.
      */
     public Servo arm1 = null;
     public Servo arm2 = null;
+
+    // Arm Servo Values
+    public static double Arm1_Start        = 0.2;
+    public static double Arm2_Start        = 0.8;
+    public static double Arm1_Scoring      = 0.85;
+    public static double Arm2_Scoring      = 0.15;
+    public static double Arm1_Front        = 0.85;
+    public static double Arm2_Front        = 0.15;
+    public static double Arm1_Cone1        = 0;
+    public static double Arm2_Cone1        = 1;
 
     public Arm(HardwareMap hardwareMap) {
         arm1 = hardwareMap.get(Servo.class, "arm1");

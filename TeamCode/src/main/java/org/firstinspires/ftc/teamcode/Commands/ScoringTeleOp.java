@@ -86,6 +86,18 @@ public class ScoringTeleOp extends CommandBase {
                 atLow = false;
                 armInTimer.reset();
             }
+
+            else{
+                if(armInTimer.seconds() > 1.0){
+                    m_slides.setSlidesPower(0.7);
+                    m_slides.slidesToStart();
+                    m_arm.armToStart();
+                    m_arm.armToStart();
+                    returning = false;
+                    atLow = false;
+                    armInTimer.reset();
+                }
+            }
         }
 
         // Low

@@ -17,9 +17,9 @@ import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Low;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Medium;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake1_in;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeLeft_in;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeLeft_out;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Intake2_in;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeRight_in;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeRight_out;
 
 
@@ -216,8 +216,8 @@ public class EelverHardware {
     }
 
     public void intakeServoIn() {
-        intakeLeft.setPosition(Intake1_in);
-        intakeRight.setPosition(Intake2_in);
+        intakeLeft.setPosition(IntakeLeft_in);
+        intakeRight.setPosition(IntakeRight_in);
     }
 
     public void intakeServoOut() {
