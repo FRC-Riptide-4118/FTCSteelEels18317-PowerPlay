@@ -70,6 +70,7 @@ public class TeleOpCommandsTesting extends LinearOpMode {
         Slides       slides        = new Slides(hardwareMap);
         Intake       intake        = new Intake(hardwareMap);
         IntakeServos intakeServos  = new IntakeServos(hardwareMap);
+
         intakeServos.getSubsystem();
         intake.getSubsystem();
         slides.getSubsystem();
