@@ -31,7 +31,6 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Commands.ArmTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainTeleOp;
@@ -39,8 +38,8 @@ import org.firstinspires.ftc.teamcode.Commands.GripperTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.ScoringTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.IntakeTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.IntakeServosTeleOp;
-
 import org.firstinspires.ftc.teamcode.Commands.SlidesTeleOp;
+
 import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
