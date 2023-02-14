@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.RoadRunner.drive;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -11,15 +10,20 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.EelverHardware;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import java.util.ArrayList;
+import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
+import org.firstinspires.ftc.teamcode.Subsystems.Slides;
+import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
 
 @Autonomous(name = "Left_RRScorePreLoaded")
-public class Left_RRScorePreLoad extends LinearOpMode {
+public class Left_CloseHighJunction extends LinearOpMode {
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -46,6 +50,21 @@ public class Left_RRScorePreLoad extends LinearOpMode {
     @Override
 
     public void runOpMode() {
+
+        //Hardware Classes
+        Drivetrain   drivetrain    = new Drivetrain(hardwareMap);
+        Gripper      gripper       = new Gripper(hardwareMap);
+        Slides       slides        = new Slides(hardwareMap);
+        Arm          arm           = new Arm(hardwareMap);
+        Intake       intake        = new Intake(hardwareMap);
+        IntakeServos intakeServos  = new IntakeServos(hardwareMap);
+
+        intakeServos.getSubsystem();
+        intake.getSubsystem();
+        slides.getSubsystem();
+        arm.getSubsystem();
+        gripper.getSubsystem();
+        drivetrain.getSubsystem();
 
         EelverHardware hardware = new EelverHardware();
 
@@ -83,7 +102,9 @@ public class Left_RRScorePreLoad extends LinearOpMode {
                 .back(35)
                 //Pre-Load
                 .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(1, hardware::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(-1, slides::slidesToHigh)
+                .UNSTABLE_addTemporalMarkerOffset(-0.8, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(1, gripper::releaseCone)
                 .waitSeconds(0.5)
                 //Stack 1
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())

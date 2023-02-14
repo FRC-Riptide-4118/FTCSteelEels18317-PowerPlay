@@ -68,12 +68,14 @@ public class TeleOpCommandsTesting extends LinearOpMode {
         Drivetrain   drivetrain    = new Drivetrain(hardwareMap);
         Gripper      gripper       = new Gripper(hardwareMap);
         Slides       slides        = new Slides(hardwareMap);
+        Arm          arm           = new Arm(hardwareMap);
         Intake       intake        = new Intake(hardwareMap);
         IntakeServos intakeServos  = new IntakeServos(hardwareMap);
 
         intakeServos.getSubsystem();
         intake.getSubsystem();
         slides.getSubsystem();
+        arm.getSubsystem();
         gripper.getSubsystem();
         drivetrain.getSubsystem();
 
