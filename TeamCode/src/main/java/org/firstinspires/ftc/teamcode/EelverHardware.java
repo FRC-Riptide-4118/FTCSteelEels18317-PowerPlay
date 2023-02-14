@@ -5,12 +5,7 @@ import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeLeft_in;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeLeft_out;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeRight_in;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeRight_out;
-
-
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeServos;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -205,12 +200,12 @@ public class EelverHardware {
     }
 
     public void intakeServoIn() {
-        intakeLeft.setPosition(IntakeLeft_in);
-        intakeRight.setPosition(IntakeRight_in);
+        intakeLeft.setPosition(IntakeServos.IntakeLeft_in);
+        intakeRight.setPosition(IntakeServos.IntakeRight_in);
     }
 
     public void intakeServoOut() {
-        intakeLeft.setPosition(IntakeLeft_out);
-        intakeRight.setPosition(IntakeRight_out);
+        intakeLeft.setPosition(IntakeServos.IntakeLeft_out);
+        intakeRight.setPosition(IntakeServos.IntakeRight_out);
     }
 }

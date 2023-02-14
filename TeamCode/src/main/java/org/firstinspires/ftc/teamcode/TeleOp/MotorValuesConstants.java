@@ -38,11 +38,14 @@ public class MotorValuesConstants {
         public static double Front  = 0.15;
         public static double Cone1  = 1;
 	}
-    public static double Move_Cone = 0.5;
-    public static double Intake1_out = 0.9;
-    public static double Intake2_out = 0.28;
-    public static double Intake1_in = 0.3;
-    public static double Intake2_in = 0.75;
+
+    public static class IntakeServos {
+        public static double Move_Cone = 0.5;
+        public static double IntakeLeft_out = 0.9;
+        public static double IntakeRight_out = 0.28;
+        public static double IntakeLeft_in = 0.3;
+        public static double IntakeRight_in = 0.75;
+    }
 
     // Gripper Values
     public static double Gripper_Grab = 0;
