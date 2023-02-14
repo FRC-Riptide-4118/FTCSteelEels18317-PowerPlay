@@ -125,41 +125,8 @@ public class Left_RRScorePreLoad extends LinearOpMode {
                 .waitSeconds(0.5)
                 .build();
 
-        Trajectory Back = drive.trajectoryBuilder(High_Junction.end())
-                .back(10)
-                .build();
-
-        Trajectory Forward = drive.trajectoryBuilder(Back.end())
-                .forward(10)
-                .build();
-
-        Pose2d forwardAfterTurn = new Pose2d(
-                Forward.end().component1(),
-                Forward.end().component2(),
-                Math.toRadians(0));
-
-        Trajectory Forward2 = drive.trajectoryBuilder(forwardAfterTurn)
-                .forward(22)
-                .build();
-
-        Trajectory trajMiddle = drive.trajectoryBuilder(Forward2.end())
-                .back(24)
-                .build();
-
-        Trajectory trajRight = drive.trajectoryBuilder(Forward2.end())
-                .back(45)
-                .build();
-
-        Trajectory High_Junction1 = drive.trajectoryBuilder(Forward2.end())
-                .back(5)
-                .splineTo(new Vector2d(35, 17), Math.toRadians(45))
-                .build();
-
-
-
         hardware.gripCone();
         hardware.armWiggle();
-
 
         waitForStart();
 
@@ -222,52 +189,7 @@ public class Left_RRScorePreLoad extends LinearOpMode {
 //            sleep(20);
 //        }
 
-//        hardware.setSlidesPower(1);
-//        hardware.slidesToHigh();
-//
         drive.followTrajectorySequence(High_Junction);
-
-//        timer.reset();
-//        while(opModeIsActive() && hardware.slidesAreBusy() && timer.seconds() < 2);
-
-//        hardware.armToHigh();
-
-//        drive.followTrajectory(Back);
-//        hardware.MoveCone();
-//        hardware.releaseCone();
-//        sleep(200);
-//        drive.followTrajectory(Forward);
-
-//        hardware.armToStart();
-//        sleep(500);
-        // Returning
-//        hardware.setSlidesPower(0.6);
-//        hardware.slidesToStart();
-//        hardware.releaseCone();
-
-//        drive.turn(Math.toRadians(-45));
-//        drive.followTrajectory(Forward2);
-//        drive.followTrajectory(High_Junction1);
-
-//        hardware.setSlidesPower(1);
-//        hardware.slidesToHigh();
-
-
-//        if (tagOfInterest == null || tagOfInterest.id == Left) {
-//            // Do nothing
-//
-//        } else if (tagOfInterest.id == Middle) {
-//            // Middle Code
-//            drive.followTrajectory(trajMiddle);
-//
-//        } else if (tagOfInterest.id == Right) {
-//            // Right Code
-//            drive.followTrajectory(trajRight);
-//
-//        } else {
-//            // Do nothing
-//        }
-//
     }
 
 //    void tagToTelemetry(AprilTagDetection detection)
