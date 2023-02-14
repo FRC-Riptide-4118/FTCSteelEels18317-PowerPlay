@@ -103,9 +103,12 @@ public class Left_CloseHighJunction extends LinearOpMode {
                 //Pre-Load
                 .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-1, slides::slidesToHigh)
-                .UNSTABLE_addTemporalMarkerOffset(-0.8, arm::armScoring)
-                .UNSTABLE_addTemporalMarkerOffset(1, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(-.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0.1, gripper::releaseCone)
                 .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0.8, slides::slidesToStart)
+                .UNSTABLE_addTemporalMarkerOffset(1.0, gripper::releaseCone)
                 //Stack 1
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
                 .waitSeconds(0.5)
