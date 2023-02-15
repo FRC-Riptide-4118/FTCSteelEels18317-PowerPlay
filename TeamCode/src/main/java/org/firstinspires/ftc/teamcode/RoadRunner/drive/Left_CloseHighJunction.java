@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.RoadRunner.drive;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -22,9 +23,12 @@ import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
 
-@Autonomous(name = "Left_RRScorePreLoaded")
+import java.util.ArrayList;
+
+@Autonomous(name = "Left_CloseHighJunction")
 public class Left_CloseHighJunction extends LinearOpMode {
 
+    // Time
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -32,6 +36,10 @@ public class Left_CloseHighJunction extends LinearOpMode {
     public ElapsedTime timer;
     static final double FEET_PER_METER = 3.28084;
 
+    // Lens intrinsics
+    // UNITS ARE PIXELS
+    // NOTE: this calibration is for the C920 webcam at 800x448.
+    // You will need to do your own calibration for other configurations!
     double fx = 578.272;
     double fy = 578.272;
     double cx = 402.145;
@@ -66,15 +74,12 @@ public class Left_CloseHighJunction extends LinearOpMode {
         gripper.getSubsystem();
         drivetrain.getSubsystem();
 
-        EelverHardware hardware = new EelverHardware();
-
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
 
         camera.setPipeline(aprilTagDetectionPipeline);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-
         {
             @Override
             public void onOpened()
@@ -89,28 +94,32 @@ public class Left_CloseHighJunction extends LinearOpMode {
             }
         });
 
+        telemetry.setMsTransmissionInterval(50);
+
         timer = new ElapsedTime();
-        hardware.init(hardwareMap); // Edited by Blake Sanders 1/31/22
+
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startPose          = new Pose2d(37, 65, Math.toRadians(90));
         Pose2d closeHighJunction  = new Pose2d(31, 8, Math.toRadians(225));
-        Pose2d Stack              = new Pose2d(63, 16, Math.toRadians(3));
+        Pose2d Stack              = new Pose2d(65, 16, Math.toRadians(3));
+        Pose2d Middle_Tile        = new Pose2d(40,18, Math.toRadians(3));
+
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence High_Junction = drive.trajectorySequenceBuilder(startPose)
                 .back(35)
                 //Pre-Load
                 .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(-1, slides::slidesToHigh)
-                .UNSTABLE_addTemporalMarkerOffset(-.9, arm::armScoring)
-                .UNSTABLE_addTemporalMarkerOffset(0.1, gripper::releaseCone)
                 .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0.5, arm::armScoring)
-                .UNSTABLE_addTemporalMarkerOffset(0.8, slides::slidesToStart)
-                .UNSTABLE_addTemporalMarkerOffset(1.0, gripper::releaseCone)
+//                .UNSTABLE_addTemporalMarkerOffset(-1, slides::slidesToHigh)
+//                .UNSTABLE_addTemporalMarkerOffset(0.1, gripper::releaseCone)
+//                .UNSTABLE_addTemporalMarkerOffset(1.2, arm::armToStart)
+//                .UNSTABLE_addTemporalMarkerOffset(1.4, slides::slidesToStart)
+//                .UNSTABLE_addTemporalMarkerOffset(1.0, gripper::releaseCone)
                 //Stack 1
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-.9, arm::armToCone1)
                 .waitSeconds(0.5)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
@@ -118,6 +127,7 @@ public class Left_CloseHighJunction extends LinearOpMode {
                 .setReversed(false)
                 //Stack 2
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-.9, arm::armToCone2)
                 .waitSeconds(0.5)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
@@ -137,94 +147,123 @@ public class Left_CloseHighJunction extends LinearOpMode {
                 .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
                 .waitSeconds(0.5)
                 .setReversed(false)
-                //Stack 5
-                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .waitSeconds(0.5)
-                .setReversed(true)
-                .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
-                .waitSeconds(0.5)
-                .setReversed(false)
                 //Back to Stack
-                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .waitSeconds(0.5)
+                .splineTo(new Vector2d(Middle_Tile.getX(), Middle_Tile.getY()), Middle_Tile.getHeading())
                 .build();
 
-        hardware.gripCone();
-        hardware.armWiggle();
+        Trajectory trajLeft = drive.trajectoryBuilder(High_Junction.end())
+                .forward(24)
+                .build();
 
-        waitForStart();
+        Trajectory trajRight = drive.trajectoryBuilder(High_Junction.end())
+                .back(24)
+                .build();
 
-//        while (!isStarted() && !isStopRequested())
-//        {
-//            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
-//
-//            if(currentDetections.size() != 0)
-//            {
-//                boolean tagFound = false;
-//
-//                for(AprilTagDetection tag : currentDetections)
-//                {
-//                    if(tag.id == Left || tag.id == Middle || tag.id == Right)
-//                    {
-//                        tagOfInterest = tag;
-//                        tagFound = true;
-//                        break;
-//                    }
-//                }
-//
-//                if(tagFound)
-//                {
-//                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
-//                    tagToTelemetry(tagOfInterest);
-//                }
-//                else
-//                {
-//                    telemetry.addLine("Don't see tag of interest :(");
-//
-//                    if(tagOfInterest == null)
-//                    {
-//                        telemetry.addLine("(The tag has never been seen)");
-//                    }
-//                    else
-//                    {
-//                        telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-//                        tagToTelemetry(tagOfInterest);
-//                    }
-//                }
-//
-//            }
-//            else
-//            {
-//                telemetry.addLine("Don't see tag of interest :(");
-//
-//                if(tagOfInterest == null)
-//                {
-//                    telemetry.addLine("(The tag has never been seen)");
-//                }
-//                else
-//                {
-//                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-//                    tagToTelemetry(tagOfInterest);
-//                }
-//
-//            }
-//
-//            telemetry.update();
-//            sleep(20);
-//        }
+        gripper.gripCone();
+        arm.armWiggle();
+        intakeServos.intakeServoOut();
+        gripper.releaseCone();
 
-        drive.followTrajectorySequence(High_Junction);
+        while (!isStarted() && !isStopRequested())
+        {
+            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+
+            if(currentDetections.size() != 0)
+            {
+                boolean tagFound = false;
+
+                for(AprilTagDetection tag : currentDetections)
+                {
+                    if(tag.id == Left || tag.id == Middle || tag.id == Right)
+                    {
+                        tagOfInterest = tag;
+                        tagFound = true;
+                        break;
+                    }
+                }
+
+                if(tagFound)
+                {
+                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
+                    tagToTelemetry(tagOfInterest);
+                }
+                else
+                {
+                    telemetry.addLine("Don't see tag of interest :(");
+
+                    if(tagOfInterest == null)
+                    {
+                        telemetry.addLine("(The tag has never been seen)");
+                    }
+                    else
+                    {
+                        telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                        tagToTelemetry(tagOfInterest);
+                    }
+                }
+
+            }
+            else
+            {
+                telemetry.addLine("Don't see tag of interest :(");
+
+                if(tagOfInterest == null)
+                {
+                    telemetry.addLine("(The tag has never been seen)");
+                }
+                else
+                {
+                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                    tagToTelemetry(tagOfInterest);
+                }
+
+            }
+
+            telemetry.update();
+            sleep(20);
+        }
+
+        /* Update the telemetry */
+        if(tagOfInterest != null)
+        {
+            telemetry.addLine("Tag snapshot:\n");
+            tagToTelemetry(tagOfInterest);
+            telemetry.update();
+        }
+        else
+        {
+            telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
+            telemetry.update();
+        }
+
+        if (opModeIsActive()) {
+            drive.followTrajectorySequence(High_Junction);
+            if (tagOfInterest.id == Left) {
+                // Left Code
+                drive.followTrajectory(trajLeft);
+
+            } else if (tagOfInterest == null || tagOfInterest.id == Middle) {
+                // Middle Code
+
+            } else if (tagOfInterest.id == Right) {
+                // Right Code
+                drive.followTrajectory(trajRight);
+
+            } else {
+
+            }
+        }
     }
 
-//    void tagToTelemetry(AprilTagDetection detection)
-//    {
-//        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-//        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
-//        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
-//        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
-//        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
-//        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
-//        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
-//    }
+    void tagToTelemetry(AprilTagDetection detection)
+    {
+        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
+        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
+        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
+        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
+        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+    }
 
 }

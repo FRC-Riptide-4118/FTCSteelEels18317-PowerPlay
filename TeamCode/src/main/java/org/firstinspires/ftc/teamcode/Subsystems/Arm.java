@@ -20,6 +20,8 @@ public class Arm extends SubsystemBase {
     public static double Arm2_Scoring      = 0.15;
     public static double Arm1_Cone1        = 0;
     public static double Arm2_Cone1        = 1;
+    public static double Arm1_Cone2        = 0.05;
+    public static double Arm2_Cone2        = 0.95;
 
     public Arm(HardwareMap hardwareMap) {
         arm1 = hardwareMap.get(Servo.class, "arm1");
@@ -48,6 +50,12 @@ public class Arm extends SubsystemBase {
     {
         arm1.setPosition(Arm1_Cone1);
         arm2.setPosition(Arm2_Cone1);
+    }
+
+    public void armToCone2()
+    {
+        arm1.setPosition(Arm1_Cone2);
+        arm2.setPosition(Arm2_Cone2);
     }
 
     public void armScoring()

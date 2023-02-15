@@ -26,7 +26,7 @@ public class Gripper extends SubsystemBase {
 
     public Gripper(HardwareMap hardwareMap) {
         gripper          = hardwareMap.get(Servo.class, "Gripper");
-        distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
+        //distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
     }
 
     public boolean isGripping() {

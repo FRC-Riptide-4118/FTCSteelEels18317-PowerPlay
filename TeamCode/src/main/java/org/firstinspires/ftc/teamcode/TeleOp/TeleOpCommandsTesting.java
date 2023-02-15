@@ -47,7 +47,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
 
-@TeleOp(name = "TeleOpMecanumDrive", group = "Robot")
+@TeleOp(name = "TeleOpCommandsTesting", group = "Robot")
 
 public class TeleOpCommandsTesting extends LinearOpMode {
 
@@ -55,13 +55,13 @@ public class TeleOpCommandsTesting extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        GripperTeleOp gripperTeleOp             = new GripperTeleOp(new Gripper(hardwareMap), gamepad1);
-        ArmTeleOp armTeleOp                     = new ArmTeleOp(new Arm(hardwareMap), gamepad1);
-        DrivetrainTeleOp drivetrainTeleOp       = new DrivetrainTeleOp(new Drivetrain(hardwareMap), gamepad1);
-        ScoringTeleOp scoringTeleOp             = new ScoringTeleOp(new Arm(hardwareMap), new Slides(hardwareMap), gamepad1);
-        IntakeTeleOp intakeTeleOp               = new IntakeTeleOp(new Intake(hardwareMap), new Gripper(hardwareMap), gamepad1);
-        IntakeServosTeleOp intakeServosTeleOp   = new IntakeServosTeleOp(new IntakeServos(hardwareMap), new Gripper(hardwareMap), gamepad1);
-        SlidesTeleOp slidesTeleOp               = new SlidesTeleOp(new Slides(hardwareMap), gamepad1);
+        GripperTeleOp       gripperTeleOp        = new GripperTeleOp(new Gripper(hardwareMap), gamepad1);
+        ArmTeleOp           armTeleOp            = new ArmTeleOp(new Arm(hardwareMap), gamepad1);
+        DrivetrainTeleOp    drivetrainTeleOp     = new DrivetrainTeleOp(new Drivetrain(hardwareMap), gamepad1);
+        ScoringTeleOp       scoringTeleOp        = new ScoringTeleOp(new Arm(hardwareMap), new Slides(hardwareMap), gamepad1);
+        IntakeTeleOp        intakeTeleOp         = new IntakeTeleOp(new Intake(hardwareMap), new Gripper(hardwareMap), gamepad1);
+        IntakeServosTeleOp  intakeServosTeleOp   = new IntakeServosTeleOp(new IntakeServos(hardwareMap), new Gripper(hardwareMap), gamepad1);
+        SlidesTeleOp        slidesTeleOp         = new SlidesTeleOp(new Slides(hardwareMap), gamepad1);
 
 
         // Send telemetry message to signify robot waiting;

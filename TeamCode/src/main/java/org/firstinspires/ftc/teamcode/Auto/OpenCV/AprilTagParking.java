@@ -54,6 +54,8 @@ public class AprilTagParking extends LinearOpMode {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
+    // Time
+    public ElapsedTime timer;
     static final double FEET_PER_METER = 3.28084;
 
     // Lens intrinsics

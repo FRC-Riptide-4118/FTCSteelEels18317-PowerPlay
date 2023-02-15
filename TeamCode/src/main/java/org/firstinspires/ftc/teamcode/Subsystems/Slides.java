@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
@@ -29,7 +30,7 @@ public class Slides extends SubsystemBase {
 
         // Slide motors
         leftSlide.  setDirection(DcMotor.Direction.REVERSE);
-        rightSlide. setDirection(DcMotor.Direction.REVERSE);
+        rightSlide. setDirection(DcMotor.Direction.FORWARD);
 
         leftSlide.  setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlide. setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -57,24 +58,32 @@ public class Slides extends SubsystemBase {
     {
         leftSlide.setTargetPosition(Slides_Ground);
         rightSlide.setTargetPosition(Slides_Ground);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
     }
 
     public void slidesToLow()
     {
         leftSlide.setTargetPosition(Slides_Low);
         rightSlide.setTargetPosition(Slides_Low);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
     }
 
     public void slidesToMedium()
     {
         leftSlide.setTargetPosition(Slides_Medium);
         rightSlide.setTargetPosition(Slides_Medium);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
     }
 
     public void slidesToHigh()
     {
         leftSlide.setTargetPosition(Slides_High);
         rightSlide.setTargetPosition(Slides_High);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
     }
 
     public boolean slidesAreBusy()

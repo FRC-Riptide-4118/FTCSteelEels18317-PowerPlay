@@ -6,47 +6,34 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
+import java.util.Stack;
+
 public class MeepMeepTesting {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
+
+        Pose2d startPose          = new Pose2d(37, 65, Math.toRadians(90));
+        Pose2d closeHighJunction  = new Pose2d(31, 8, Math.toRadians(225));
+        Pose2d closeMidJunction   = new Pose2d(29, 18, Math.toRadians(125));
+        Pose2d Stack              = new Pose2d(67, 16, Math.toRadians(3));
+        Pose2d Middle_Tile        = new Pose2d(40,16, Math.toRadians(3));
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(46, 46, Math.toRadians(180), Math.toRadians(180), 12)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(37, 65, Math.toRadians(90)))
+                                .back(50)
+                                //Pre-Load
+                                .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
+                                .waitSeconds(1)
+                                //Stack 1
+                                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
+                                .waitSeconds(0.5)
                                 .setReversed(true)
-//                                .back(5)
-                                .splineToSplineHeading(new Pose2d(36, 14, Math.toRadians(50)), Math.toRadians(90))
-
-//                                .setReversed(true)
-//                                .back(26)
-//                                .splineTo(new Vector2d(36, 12), Math.toRadians(230))
-                                .addDisplacementMarker(() -> {})
-                                .back(5)
+                                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
                                 .waitSeconds(0.5)
-
                                 .setReversed(false)
-                                .splineTo(new Vector2d(55, 15), Math.toRadians(0))
-                                .addDisplacementMarker(() -> {})
-                                .forward(5)
-                                .waitSeconds(0.5)
-
-                                .setReversed(true)
-                                .back(5)
-                                .splineTo(new Vector2d(33, 10), Math.toRadians(225))
-                                .addDisplacementMarker(() -> {})
-                                .waitSeconds(0.5)
-                                //Scores cone from stack
-
-                                //Keep cycling...
-
-                                //Setup for parking
-                                .setReversed(false)
-                                .splineToLinearHeading(new Pose2d(35, 13, Math.toRadians(0)), Math.toRadians(225))
-                                .addDisplacementMarker(() -> {})
-                                .waitSeconds(0.5)
-
                                 .build()
                 );
 
