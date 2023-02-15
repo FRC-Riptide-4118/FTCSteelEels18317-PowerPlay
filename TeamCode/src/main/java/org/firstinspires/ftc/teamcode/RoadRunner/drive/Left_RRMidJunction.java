@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.RoadRunner.drive;
 
-import android.service.quicksettings.Tile;
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -11,7 +9,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
-import org.firstinspires.ftc.teamcode.EelverHardware;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.openftc.apriltag.AprilTagDetection;
@@ -26,6 +23,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @Autonomous(name = "Left_RRMidJunction")
 public class Left_RRMidJunction extends LinearOpMode {
@@ -57,12 +55,12 @@ public class Left_RRMidJunction extends LinearOpMode {
     public void runOpMode() {
 
         //Hardware Classes
-        Drivetrain drivetrain    = new Drivetrain(hardwareMap);
-        Gripper gripper       = new Gripper(hardwareMap);
-        Slides slides        = new Slides(hardwareMap);
-        Arm arm           = new Arm(hardwareMap);
-        Intake intake        = new Intake(hardwareMap);
-        IntakeServos intakeServos  = new IntakeServos(hardwareMap);
+        Drivetrain     drivetrain    = new Drivetrain(hardwareMap);
+        Gripper        gripper       = new Gripper(hardwareMap);
+        Slides         slides        = new Slides(hardwareMap);
+        Arm            arm           = new Arm(hardwareMap);
+        Intake         intake        = new Intake(hardwareMap);
+        IntakeServos   intakeServos  = new IntakeServos(hardwareMap);
 
         intakeServos.getSubsystem();
         intake.getSubsystem();
@@ -96,7 +94,7 @@ public class Left_RRMidJunction extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startPose          = new Pose2d(37, 65, Math.toRadians(90));
-        Pose2d closeHighJunction  = new Pose2d(31, 8, Math.toRadians(225));
+        Pose2d closeHighJunction  = new Pose2d(31, 8 , Math.toRadians(225));
         Pose2d Stack              = new Pose2d(65, 16, Math.toRadians(0));
         Pose2d Middle_Tile        = new Pose2d(40, 16, Math.toRadians(0));
         Pose2d closeMidJunction   = new Pose2d(32, 20, Math.toRadians(130));
@@ -151,6 +149,7 @@ public class Left_RRMidJunction extends LinearOpMode {
         gripper.releaseCone();
         intakeServos.intakeServoOut();
 
+        /* OpMode */
         while (!isStarted() && !isStopRequested())
         {
             ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
@@ -223,36 +222,7 @@ public class Left_RRMidJunction extends LinearOpMode {
             telemetry.update();
         }
 
-//        hardware.setSlidesPower(1);
-//        hardware.slidesToHigh();
-//
         drive.followTrajectorySequence(High_Junction);
-        //
-//        timer.reset();
-//        while(opModeIsActive() && hardware.slidesAreBusy() && timer.seconds() < 2);
-
-//        hardware.armToHigh();
-
-//        drive.followTrajectory(Back);
-//        hardware.MoveCone();
-//        hardware.releaseCone();
-//        sleep(200);
-//        drive.followTrajectory(Forward);
-
-//        hardware.armToStart();
-//        sleep(500);
-        // Returning
-//        hardware.setSlidesPower(0.6);
-//        hardware.slidesToStart();
-//        hardware.releaseCone();
-
-//        drive.turn(Math.toRadians(-45));
-//        drive.followTrajectory(Forward2);
-//        drive.followTrajectory(High_Junction1);
-
-//        hardware.setSlidesPower(1);
-//        hardware.slidesToHigh();
-
 
         if (tagOfInterest == null || tagOfInterest.id == Left) {
             // Do nothing
@@ -273,13 +243,8 @@ public class Left_RRMidJunction extends LinearOpMode {
 
     void tagToTelemetry(AprilTagDetection detection)
     {
-        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
-        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
-        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
-        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+        for (String s : Arrays.asList(String.format("\nDetected tag ID=%d", detection.id), String.format("Translation X: %.2f feet", detection.pose.x * FEET_PER_METER), String.format("Translation Y: %.2f feet", detection.pose.y * FEET_PER_METER), String.format("Translation Z: %.2f feet", detection.pose.z * FEET_PER_METER), String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)), String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)), String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)))) {
+            telemetry.addLine(s);
+        }
     }
-
 }

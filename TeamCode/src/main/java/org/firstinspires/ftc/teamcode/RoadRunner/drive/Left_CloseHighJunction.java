@@ -98,7 +98,7 @@ public class Left_CloseHighJunction extends LinearOpMode {
 
         timer = new ElapsedTime();
 
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        SampleMecanumDrive drive  = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startPose          = new Pose2d(37, 65, Math.toRadians(90));
         Pose2d closeHighJunction  = new Pose2d(31, 8, Math.toRadians(225));
