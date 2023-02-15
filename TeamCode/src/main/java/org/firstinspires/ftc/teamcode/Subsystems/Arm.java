@@ -23,6 +23,10 @@ public class Arm extends SubsystemBase {
     public static double Arm1_Cone2        = 0.05;
     public static double Arm2_Cone2        = 0.95;
 
+    private int m_counter = 0;
+
+    private final int NUM_STATES = 5;
+
     public Arm(HardwareMap hardwareMap) {
         arm1 = hardwareMap.get(Servo.class, "arm1");
         arm2 = hardwareMap.get(Servo.class, "arm2");
@@ -58,6 +62,12 @@ public class Arm extends SubsystemBase {
         arm2.setPosition(Arm2_Cone2);
     }
 
+    public void armToPosition()
+    {
+//        if (m_counter = 0)
+//            arm1.setPosition();
+    }
+
     public void armScoring()
     {
         arm1.setPosition(Arm1_Scoring);
@@ -70,6 +80,10 @@ public class Arm extends SubsystemBase {
         arm1.setPosition(Arm1_Start + 0.01);
         arm2.setPosition(Arm2_Start + 0.01);
         armToStart();
+    }
+
+    public void incrementCounter(){
+        m_counter = (m_counter + 1) % 5;
     }
 
     @Override

@@ -55,19 +55,6 @@ public class TeleOpCommandsTesting extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        GripperTeleOp       gripperTeleOp        = new GripperTeleOp(new Gripper(hardwareMap), gamepad1);
-        ArmTeleOp           armTeleOp            = new ArmTeleOp(new Arm(hardwareMap), gamepad1);
-        DrivetrainTeleOp    drivetrainTeleOp     = new DrivetrainTeleOp(new Drivetrain(hardwareMap), gamepad1);
-        ScoringTeleOp       scoringTeleOp        = new ScoringTeleOp(new Arm(hardwareMap), new Slides(hardwareMap), gamepad1);
-        IntakeTeleOp        intakeTeleOp         = new IntakeTeleOp(new Intake(hardwareMap), new Gripper(hardwareMap), gamepad1);
-        IntakeServosTeleOp  intakeServosTeleOp   = new IntakeServosTeleOp(new IntakeServos(hardwareMap), new Gripper(hardwareMap), gamepad1);
-        SlidesTeleOp        slidesTeleOp         = new SlidesTeleOp(new Slides(hardwareMap), gamepad1);
-
-
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Hello Driver1");
-        telemetry.update();
-
         //Hardware Classes
         Drivetrain   drivetrain    = new Drivetrain(hardwareMap);
         Gripper      gripper       = new Gripper(hardwareMap);
@@ -76,12 +63,18 @@ public class TeleOpCommandsTesting extends LinearOpMode {
         Intake       intake        = new Intake(hardwareMap);
         IntakeServos intakeServos  = new IntakeServos(hardwareMap);
 
-        intakeServos.getSubsystem();
-        intake.getSubsystem();
-        slides.getSubsystem();
-        arm.getSubsystem();
-        gripper.getSubsystem();
-        drivetrain.getSubsystem();
+        // Command Declaration
+        GripperTeleOp       gripperTeleOp        = new GripperTeleOp(gripper, gamepad1);
+        ArmTeleOp           armTeleOp            = new ArmTeleOp(arm, gamepad1);
+        DrivetrainTeleOp    drivetrainTeleOp     = new DrivetrainTeleOp(drivetrain, gamepad1);
+        ScoringTeleOp       scoringTeleOp        = new ScoringTeleOp(arm, slides, gamepad1);
+        IntakeTeleOp        intakeTeleOp         = new IntakeTeleOp(intake, gripper, gamepad1);
+        IntakeServosTeleOp  intakeServosTeleOp   = new IntakeServosTeleOp(intakeServos, gripper, gamepad1);
+        SlidesTeleOp        slidesTeleOp         = new SlidesTeleOp(slides, gamepad1);
+
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Say", "Hello Driver1");
+        telemetry.update();
 
         gripperTeleOp.initialize();
         intakeTeleOp.initialize();
@@ -91,7 +84,6 @@ public class TeleOpCommandsTesting extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
