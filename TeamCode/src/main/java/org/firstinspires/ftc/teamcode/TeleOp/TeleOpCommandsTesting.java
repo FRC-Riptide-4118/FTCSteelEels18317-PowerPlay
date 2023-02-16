@@ -29,9 +29,13 @@
 
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Commands.ArmTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.GripperTeleOp;
@@ -50,6 +54,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
 @TeleOp(name = "TeleOpCommandsTesting", group = "Robot")
 
 public class TeleOpCommandsTesting extends LinearOpMode {
+
 
 
     @Override
@@ -72,10 +77,6 @@ public class TeleOpCommandsTesting extends LinearOpMode {
         IntakeServosTeleOp  intakeServosTeleOp   = new IntakeServosTeleOp(intakeServos, gripper, gamepad1);
         SlidesTeleOp        slidesTeleOp         = new SlidesTeleOp(slides, gamepad1);
 
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Hello Driver1");
-        telemetry.update();
-
         gripperTeleOp.initialize();
         intakeTeleOp.initialize();
         scoringTeleOp.initialize();
@@ -87,6 +88,10 @@ public class TeleOpCommandsTesting extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+
+            // Send telemetry message to signify robot waiting;
+            telemetry.addData("Say", "Hello Driver1");
+            telemetry.addData("Distance", gripper.getDistance());
 
             /*-------Drivetrain-------*/
             // Gamepad controls
@@ -105,6 +110,8 @@ public class TeleOpCommandsTesting extends LinearOpMode {
             /*------- Intake -------*/
             intakeTeleOp.execute();
             intakeServosTeleOp.execute();
+
+            telemetry.update();
 
         }
     }

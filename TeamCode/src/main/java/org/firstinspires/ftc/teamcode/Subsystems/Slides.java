@@ -18,8 +18,8 @@ public class Slides extends SubsystemBase {
 
     //Slides Encoder Values
     public static int Slides_Start         = 0;
-    public static int Slides_Ground        = 5;
-    public static int TeleOpSlides_Ground  = 10;
+    public static int Slides_Ground        = 0;
+    public static int TeleOpSlides_Ground  = 0;
     public static int Slides_Low           = 700;
     public static int Slides_Medium        = 1300;
     public static int Slides_High          = 1950;
@@ -73,6 +73,14 @@ public class Slides extends SubsystemBase {
     public void slidesToMedium()
     {
         leftSlide.setTargetPosition(Slides_Medium);
+        rightSlide.setTargetPosition(Slides_Medium);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
+    public void slidesToMediumAuto()
+    {
+        leftSlide.setTargetPosition(Slides_Medium+100);
         rightSlide.setTargetPosition(Slides_Medium);
         leftSlide.setPower(1);
         rightSlide.setPower(1);

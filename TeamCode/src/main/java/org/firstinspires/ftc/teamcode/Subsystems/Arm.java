@@ -22,6 +22,12 @@ public class Arm extends SubsystemBase {
     public static double Arm2_Cone1        = 1;
     public static double Arm1_Cone2        = 0.05;
     public static double Arm2_Cone2        = 0.95;
+    public static double Arm1_Cone3        = 0.1;
+    public static double Arm2_Cone3        = 0.9;
+    public static double Arm1_Cone4        = 0.15;
+    public static double Arm2_Cone4        = 0.85;
+    public static double Arm1_Cone5        = 0.2;
+    public static double Arm2_Cone5        = 0.8;
 
     private int m_counter = 0;
 
@@ -36,8 +42,8 @@ public class Arm extends SubsystemBase {
 
         // Wiggle the arm servos so they (hopefully) don't
         // misbehave on the first two real commands
-        arm1.setPosition(Arm1_Start + 0.01);
-        arm2.setPosition(Arm2_Start + 0.01);
+        arm1.setPosition(Arm1_Start + 0.2);
+        arm2.setPosition(Arm2_Start - 0.2);
         armToStart();
     }
 
@@ -56,10 +62,34 @@ public class Arm extends SubsystemBase {
         arm2.setPosition(Arm2_Cone1);
     }
 
+    public void armToCone1Wiggle()
+    {
+        arm1.setPosition(Arm1_Cone1 - 0.2);
+        arm2.setPosition(Arm2_Cone1 + 0.2);
+    }
+
     public void armToCone2()
     {
         arm1.setPosition(Arm1_Cone2);
         arm2.setPosition(Arm2_Cone2);
+    }
+
+    public void armToCone3()
+    {
+        arm1.setPosition(Arm1_Cone3);
+        arm2.setPosition(Arm2_Cone3);
+    }
+
+    public void armToCone4()
+    {
+        arm1.setPosition(Arm1_Cone4);
+        arm2.setPosition(Arm2_Cone4);
+    }
+
+    public void armToCone5()
+    {
+        arm1.setPosition(Arm1_Cone5);
+        arm2.setPosition(Arm2_Cone5);
     }
 
     public void armToPosition()

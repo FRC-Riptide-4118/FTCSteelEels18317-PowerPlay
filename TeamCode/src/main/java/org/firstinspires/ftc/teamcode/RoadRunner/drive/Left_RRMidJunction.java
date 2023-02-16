@@ -94,9 +94,9 @@ public class Left_RRMidJunction extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startPose          = new Pose2d(37, 65, Math.toRadians(90));
-        Pose2d closeHighJunction  = new Pose2d(31, 8 , Math.toRadians(225));
-        Pose2d Stack              = new Pose2d(65, 16, Math.toRadians(0));
-        Pose2d Middle_Tile        = new Pose2d(40, 16, Math.toRadians(0));
+        Pose2d closeHighJunction  = new Pose2d(31, 8, Math.toRadians(225));
+        Pose2d Stack              = new Pose2d(65, 16, Math.toRadians(3));
+        Pose2d Middle_Tile        = new Pose2d(40,18, Math.toRadians(0));
         Pose2d closeMidJunction   = new Pose2d(32, 20, Math.toRadians(130));
         drive.setPoseEstimate(startPose);
 
@@ -107,31 +107,57 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .waitSeconds(0.5)
                 //Stack 1
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .waitSeconds(0.5)
+                .waitSeconds(0.95)
+                .UNSTABLE_addTemporalMarkerOffset(-3, arm::armToCone1)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(-0.05, arm::armToCone1Wiggle)
+                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.4, arm::armToCone2)
+                .UNSTABLE_addTemporalMarkerOffset(0.55, slides::slidesToStart)
+                .waitSeconds(0.25)
                 .setReversed(false)
                 //Stack 2
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .waitSeconds(0.5)
+                .waitSeconds(0.95)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.4, arm::armToCone3)
+                .UNSTABLE_addTemporalMarkerOffset(0.55, slides::slidesToStart)
+                .waitSeconds(0.25)
                 .setReversed(false)
                 //Stack 3
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .waitSeconds(0.5)
+                .waitSeconds(0.95)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.4, arm::armToCone4)
+                .UNSTABLE_addTemporalMarkerOffset(0.55, slides::slidesToStart)
+                .waitSeconds(0.25)
                 .setReversed(false)
                 //Stack 4
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .waitSeconds(0.5)
+                .waitSeconds(0.95)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.4, arm::armToCone5)
+                .UNSTABLE_addTemporalMarkerOffset(0.55, slides::slidesToStart)
+                .waitSeconds(0.25)
                 .setReversed(false)
                 .splineTo(new Vector2d(Middle_Tile.getX(), Middle_Tile.getY()), Middle_Tile.getHeading())
                 .build();
@@ -148,6 +174,8 @@ public class Left_RRMidJunction extends LinearOpMode {
         arm.armWiggle();
         gripper.releaseCone();
         intakeServos.intakeServoOut();
+        arm.armWiggle();
+        arm.armWiggle();
 
         /* OpMode */
         while (!isStarted() && !isStopRequested())

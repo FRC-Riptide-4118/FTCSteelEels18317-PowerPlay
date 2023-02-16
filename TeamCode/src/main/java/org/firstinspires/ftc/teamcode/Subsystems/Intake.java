@@ -20,7 +20,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void intakeOut() {
-        Intake.setPower(-.5);
+        Intake.setPower(1);
     }
 
     @Override

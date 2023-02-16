@@ -103,7 +103,8 @@ public class Left_CloseHighJunction extends LinearOpMode {
         Pose2d startPose          = new Pose2d(37, 65, Math.toRadians(90));
         Pose2d closeHighJunction  = new Pose2d(31, 8, Math.toRadians(225));
         Pose2d Stack              = new Pose2d(65, 16, Math.toRadians(3));
-        Pose2d Middle_Tile        = new Pose2d(40,18, Math.toRadians(3));
+        Pose2d Middle_Tile        = new Pose2d(40,18, Math.toRadians(0));
+
 
         drive.setPoseEstimate(startPose);
 
@@ -119,8 +120,11 @@ public class Left_CloseHighJunction extends LinearOpMode {
 //                .UNSTABLE_addTemporalMarkerOffset(1.0, gripper::releaseCone)
                 //Stack 1
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(-.9, arm::armToCone1)
-                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armToCone1)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToLow)
+                .UNSTABLE_addTemporalMarkerOffset(-.8, slides::slidesToStart)
+                .waitSeconds(1)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
                 .waitSeconds(0.5)
@@ -135,6 +139,7 @@ public class Left_CloseHighJunction extends LinearOpMode {
                 .setReversed(false)
                 //Stack 3
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-.9, arm::armToCone3)
                 .waitSeconds(0.5)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
@@ -142,6 +147,7 @@ public class Left_CloseHighJunction extends LinearOpMode {
                 .setReversed(false)
                 //Stack 4
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-.9, arm::armToCone4)
                 .waitSeconds(0.5)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())

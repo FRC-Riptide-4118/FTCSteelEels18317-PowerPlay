@@ -76,8 +76,8 @@ public class TeleOpTesting extends LinearOpMode {
             /*-------Arm-------*/
             // Ground
             if(gamepad1.a) {
-                arm1.setPosition(Arm1.Ground);
-                arm2.setPosition(Arm2.Ground);
+                arm1.setPosition(Arm1.Cone1);
+                arm2.setPosition(Arm2.Cone1);
             }
 
             // Low

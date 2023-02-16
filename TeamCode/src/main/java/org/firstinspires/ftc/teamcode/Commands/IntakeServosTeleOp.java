@@ -35,7 +35,7 @@ public class IntakeServosTeleOp extends CommandBase {
 
     @Override
     public void execute() {
-        if (m_gripper.isGripping() || m_gripper.Distance() == true) {
+        if (m_gripper.isGripping() || m_gripper.Distance()) {
             m_intakeServos.intakeServoOut();
         }
         else {
