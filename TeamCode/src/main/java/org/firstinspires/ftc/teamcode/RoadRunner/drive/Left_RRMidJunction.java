@@ -93,8 +93,8 @@ public class Left_RRMidJunction extends LinearOpMode {
         timer = new ElapsedTime();
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose          = new Pose2d(37, 65, Math.toRadians(90));
-        Pose2d closeHighJunction  = new Pose2d(31, 8, Math.toRadians(225));
+        Pose2d startPose          = new Pose2d(37, 64, Math.toRadians(90));
+        Pose2d closeHighJunction  = new Pose2d(31, 8, Math.toRadians(224));
         Pose2d Stack              = new Pose2d(65, 16, Math.toRadians(3));
         Pose2d Middle_Tile        = new Pose2d(40,18, Math.toRadians(0));
         Pose2d closeMidJunction   = new Pose2d(32, 20, Math.toRadians(130));
@@ -104,11 +104,16 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .back(35)
                 //Pre-Load
                 .splineTo(new Vector2d(closeHighJunction.getX(), closeHighJunction.getY()), closeHighJunction.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-2, slides::slidesToHigh)
+                .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(-1, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(.8, arm::armToCone1)
+                .UNSTABLE_addTemporalMarkerOffset(.9, slides::slidesToStart)
                 .waitSeconds(0.5)
                 //Stack 1
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
                 .waitSeconds(0.95)
-                .UNSTABLE_addTemporalMarkerOffset(-3, arm::armToCone1)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
                 .UNSTABLE_addTemporalMarkerOffset(-0.05, arm::armToCone1Wiggle)
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
@@ -171,11 +176,11 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .build();
 
         gripper.gripCone();
-        arm.armWiggle();
-        gripper.releaseCone();
+//        arm.armWiggle();
         intakeServos.intakeServoOut();
-        arm.armWiggle();
-        arm.armWiggle();
+        arm.armToCone1();
+//        arm.armWiggle();
+//        arm.armWiggle();
 
         /* OpMode */
         while (!isStarted() && !isStopRequested())

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.Subsystems.Arm.Arm1_Scoring;
+import static org.firstinspires.ftc.teamcode.Subsystems.Arm.Arm2_Scoring;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides;
@@ -130,6 +132,12 @@ public class EelverHardware {
     {
         arm1.setPosition(Arm1.High);
         arm2.setPosition(Arm2.High);
+    }
+
+    public void armScoring()
+    {
+        arm1.setPosition(Arm1_Scoring);
+        arm2.setPosition(Arm2_Scoring);
     }
 
     public void armWiggle()

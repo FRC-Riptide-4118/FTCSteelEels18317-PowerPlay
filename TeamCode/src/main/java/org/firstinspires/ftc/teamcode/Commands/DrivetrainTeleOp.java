@@ -33,10 +33,10 @@ public class DrivetrainTeleOp extends CommandBase {
     @Override
     public void execute() {
         // Gamepad controls
-        double drive = -m_gamepad1.left_stick_y;
-        double strafe = m_gamepad1.left_stick_x;
-        double twist = m_gamepad1.right_stick_x;
-        double slowMode = Math.abs(1.25 - m_gamepad1.left_trigger);
+        double drive        = -m_gamepad1.left_stick_y;
+        double strafe       = m_gamepad1.left_stick_x;
+        double twist        = m_gamepad1.right_stick_x;
+        double slowMode     = Math.abs(1.25 - m_gamepad1.left_trigger);
 
         m_drivetrain.setMecanumPower(drive, strafe, twist, slowMode);
     }

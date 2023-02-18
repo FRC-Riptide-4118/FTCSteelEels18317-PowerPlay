@@ -17,12 +17,12 @@ public class Slides extends SubsystemBase {
     public DcMotorEx rightSlide = null;
 
     //Slides Encoder Values
-    public static int Slides_Start         = 0;
+    public static int Slides_Start         = -5;
     public static int Slides_Ground        = 0;
     public static int TeleOpSlides_Ground  = 0;
-    public static int Slides_Low           = 700;
-    public static int Slides_Medium        = 1300;
-    public static int Slides_High          = 1950;
+    public static int Slides_Low           = 600;
+    public static int Slides_Medium        = 1200;
+    public static int Slides_High          = 1850;
 
     public Slides(HardwareMap hardwareMap) {
         leftSlide =  hardwareMap.get(DcMotorEx.class, "left_slide");

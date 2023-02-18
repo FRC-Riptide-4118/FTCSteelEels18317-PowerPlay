@@ -57,6 +57,13 @@ public class ScoringTeleOp extends CommandBase {
         }
 
         if(returning) {
+
+            // int pos = 0;
+            // double times[3] = {1, 0.5, 0.25};
+            // if (armInTimer.seconds() > times[pos]) { do stuff}
+            // -----
+            // pos = (pos + 1) % 3;
+
             if(atHigh && (armInTimer.seconds() > 0.25)) {
                 m_slides.setSlidesPower(0.7);
                 m_slides.slidesToStart();

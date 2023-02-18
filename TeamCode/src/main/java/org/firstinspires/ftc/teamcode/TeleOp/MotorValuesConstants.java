@@ -8,7 +8,7 @@ public class MotorValuesConstants {
     //Slides Encoder Values
     public static class Slides
     {
-        public static int Start     = 0;
+        public static int Start     = -5;
         public static int Ground    = 5;
         public static int Low       = 700;
         public static int Medium    = 1300;
@@ -18,23 +18,23 @@ public class MotorValuesConstants {
     // Encoder Values
     public static class Arm1
     {
-        public static double Start 	= 0.2;
+        public static double Start 	= 0.12;
 		public static double Ground = 0.2;
 		public static double Low 	= 0.85;
 		public static double Medium = 0.85;
 		public static double High 	= 0.85;
-		public static double Scoring= 0.85;
+		public static double Scoring= 0.8;
 		public static double Front 	= 0.85;
 		public static double Cone1 	= 0;
     }
 	public static class Arm2
 	{
-		public static double Start  = 0.8;
+		public static double Start  = 0.88;
         public static double Ground = 0.8;
         public static double Low    = 0.15;
         public static double Medium = 0.15;
         public static double High   = 0.15;
-        public static double Scoring= 0.15;
+        public static double Scoring= 0.2;
         public static double Front  = 0.15;
         public static double Cone1  = 1;
 	}

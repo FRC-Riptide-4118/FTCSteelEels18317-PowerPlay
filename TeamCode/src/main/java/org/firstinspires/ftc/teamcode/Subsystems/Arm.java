@@ -14,10 +14,10 @@ public class Arm extends SubsystemBase {
     public Servo arm2 = null;
 
     // Arm Servo Values
-    public static double Arm1_Start        = 0.2;
-    public static double Arm2_Start        = 0.8;
-    public static double Arm1_Scoring      = 0.85;
-    public static double Arm2_Scoring      = 0.15;
+    public static double Arm1_Start        = 0.15;
+    public static double Arm2_Start        = 0.85;
+    public static double Arm1_Scoring      = 0.8;
+    public static double Arm2_Scoring      = 0.2;
     public static double Arm1_Cone1        = 0;
     public static double Arm2_Cone1        = 1;
     public static double Arm1_Cone2        = 0.05;
@@ -45,6 +45,7 @@ public class Arm extends SubsystemBase {
         arm1.setPosition(Arm1_Start + 0.2);
         arm2.setPosition(Arm2_Start - 0.2);
         armToStart();
+
     }
 
     public boolean ArmScoring() {
@@ -112,12 +113,27 @@ public class Arm extends SubsystemBase {
         armToStart();
     }
 
+    public double getPosition(int side) {
+
+        switch(side) {
+
+            case 1:
+                return arm1.getPosition();
+            case 2:
+                return arm2.getPosition();
+            default:
+                return 0;
+
+        }
+
+    }
+
     public void incrementCounter(){
         m_counter = (m_counter + 1) % 5;
     }
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
+
     }
 }
