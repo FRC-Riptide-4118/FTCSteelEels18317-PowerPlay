@@ -103,10 +103,9 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
             if(returning) {
                 if(armInTimer.seconds() > 1.0) {
-                    hardware.setSlidesPower(0.7);
+                    hardware.setSlidesPower(1);
                     hardware.slidesToStart();
                     hardware.releaseCone();
-                    hardware.armToStart();
                     hardware.armToStart();
                     returning = false;
                 }
@@ -121,7 +120,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             }
             if(raisingToLow) {
                 if(hardware.leftSlide.getCurrentPosition() > 600) {
-                    hardware.armToLow();
+                    hardware.armScoring();
                     raisingToLow = false;
                 }
             }
@@ -135,7 +134,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             }
             if(raisingToMiddle) {
                 if(hardware.leftSlide.getCurrentPosition() > 600) {
-                    hardware.armToMedium();
+                    hardware.armScoring();
                     raisingToMiddle = false;
                 }
             }
@@ -149,7 +148,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             }
             if(raisingToHigh) {
                 if(hardware.leftSlide.getCurrentPosition() > 600) {
-                    hardware.armToHigh();
+                    hardware.armScoring();
                     raisingToHigh = false;
                 }
             }

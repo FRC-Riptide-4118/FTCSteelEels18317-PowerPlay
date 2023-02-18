@@ -99,7 +99,7 @@ public class TeleOpTesting extends LinearOpMode {
             }
 
             /*-------Slides-------*/
-            // Ground
+            // Grounds
             if(gamepad2.a) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
@@ -143,7 +143,8 @@ public class TeleOpTesting extends LinearOpMode {
             if (gamepad1.dpad_down) {
                 Gripper.setPosition(Gripper_Release);
             }
-
+                telemetry.addData("Arm1 Pos", arm1.getPosition());
+                telemetry.addData("Arm2 Pos", arm2.getPosition());
                 telemetry.addData("Gripper Distance", distanceSensor.getDistance(DistanceUnit.CM));
                 telemetry.addLine();
                 telemetry.addData("left pos", leftSlide.getCurrentPosition());

@@ -55,8 +55,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
 
 public class TeleOpCommandsTesting extends LinearOpMode {
 
-
-
     @Override
     public void runOpMode() {
 
@@ -83,6 +81,9 @@ public class TeleOpCommandsTesting extends LinearOpMode {
         intakeServosTeleOp.initialize();
         armTeleOp.initialize();
 
+        drivetrain.setDefaultCommand(drivetrainTeleOp);
+        drivetrainTeleOp.execute();
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
@@ -95,7 +96,7 @@ public class TeleOpCommandsTesting extends LinearOpMode {
 
             /*-------Drivetrain-------*/
             // Gamepad controls
-            drivetrainTeleOp.execute();
+            // drivetrainTeleOp.execute();
 
             /*-------Gripper-------*/
             gripperTeleOp.execute();

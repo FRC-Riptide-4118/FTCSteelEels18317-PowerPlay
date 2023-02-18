@@ -1,29 +1,43 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.annotation.SuppressLint;
+import com.arcrobotics.ftclib.command.CommandScheduler;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
-import org.firstinspires.ftc.teamcode.Subsystems.Slides;
-import org.firstinspires.ftc.teamcode.Subsystems.Arm;
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
-
+/**
+ * This is the Robot class. This will make your command-based robot code a lot smoother
+ * and easier to understand.
+ */
 public class Robot {
 
-    // Hardware components (motors, sensors, servos, etc)
-    public Gripper      gripper;
-    public Slides       slides;
-    public Arm          arm;
-    public Drivetrain   drivetrain;
-    public Intake       intake;
-    public IntakeServos intakeServos;
+    // ... in MyRobot.java (extends Robot)
 
-
-    public void init(HardwareMap hardwareMap){
-
+    // enum to specify opmode type
+    public enum OpModeType {
+        TELEOP, AUTO
     }
 
+    // the constructor with a specified opmode type
+    public Robot(OpModeType type) {
+        if (type == OpModeType.TELEOP) {
+            initTele();
+        } else {
+            initAuto();
+        }
+    }
+
+    /*
+     * Initialize teleop or autonomous, depending on which is used
+     */
+    public void initTele() {
+        // initialize teleop-specific scheduler
+    }
+
+    public void initAuto() {
+        // initialize auto-specific scheduler
+    }
+
+
+    // ... in your opmode
+
+    // our robot object
+    Robot m_robot = new Robot(Robot.OpModeType.TELEOP);
 }
