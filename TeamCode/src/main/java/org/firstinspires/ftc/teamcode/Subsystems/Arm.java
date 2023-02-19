@@ -95,8 +95,16 @@ public class Arm extends SubsystemBase {
 
     public void armToPosition()
     {
-//        if (m_counter = 0)
-//            arm1.setPosition();
+        if (m_counter == 0)
+            armToCone1();
+        if (m_counter == 1)
+            armToCone2();
+        if (m_counter == 2)
+            armToCone3();
+        if (m_counter == 3)
+            armToCone4();
+        if (m_counter == 4)
+            armToCone5();
     }
 
     public void armScoring()
