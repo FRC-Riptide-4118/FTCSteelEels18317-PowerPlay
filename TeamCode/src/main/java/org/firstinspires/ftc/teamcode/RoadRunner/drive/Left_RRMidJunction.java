@@ -175,9 +175,6 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .back(24)
                 .build();
 
-        gripper.gripCone();
-        intakeServos.intakeServoOut();
-
         /* OpMode */
         while (!isStarted() && !isStopRequested())
         {
@@ -251,6 +248,8 @@ public class Left_RRMidJunction extends LinearOpMode {
             telemetry.update();
         }
 
+        gripper.gripCone();
+        intakeServos.intakeServoOut();
         drive.followTrajectorySequence(High_Junction);
 
         if (tagOfInterest == null || tagOfInterest.id == Left) {
