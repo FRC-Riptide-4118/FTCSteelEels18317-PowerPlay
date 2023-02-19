@@ -177,7 +177,6 @@ public class Left_RRMidJunction extends LinearOpMode {
 
         gripper.gripCone();
         intakeServos.intakeServoOut();
-        arm.armToCone1();
 
         /* OpMode */
         while (!isStarted() && !isStopRequested())
