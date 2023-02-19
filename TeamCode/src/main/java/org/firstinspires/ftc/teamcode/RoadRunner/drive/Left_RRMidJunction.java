@@ -93,8 +93,8 @@ public class Left_RRMidJunction extends LinearOpMode {
         timer = new ElapsedTime();
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose          = new Pose2d(37, 64, Math.toRadians(90));
-        Pose2d closeHighJunction  = new Pose2d(31, 8, Math.toRadians(224));
+        Pose2d startPose          = new Pose2d(37, 63, Math.toRadians(90));
+        Pose2d closeHighJunction  = new Pose2d(29, 6, Math.toRadians(224));
         Pose2d Stack              = new Pose2d(65, 16, Math.toRadians(3));
         Pose2d Middle_Tile        = new Pose2d(40,18, Math.toRadians(0));
         Pose2d closeMidJunction   = new Pose2d(32, 20, Math.toRadians(130));

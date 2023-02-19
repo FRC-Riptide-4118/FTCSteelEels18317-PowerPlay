@@ -29,20 +29,20 @@ public class CommandOpModeTesting extends CommandOpMode {
     public void initialize() {
         // initialize hardware
         m_gripper       = new Gripper(hardwareMap);
-        m_drivetrain    = new Drivetrain(hardwareMap);
-        m_slides        = new Slides(hardwareMap);
-        m_arm           = new Arm(hardwareMap);
-        m_intake        = new Intake(hardwareMap);
-        m_intakeServos  = new IntakeServos(hardwareMap);
+//        m_drivetrain    = new Drivetrain(hardwareMap);
+//        m_slides        = new Slides(hardwareMap);
+//        m_arm           = new Arm(hardwareMap);
+//        m_intake        = new Intake(hardwareMap);
+//        m_intakeServos  = new IntakeServos(hardwareMap);
 
         // schedule all commands
         schedule(
-                new GripperTeleOp(m_gripper, gamepad1),
+                new GripperTeleOp(m_gripper, gamepad1)/*,
                 new DrivetrainTeleOp(m_drivetrain, gamepad1),
                 new SlidesTeleOp(m_slides, gamepad1),
                 new ArmTeleOp(m_arm, gamepad1),
                 new IntakeTeleOp(m_intake, m_gripper, gamepad1),
                 new IntakeServosTeleOp(m_intakeServos, m_gripper, gamepad1),
-                new ScoringTeleOp(m_arm, m_slides, gamepad1));
+                new ScoringTeleOp(m_arm, m_slides, gamepad1)*/);
     }
 }

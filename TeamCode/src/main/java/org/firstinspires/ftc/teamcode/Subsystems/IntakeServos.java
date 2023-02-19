@@ -15,7 +15,7 @@ public class IntakeServos extends SubsystemBase {
 
     // Intake Servo Values
     public static double IntakeLeft_out    = 0.9;
-    public static double IntakeRight_out   = 0.28;
+    public static double IntakeRight_out   = 1;
     public static double IntakeLeft_in     = 0.3;
     public static double IntakeRight_in    = 0.75;
 
