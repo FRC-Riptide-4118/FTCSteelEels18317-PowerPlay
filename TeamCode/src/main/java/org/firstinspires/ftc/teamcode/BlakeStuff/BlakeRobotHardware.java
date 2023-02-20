@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.BlakeStuff;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1Constants;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2Constants;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -100,15 +100,15 @@ public class BlakeRobotHardware
         rightSlide. setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Arm servos
-        arm1.setPosition(Arm1.Start);
-        arm2.setPosition(Arm2.Start);
+        arm1.setPosition(Arm1Constants.Start);
+        arm2.setPosition(Arm2Constants.Start);
 
         // Wiggle the arm servos so they (hopefully) don't
         // misbehave on the first two real commands
-        arm1.setPosition(Arm1.Start + 0.01);
-        arm2.setPosition(Arm2.Start + 0.01);
-        arm1.setPosition(Arm1.Start);
-        arm2.setPosition(Arm2.Start);
+        arm1.setPosition(Arm1Constants.Start + 0.01);
+        arm2.setPosition(Arm2Constants.Start + 0.01);
+        arm1.setPosition(Arm1Constants.Start);
+        arm2.setPosition(Arm2Constants.Start);
     }
 
     /*------- Define any other methods down here! -------*/

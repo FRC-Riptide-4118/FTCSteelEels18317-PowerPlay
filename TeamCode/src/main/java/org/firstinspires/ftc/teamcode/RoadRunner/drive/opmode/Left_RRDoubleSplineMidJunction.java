@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.RoadRunner.drive;
+package org.firstinspires.ftc.teamcode.RoadRunner.drive.opmode;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -9,24 +9,24 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
+import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
+import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
+import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
-import org.firstinspires.ftc.teamcode.Subsystems.Slides;
-import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@Autonomous(name = "Left_RRMidJunction")
-public class Left_RRMidJunction extends LinearOpMode {
+@Autonomous(name = "Left_RRDoubleSplineMidJunction")
+public class Left_RRDoubleSplineMidJunction extends LinearOpMode {
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -94,14 +94,14 @@ public class Left_RRMidJunction extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startPose           = new Pose2d(37, 63, Math.toRadians(90));
-        Pose2d PreLoadMidJunction  = new Pose2d(33, 18, Math.toRadians(135));
-        Pose2d Stack               = new Pose2d(65, 14, Math.toRadians(0));
-        Pose2d Middle_Tile         = new Pose2d(40, 18, Math.toRadians(0));
-        Pose2d closeMidJunction    = new Pose2d(33, 18, Math.toRadians(135));
+        Pose2d PreLoadMidJunction  = new Pose2d(31, 28, Math.toRadians(225));
+        Pose2d Stack               = new Pose2d(65, 10, Math.toRadians(0));
+        Pose2d Middle_Tile         = new Pose2d(40,18, Math.toRadians(0));
+        Pose2d closeMidJunction    = new Pose2d(32, 20, Math.toRadians(130));
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence High_Junction = drive.trajectorySequenceBuilder(startPose)
-                .back(45)
+                .back(25)
                 .splineTo(new Vector2d(PreLoadMidJunction.getX(), PreLoadMidJunction.getY()), PreLoadMidJunction.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-2, slides::slidesToMedium)
                 .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
@@ -110,10 +110,12 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(.8, arm::armToCone1)
                 .UNSTABLE_addTemporalMarkerOffset(.9, slides::slidesToStart)
                 .waitSeconds(0.5)
+                .splineTo(new Vector2d(Middle_Tile.getX(), Middle_Tile.getY()), Middle_Tile.getHeading())
                 //Stack 1
                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
                 .waitSeconds(0.95)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(-0.05, arm::armToCone1Wiggle)
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())

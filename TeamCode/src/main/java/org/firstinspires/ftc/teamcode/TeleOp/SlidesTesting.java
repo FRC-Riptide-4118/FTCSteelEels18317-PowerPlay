@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1Constants;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2Constants;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -45,8 +45,8 @@ public class SlidesTesting extends LinearOpMode {
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
         // Intake = hardwareMap.get(DcMotor.class, "Intake");
 //
-        arm1.setPosition(Arm1.Start);
-        arm2.setPosition(Arm2.Start);
+        arm1.setPosition(Arm1Constants.Start);
+        arm2.setPosition(Arm2Constants.Start);
 //        Gripper.setPosition(Gripper_Grab);
 
         leftSlide.setDirection(DcMotor.Direction.REVERSE);

@@ -76,7 +76,7 @@ public class ScoringTeleOp extends CommandBase {
 
         if(returning) {
             if(atHigh && (armInTimer.seconds() > 0)) {
-                m_slides.setSlidesPower(0.7);
+                m_slides.setSlidesPower(1);
                 m_slides.slidesToGround();
                 m_arm.armToStart();
                 m_arm.armToStart();
@@ -85,7 +85,7 @@ public class ScoringTeleOp extends CommandBase {
             }
 
             if(atMid && (armInTimer.seconds() > 0.2)) {
-                m_slides.setSlidesPower(0.7);
+                m_slides.setSlidesPower(1);
                 m_slides.slidesToGround();
                 m_arm.armToStart();
                 m_arm.armToStart();
@@ -93,8 +93,8 @@ public class ScoringTeleOp extends CommandBase {
                 atMid = false;
             }
 
-            if(atLow && (armInTimer.seconds() > 0.4)) {
-                m_slides.setSlidesPower(0.7);
+            if(atLow && (armInTimer.seconds() > 0.3)) {
+                m_slides.setSlidesPower(1);
                 m_slides.slidesToGround();
                 m_arm.armToStart();
                 m_arm.armToStart();
@@ -104,7 +104,7 @@ public class ScoringTeleOp extends CommandBase {
 
             else{
                 if(armInTimer.seconds() > 0.75){
-                    m_slides.setSlidesPower(0.7);
+                    m_slides.setSlidesPower(1);
                     m_slides.slidesToGround();
                     m_arm.armToStart();
                     m_arm.armToStart();
