@@ -1,20 +1,10 @@
 package org.firstinspires.ftc.teamcode.BlakeStuff;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "(Blake) Test TeleOp", group = "Blake")
 public class BlakeTestTeleOp extends LinearOpMode {

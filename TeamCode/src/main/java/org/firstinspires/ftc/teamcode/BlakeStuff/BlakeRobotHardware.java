@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.BlakeStuff;
 
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -93,8 +93,8 @@ public class BlakeRobotHardware
         leftSlide.  setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlide. setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftSlide.  setTargetPosition(Slides.Start);
-        rightSlide. setTargetPosition(Slides.Start);
+        leftSlide.  setTargetPosition(SlidesConstants.Start);
+        rightSlide. setTargetPosition(SlidesConstants.Start);
 
         leftSlide.  setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightSlide. setMode(DcMotor.RunMode.RUN_TO_POSITION);

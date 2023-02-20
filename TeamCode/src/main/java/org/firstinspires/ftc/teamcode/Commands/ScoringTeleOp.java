@@ -5,16 +5,24 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
+import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
+import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
+import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
+import org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants;
 
 /**
  * An example command that uses an example subsystem.
  */
 public class ScoringTeleOp extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Arm        m_arm;
-    private final Gamepad    m_gamepad1;
-    private final Slides     m_slides;
+    private final Arm              m_arm;
+    private final Gamepad          m_gamepad1;
+    private final Slides           m_slides;
+    private final Gripper          m_gripper;
+//    private final Intake           m_intake;
+//    private final IntakeServos     m_intakeServos;
+
 
     private boolean raisingToLow    = false;
     private boolean returning       = false;
@@ -26,17 +34,25 @@ public class ScoringTeleOp extends CommandBase {
 
     private ElapsedTime armInTimer;
 
+    private boolean pressedLastIteration = false;
+
     /**
      * Creates a new ExampleCommand.
      *  @param arm    The subsystem used by this command.
      *  @param slides The subsystem used by this command.
+     *  @param gripper The subsystem used by this command.
+//     *  @param intake The subsystem used by this command.
+//     *  @param intakeServos The subsystem used by this command.
      */
-    public ScoringTeleOp(Arm arm, Slides slides, Gamepad gamepad1) {
-        m_arm        = arm;
-        m_gamepad1   = gamepad1;
-        m_slides     = slides;
+    public ScoringTeleOp(Arm arm, Slides slides, Gripper gripper, /*Intake intake, IntakeServos intakeServos, */ Gamepad gamepad1) {
+        m_arm          = arm;
+        m_gamepad1     = gamepad1;
+        m_slides       = slides;
+        m_gripper      = gripper;
+//        m_intake       = intake;
+//        m_intakeServos = intakeServos;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(arm, slides);
+        addRequirements(arm, slides, gripper);
         armInTimer = new ElapsedTime();
         armInTimer.reset();
     }
@@ -49,60 +65,51 @@ public class ScoringTeleOp extends CommandBase {
 
     @Override
     public void execute() {
+
         /*-------Lift & Arm-------*/
         // Ground
         if(m_gamepad1.a) {
             returning = true;
             m_arm.armToStart();
+            armInTimer.reset();
         }
 
         if(returning) {
-
-            // int pos = 0;
-            // double times[3] = {1, 0.5, 0.25};
-            // if (armInTimer.seconds() > times[pos]) { do stuff}
-            // -----
-            // pos = (pos + 1) % 3;
-
-            if(atHigh && (armInTimer.seconds() > 0.25)) {
+            if(atHigh && (armInTimer.seconds() > 0)) {
                 m_slides.setSlidesPower(0.7);
-                m_slides.slidesToStart();
+                m_slides.slidesToGround();
                 m_arm.armToStart();
                 m_arm.armToStart();
                 returning = false;
                 atHigh = false;
-                armInTimer.reset();
             }
 
-            if(atMid && (armInTimer.seconds() > 0.5)) {
+            if(atMid && (armInTimer.seconds() > 0.2)) {
                 m_slides.setSlidesPower(0.7);
-                m_slides.slidesToStart();
+                m_slides.slidesToGround();
                 m_arm.armToStart();
                 m_arm.armToStart();
                 returning = false;
                 atMid = false;
-                armInTimer.reset();
             }
 
-            if(atLow && (armInTimer.seconds() > 1.0)) {
+            if(atLow && (armInTimer.seconds() > 0.4)) {
                 m_slides.setSlidesPower(0.7);
-                m_slides.slidesToStart();
+                m_slides.slidesToGround();
                 m_arm.armToStart();
                 m_arm.armToStart();
                 returning = false;
                 atLow = false;
-                armInTimer.reset();
             }
 
             else{
-                if(armInTimer.seconds() > 1.0){
+                if(armInTimer.seconds() > 0.75){
                     m_slides.setSlidesPower(0.7);
-                    m_slides.slidesToStart();
+                    m_slides.slidesToGround();
                     m_arm.armToStart();
                     m_arm.armToStart();
                     returning = false;
                     atLow = false;
-                    armInTimer.reset();
                 }
             }
         }
@@ -154,6 +161,39 @@ public class ScoringTeleOp extends CommandBase {
                 atHigh = true;
             }
         }
+
+        /*-------Gripper-------*/
+        boolean pressed = m_gamepad1.left_bumper;
+        if (pressed & !pressedLastIteration) {
+
+            if(m_gripper.isGripping()) {
+                m_gripper.releaseCone();
+            }
+            else {
+                m_gripper.gripCone();
+            }
+        }
+        pressedLastIteration = pressed;
+
+//        /*-------Intake-------*/
+//        if(m_gamepad1.right_trigger > 0.1) {
+//            m_intake.intakeIn();
+//        }
+//
+//        else if(m_gamepad1.right_bumper) {
+//            m_intake.intakeOut();
+//        }
+//
+//        else {
+//            m_intake.intake(0);
+//        }
+//
+//        if (m_gripper.isGripping() || m_gripper.Distance()) {
+//            m_intakeServos.intakeServoOut();
+//        }
+//        else {
+//            m_intakeServos.intakeServoIn();
+//        }
     }
 
    @Override

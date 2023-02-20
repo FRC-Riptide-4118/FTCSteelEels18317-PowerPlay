@@ -32,11 +32,11 @@ public class SlidesTeleOp extends CommandBase {
     @Override
     public void execute() {
         // Fine Control the Slides
-        if(m_gamepad1.dpad_down) {
+        if(m_gamepad1.dpad_up) {
              m_slides.leftSlide.setTargetPosition(m_slides.leftSlide.getCurrentPosition() + 50);
              m_slides.rightSlide.setTargetPosition(m_slides.rightSlide.getCurrentPosition() + 50);
         }
-        if(m_gamepad1.dpad_up) {
+        if(m_gamepad1.dpad_down) {
             m_slides.leftSlide.setTargetPosition(m_slides.leftSlide.getCurrentPosition() - 50);
             m_slides.rightSlide.setTargetPosition(m_slides.rightSlide.getCurrentPosition() - 50);
         }

@@ -4,16 +4,14 @@ import static org.firstinspires.ftc.teamcode.Subsystems.Arm.Arm1_Scoring;
 import static org.firstinspires.ftc.teamcode.Subsystems.Arm.Arm2_Scoring;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeServos;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class EelverHardware {
@@ -66,8 +64,8 @@ public class EelverHardware {
         leftSlide.  setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlide. setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftSlide.  setTargetPosition(Slides.Start);
-        rightSlide. setTargetPosition(Slides.Start);
+        leftSlide.  setTargetPosition(SlidesConstants.Start);
+        rightSlide. setTargetPosition(SlidesConstants.Start);
 
         leftSlide.  setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightSlide. setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -83,14 +81,14 @@ public class EelverHardware {
         arm1.setPosition(Arm1.Start);
         arm2.setPosition(Arm2.Start);
 
-        // PID Values
-        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-                new PIDFCoefficients(5, 0, 0, 0));
-        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-                new PIDFCoefficients(5, 0, 0, 0));
+//        // PID Values
+//        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+//                new PIDFCoefficients(5, 0, 0, 0));
+//        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
+//                new PIDFCoefficients(5, 0, 0, 0));
 
         // Intake
-        Intake.     setDirection(DcMotor.Direction.REVERSE);
+        Intake.     setDirection(DcMotor.Direction.FORWARD);
         intakeServoOut();
     }
 
@@ -156,26 +154,32 @@ public class EelverHardware {
 
     public void slidesToStart()
     {
-        leftSlide.setTargetPosition(Slides.Ground);
-        rightSlide.setTargetPosition(Slides.Ground);
+        leftSlide.setTargetPosition(SlidesConstants.Start);
+        rightSlide.setTargetPosition(SlidesConstants.Start);
+    }
+
+    public void slidesToGround()
+    {
+        leftSlide.setTargetPosition(SlidesConstants.Ground);
+        rightSlide.setTargetPosition(SlidesConstants.Ground);
     }
 
     public void slidesToLow()
     {
-        leftSlide.setTargetPosition(Slides.Low);
-        rightSlide.setTargetPosition(Slides.Low);
+        leftSlide.setTargetPosition(SlidesConstants.Low);
+        rightSlide.setTargetPosition(SlidesConstants.Low);
     }
 
     public void slidesToMedium()
     {
-        leftSlide.setTargetPosition(Slides.Medium);
-        rightSlide.setTargetPosition(Slides.Medium);
+        leftSlide.setTargetPosition(SlidesConstants.Medium);
+        rightSlide.setTargetPosition(SlidesConstants.Medium);
     }
 
     public void slidesToHigh()
     {
-        leftSlide.setTargetPosition(Slides.High);
-        rightSlide.setTargetPosition(Slides.High);
+        leftSlide.setTargetPosition(SlidesConstants.High);
+        rightSlide.setTargetPosition(SlidesConstants.High);
     }
 
     public boolean slidesAreBusy()
@@ -201,11 +205,11 @@ public class EelverHardware {
     }
 
     public void intakeIn() {
-        Intake.setPower(.5);
+        Intake.setPower(1);
     }
 
     public void intakeOut() {
-        Intake.setPower(-.5);
+        Intake.setPower(-0.5);
     }
 
     public void intakeServoIn() {

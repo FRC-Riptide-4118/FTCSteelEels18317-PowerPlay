@@ -15,6 +15,7 @@ public class IntakeTeleOp extends CommandBase {
     private final Gripper m_gripper;
     private final Gamepad m_gamepad1;
 
+
     /**
      * Creates a new ExampleCommand.
      *

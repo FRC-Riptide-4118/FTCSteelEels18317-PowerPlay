@@ -2,9 +2,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -14,8 +12,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.Auto.Testing.PID;
 
 @TeleOp(name = "TestSlide", group = "Robot")
 
@@ -61,8 +57,8 @@ public class SlidesTesting extends LinearOpMode {
         rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Slides
-        leftSlide.setTargetPosition(Slides.Start);
-        rightSlide.setTargetPosition(Slides.Start);
+        leftSlide.setTargetPosition(SlidesConstants.Start);
+        rightSlide.setTargetPosition(SlidesConstants.Start);
         leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -83,16 +79,16 @@ public class SlidesTesting extends LinearOpMode {
             if(gamepad2.a) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides.Start);
-                rightSlide.setTargetPosition(Slides.Start);
+                leftSlide.setTargetPosition(SlidesConstants.Start);
+                rightSlide.setTargetPosition(SlidesConstants.Start);
             }
 
             // Low
             if(gamepad2.x) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides.Low);
-                rightSlide.setTargetPosition(Slides.Low);
+                leftSlide.setTargetPosition(SlidesConstants.Low);
+                rightSlide.setTargetPosition(SlidesConstants.Low);
 
             }
 
@@ -100,16 +96,16 @@ public class SlidesTesting extends LinearOpMode {
             if(gamepad2.y) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides.Medium);
-                rightSlide.setTargetPosition(Slides.Medium);
+                leftSlide.setTargetPosition(SlidesConstants.Medium);
+                rightSlide.setTargetPosition(SlidesConstants.Medium);
             }
 
             // High
             if(gamepad2.b) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(Slides.High);
-                rightSlide.setTargetPosition(Slides.High);
+                leftSlide.setTargetPosition(SlidesConstants.High);
+                rightSlide.setTargetPosition(SlidesConstants.High);
             }
 
 

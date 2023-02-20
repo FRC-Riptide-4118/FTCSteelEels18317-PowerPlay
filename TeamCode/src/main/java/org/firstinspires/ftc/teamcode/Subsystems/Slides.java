@@ -4,9 +4,10 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
+
 
 @Config
 public class Slides extends SubsystemBase {
@@ -16,13 +17,7 @@ public class Slides extends SubsystemBase {
     public DcMotorEx leftSlide = null;
     public DcMotorEx rightSlide = null;
 
-    //Slides Encoder Values
-    public static int Slides_Start         = -5;
-    public static int Slides_Ground        = 0;
-    public static int TeleOpSlides_Ground  = 0;
-    public static int Slides_Low           = 600;
-    public static int Slides_Medium        = 1200;
-    public static int Slides_High          = 1850;
+
 
     public Slides(HardwareMap hardwareMap) {
         leftSlide =  hardwareMap.get(DcMotorEx.class, "left_slide");
@@ -35,8 +30,8 @@ public class Slides extends SubsystemBase {
         leftSlide.  setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlide. setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftSlide.  setTargetPosition(Slides_Start);
-        rightSlide. setTargetPosition(Slides_Start);
+        leftSlide.  setTargetPosition(SlidesConstants.Start);
+        rightSlide. setTargetPosition(SlidesConstants.Start);
 
         leftSlide.  setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightSlide. setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -56,40 +51,41 @@ public class Slides extends SubsystemBase {
 
     public void slidesToStart()
     {
-        leftSlide.setTargetPosition(Slides_Ground);
-        rightSlide.setTargetPosition(Slides_Ground);
+        leftSlide.setTargetPosition(SlidesConstants.Start);
+        rightSlide.setTargetPosition(SlidesConstants.Start);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }
 
     public void slidesToLow()
     {
-        leftSlide.setTargetPosition(Slides_Low);
-        rightSlide.setTargetPosition(Slides_Low);
+        leftSlide.setTargetPosition(SlidesConstants.Low);
+        rightSlide.setTargetPosition(SlidesConstants.Low);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
+    public void slidesToGround()
+    {
+        leftSlide.setTargetPosition(SlidesConstants.Ground);
+        rightSlide.setTargetPosition(SlidesConstants.Ground);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }
 
     public void slidesToMedium()
     {
-        leftSlide.setTargetPosition(Slides_Medium);
-        rightSlide.setTargetPosition(Slides_Medium);
+        leftSlide.setTargetPosition(SlidesConstants.Medium);
+        rightSlide.setTargetPosition(SlidesConstants.Medium);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }
 
-    public void slidesToMediumAuto()
-    {
-        leftSlide.setTargetPosition(Slides_Medium+100);
-        rightSlide.setTargetPosition(Slides_Medium);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
-    }
 
     public void slidesToHigh()
     {
-        leftSlide.setTargetPosition(Slides_High);
-        rightSlide.setTargetPosition(Slides_High);
+        leftSlide.setTargetPosition(SlidesConstants.High);
+        rightSlide.setTargetPosition(SlidesConstants.High);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }

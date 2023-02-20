@@ -104,7 +104,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             if(returning) {
                 if(armInTimer.seconds() > 1.0) {
                     hardware.setSlidesPower(1);
-                    hardware.slidesToStart();
+                    hardware.slidesToGround();
                     hardware.releaseCone();
                     hardware.armToStart();
                     returning = false;
@@ -166,10 +166,17 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             }
 
             /*------- Intake -------*/
-            hardware.intake(gamepad1.right_trigger);
 
-            if(gamepad1.right_bumper) {
+            if(gamepad1.right_trigger > 0.1) {
+                hardware.intakeIn();
+            }
+
+            else if(gamepad1.right_bumper) {
                 hardware.intakeOut();
+            }
+
+            else {
+                hardware.intake(0);
             }
 
             if(gamepad1.dpad_left) {
@@ -180,9 +187,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 hardware.intakeServoOut();
             }
 
-            else {
-                hardware.intake(0);
-            }
         }
     }
 
