@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1Constants;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2Constants;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.GripperConstants;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeServosConstants;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -15,6 +14,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants;
 
 public class EelverHardware {
 
@@ -101,17 +101,17 @@ public class EelverHardware {
     }
 
     public boolean isGripping() {
-        return gripper.getPosition() == Gripper_Grab;
+        return gripper.getPosition() == GripperConstants.Gripper_Grab;
     }
 
     public void gripCone()
     {
-        gripper.setPosition(Gripper_Grab);
+        gripper.setPosition(MotorValuesConstants.GripperConstants.Gripper_Grab);
     }
 
     public void releaseCone()
     {
-        gripper.setPosition(Gripper_Release);
+        gripper.setPosition(GripperConstants.Gripper_Release);
     }
 
     public void armToStart()

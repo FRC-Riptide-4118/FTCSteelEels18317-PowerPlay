@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.acmerobotics.dashboard.config.Config;
 
-@Config
 public class MotorValuesConstants {
 
     //Slides Encoder Values
@@ -52,7 +51,11 @@ public class MotorValuesConstants {
         public static double IntakeRight_in    = 0.3;
     }
 
-    // Gripper Values
-    public static double Gripper_Grab    = 0;
-    public static double Gripper_Release = 0.25;
+    @Config
+    public static class GripperConstants {
+        // Gripper Values
+        public static double Gripper_Grab    = 0;
+        public static double Gripper_Release = 0.25;
+    }
+
 }

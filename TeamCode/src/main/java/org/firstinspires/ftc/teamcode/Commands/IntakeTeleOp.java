@@ -23,9 +23,9 @@ public class IntakeTeleOp extends CommandBase {
      * @param gripper The subsystem used by this command.
      */
     public IntakeTeleOp(Intake intake, Gripper gripper, Gamepad gamepad1) {
-        m_gripper    = gripper;
-        m_intake     = intake;
-        m_gamepad1   = gamepad1;
+        m_gripper      = gripper;
+        m_intake       = intake;
+        m_gamepad1     = gamepad1;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(intake, gripper);
     }
@@ -44,6 +44,14 @@ public class IntakeTeleOp extends CommandBase {
         else {
             m_intake.intake(0);
         }
+
+        if (m_gripper.isGripping() || m_gripper.Distance()) {
+            m_intake.intakeServoOut();
+        }
+        else {
+            m_intake.intakeServoIn();
+        }
+
     }
 
     @Override

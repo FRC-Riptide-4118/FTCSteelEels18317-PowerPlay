@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -60,9 +59,7 @@ public class Left_RRDoubleSplineMidJunction extends LinearOpMode {
         Slides         slides        = new Slides(hardwareMap);
         Arm            arm           = new Arm(hardwareMap);
         Intake         intake        = new Intake(hardwareMap);
-        IntakeServos   intakeServos  = new IntakeServos(hardwareMap);
 
-        intakeServos.getSubsystem();
         intake.getSubsystem();
         slides.getSubsystem();
         arm.getSubsystem();
@@ -249,7 +246,7 @@ public class Left_RRDoubleSplineMidJunction extends LinearOpMode {
         }
 
         gripper.gripCone();
-        intakeServos.intakeServoOut();
+        intake.intakeServoOut();
         drive.followTrajectorySequence(High_Junction);
 
         if (tagOfInterest == null || tagOfInterest.id == Left) {

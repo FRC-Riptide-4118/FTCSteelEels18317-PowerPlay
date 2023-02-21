@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
-import org.firstinspires.ftc.teamcode.EelverHardware;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.openftc.apriltag.AprilTagDetection;
@@ -21,7 +20,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
 
 import java.util.ArrayList;
 
@@ -65,9 +63,7 @@ public class Left_CloseHighJunction extends LinearOpMode {
         Slides       slides        = new Slides(hardwareMap);
         Arm          arm           = new Arm(hardwareMap);
         Intake       intake        = new Intake(hardwareMap);
-        IntakeServos intakeServos  = new IntakeServos(hardwareMap);
 
-        intakeServos.getSubsystem();
         intake.getSubsystem();
         slides.getSubsystem();
         arm.getSubsystem();
@@ -167,7 +163,7 @@ public class Left_CloseHighJunction extends LinearOpMode {
 
         gripper.gripCone();
         arm.armWiggle();
-        intakeServos.intakeServoOut();
+        intake.intakeServoOut();
         gripper.releaseCone();
 
         while (!isStarted() && !isStopRequested())

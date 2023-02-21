@@ -38,7 +38,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 
 @TeleOp(name = "CommandOpModeTesting", group = "Robot")
@@ -47,7 +46,6 @@ public class CommandOpModeTesting extends CommandOpMode {
     private Arm                 m_arm;
     private Slides              m_slides;
     private Intake              m_intake;
-    private IntakeServos        m_intakeServos;
     private Gripper             m_gripper;
     private Drivetrain          m_drivetrain;
 
@@ -59,7 +57,6 @@ public class CommandOpModeTesting extends CommandOpMode {
         m_slides        = new Slides(hardwareMap);
         m_arm           = new Arm(hardwareMap);
         m_intake        = new Intake(hardwareMap);
-        m_intakeServos  = new IntakeServos(hardwareMap);
 
         // schedule all commands
         schedule(

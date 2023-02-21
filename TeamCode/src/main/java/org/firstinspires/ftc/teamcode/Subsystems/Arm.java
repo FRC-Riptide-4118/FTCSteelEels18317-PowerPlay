@@ -5,6 +5,9 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1Constants;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2Constants;
+
 import org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants;
 
 public class Arm extends SubsystemBase {
@@ -34,18 +37,18 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean ArmScoring() {
-        return arm1.getPosition() == MotorValuesConstants.Arm1Constants.Scoring;
+        return arm1.getPosition() == Arm1Constants.Scoring;
     }
 
     public void armToStart() {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.Start);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.Start);
+        arm1.setPosition(Arm1Constants.Start);
+        arm2.setPosition(Arm2Constants.Start);
     }
 
     public void armToCone1()
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.Cone1);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.Cone1);
+        arm1.setPosition(Arm1Constants.Cone1);
+        arm2.setPosition(Arm2Constants.Cone1);
     }
 
     public void armToCone1Wiggle()

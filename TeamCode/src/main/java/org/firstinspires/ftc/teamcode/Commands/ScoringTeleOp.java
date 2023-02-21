@@ -6,10 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
-import org.firstinspires.ftc.teamcode.Subsystems.IntakeServos;
-import org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants;
 
 /**
  * An example command that uses an example subsystem.
@@ -42,7 +39,6 @@ public class ScoringTeleOp extends CommandBase {
      *  @param slides The subsystem used by this command.
      *  @param gripper The subsystem used by this command.
 //     *  @param intake The subsystem used by this command.
-//     *  @param intakeServos The subsystem used by this command.
      */
     public ScoringTeleOp(Arm arm, Slides slides, Gripper gripper, /*Intake intake, IntakeServos intakeServos, */ Gamepad gamepad1) {
         m_arm          = arm;
