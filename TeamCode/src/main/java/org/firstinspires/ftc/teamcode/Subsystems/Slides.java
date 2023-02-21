@@ -15,8 +15,6 @@ public class Slides extends SubsystemBase {
     public DcMotorEx leftSlide = null;
     public DcMotorEx rightSlide = null;
 
-
-
     public Slides(HardwareMap hardwareMap) {
         leftSlide =  hardwareMap.get(DcMotorEx.class, "left_slide");
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");

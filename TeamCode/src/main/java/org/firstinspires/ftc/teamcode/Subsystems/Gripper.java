@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.GripperConstants;
 
 @Config
 public class Gripper extends SubsystemBase {
@@ -14,10 +15,6 @@ public class Gripper extends SubsystemBase {
      */
     public  Servo          gripper;
     public  DistanceSensor distanceSensor;
-
-    // Gripper Values
-    public static double Gripper_Grab = 0;
-    public static double Gripper_Release = 0.25;
 
     public boolean Distance() {
         return (distanceSensor.getDistance(DistanceUnit.MM) <= 50);
@@ -29,17 +26,17 @@ public class Gripper extends SubsystemBase {
     }
 
     public boolean isGripping() {
-        return gripper.getPosition() == Gripper_Grab;
+        return gripper.getPosition() == GripperConstants.Gripper_Grab;
     }
 
     public void gripCone()
     {
-        gripper.setPosition(Gripper_Grab);
+        gripper.setPosition(GripperConstants.Gripper_Grab);
     }
 
     public void releaseCone()
     {
-        gripper.setPosition(Gripper_Release);
+        gripper.setPosition(GripperConstants.Gripper_Release);
     }
 
     public double getDistance() {

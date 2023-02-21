@@ -33,18 +33,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.GripperConstants;
-
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
-
-
-import org.firstinspires.ftc.teamcode.EelverHardware;
 import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
-import org.firstinspires.ftc.teamcode.Subsystems.Arm;
-import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 
 @TeleOp(name = "TeleOpMecanumDrive", group = "Robot")
 
@@ -125,7 +118,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
             if(returning) {
                 if(atHigh && (armInTimer.seconds() > 0)) {
-                    m_slides.setSlidesPower(1);
                     m_slides.slidesToGround();
                     m_arm.armToStart();
                     returning = false;
@@ -133,7 +125,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 }
 
                 if(atMid && (armInTimer.seconds() > 0.2)) {
-                    m_slides.setSlidesPower(1);
                     m_slides.slidesToGround();
                     m_arm.armToStart();
                     returning = false;
@@ -141,7 +132,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 }
 
                 if(atLow && (armInTimer.seconds() > 0.3)) {
-                    m_slides.setSlidesPower(1);
                     m_slides.slidesToGround();
                     m_arm.armToStart();
                     returning = false;
@@ -150,7 +140,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
                 else{
                     if(armInTimer.seconds() > 0.75){
-                        m_slides.setSlidesPower(1);
                         m_slides.slidesToGround();
                         m_arm.armToStart();
                         returning = false;
@@ -162,7 +151,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             // Low
             if(gamepad1.x) {
                 raisingToLow = true;
-                m_slides.setSlidesPower(1);
                 m_slides.slidesToLow();
             }
             if(raisingToLow) {
@@ -178,7 +166,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             // Medium
             if(gamepad1.y) {
                 raisingToMiddle = true;
-                m_slides.setSlidesPower(1);
                 m_slides.slidesToMedium();
             }
             if(raisingToMiddle) {
@@ -194,7 +181,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             // High
             if(gamepad1.b) {
                 raisingToHigh = true;
-                m_slides.setSlidesPower(1);
                 m_slides.slidesToHigh();
             }
             if(raisingToHigh) {

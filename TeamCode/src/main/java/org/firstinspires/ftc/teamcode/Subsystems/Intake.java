@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeServosConstants;
+
 public class Intake extends SubsystemBase {
     /**
      * Creates a new ExampleSubsystem.
@@ -34,24 +36,18 @@ public class Intake extends SubsystemBase {
     public Servo intakeLeft = null;
     public Servo intakeRight = null;
 
-    // Intake Servo Values
-    public static double IntakeLeft_out    = 0.9;
-    public static double IntakeRight_out   = 1;
-    public static double IntakeLeft_in     = 0.3;
-    public static double IntakeRight_in    = 0.75;
-
     public void intakeServoIn() {
-        intakeLeft.setPosition(IntakeLeft_in);
-        intakeRight.setPosition(IntakeRight_in);
+        intakeLeft.setPosition(IntakeServosConstants.IntakeLeft_in);
+        intakeRight.setPosition(IntakeServosConstants.IntakeRight_in);
     }
 
     public void intakeServoOut() {
-        intakeLeft.setPosition(IntakeLeft_out);
-        intakeRight.setPosition(IntakeRight_out);
+        intakeLeft.setPosition(IntakeServosConstants.IntakeLeft_out);
+        intakeRight.setPosition(IntakeServosConstants.IntakeRight_out);
     }
 
     public boolean intakeServosIn() {
-        return intakeLeft.getPosition() == IntakeLeft_in;
+        return intakeLeft.getPosition() == IntakeServosConstants.IntakeLeft_in;
     }
 
     @Override
