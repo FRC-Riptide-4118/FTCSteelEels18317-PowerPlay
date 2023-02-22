@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.BlakeStuff.Subsystems;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Release;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.GripperConstants;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -39,7 +38,7 @@ public class Gripper extends SubsystemBase {
      */
     public void grip()
     {
-        gripper.setPosition(Gripper_Grab);
+        gripper.setPosition(GripperConstants.Gripper_Grab);
     }
 
     /**
@@ -47,6 +46,6 @@ public class Gripper extends SubsystemBase {
      */
     public void release()
     {
-        gripper.setPosition(Gripper_Release);
+        gripper.setPosition(GripperConstants.Gripper_Release);
     }
 }

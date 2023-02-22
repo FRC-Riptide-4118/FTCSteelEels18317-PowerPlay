@@ -22,10 +22,10 @@ public class MotorValuesConstants {
         public static double Start 	 = 0.2;
 		public static double Scoring = 0.85;
 		public static double Front   = 0.85;
-		public static double Cone1 	 = 0;
-        public static double Cone2   = 0.05;
+		public static double Cone1 	 = 0.03;
+        public static double Cone2   = 0.06;
         public static double Cone3   = 0.1;
-        public static double Cone4   = 0.15;
+        public static double Cone4   = 0.12;
         public static double Cone5   = 0.2;
     }
 
@@ -35,10 +35,10 @@ public class MotorValuesConstants {
 		public static double Start   = 0.8;
         public static double Scoring = 0.15;
         public static double Front   = 0.15;
-        public static double Cone1   = 1;
-        public static double Cone2   = 0.95;
+        public static double Cone1   = 0.97;
+        public static double Cone2   = 0.94;
         public static double Cone3   = 0.9;
-        public static double Cone4   = 0.85;
+        public static double Cone4   = 0.88;
         public static double Cone5   = 0.8;
     }
 

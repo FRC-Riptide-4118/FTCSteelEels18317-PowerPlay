@@ -13,10 +13,10 @@ public class MeepMeepTesting {
         MeepMeep meepMeep = new MeepMeep(800);
 
         Pose2d startPose           = new Pose2d(37, 63, Math.toRadians(90));
-        Pose2d PreLoadMidJunction  = new Pose2d(32, 20, Math.toRadians(130));
-        Pose2d Stack               = new Pose2d(65, 10, Math.toRadians(0));
-        Pose2d Middle_Tile         = new Pose2d(40,18, Math.toRadians(0));
-        Pose2d closeMidJunction    = new Pose2d(32, 20, Math.toRadians(130));
+        Pose2d PreLoadMidJunction  = new Pose2d(33, 18, Math.toRadians(135));
+        Pose2d Stack               = new Pose2d(68, 14, Math.toRadians(0));
+        Pose2d Middle_Tile         = new Pose2d(40, 18, Math.toRadians(0));
+        Pose2d closeMidJunction    = new Pose2d(33, 18, Math.toRadians(128));
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
@@ -29,30 +29,30 @@ public class MeepMeepTesting {
                                 .waitSeconds(0.5)
                                 //Stack 1
                                 .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                                .waitSeconds(0.95)
+                                .waitSeconds(0.5)
                                 .setReversed(true)
                                 .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
                                 .waitSeconds(0.25)
                                 .setReversed(false)
                                 //Stack 2
-                                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                                .waitSeconds(0.95)
+                                .splineTo(new Vector2d(Stack.getX()+1, Stack.getY()), Stack.getHeading())
+                                .waitSeconds(0.5)
                                 .setReversed(true)
-                                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
+                                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading()-1)
                                 .waitSeconds(0.25)
                                 .setReversed(false)
                                 //Stack 3
-                                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                                .waitSeconds(0.95)
+                                .splineTo(new Vector2d(Stack.getX()+2, Stack.getY()), Stack.getHeading())
+                                .waitSeconds(0.5)
                                 .setReversed(true)
-                                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
+                                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading()-1)
                                 .waitSeconds(0.25)
                                 .setReversed(false)
                                 //Stack 4
-                                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
-                                .waitSeconds(0.95)
+                                .splineTo(new Vector2d(Stack.getX()+3, Stack.getY()), Stack.getHeading())
+                                .waitSeconds(0.5)
                                 .setReversed(true)
-                                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
+                                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading()-1)
                                 .waitSeconds(0.25)
                                 .setReversed(false)
                                 .splineTo(new Vector2d(Middle_Tile.getX(), Middle_Tile.getY()), Middle_Tile.getHeading())

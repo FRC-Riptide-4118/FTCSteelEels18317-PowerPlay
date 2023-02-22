@@ -29,7 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.GripperConstants;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -83,7 +83,7 @@ public class OutreachBot extends LinearOpMode {
             boolean pressed = gamepad1.left_bumper;
             if (pressed & !pressedLastIteration) {
 
-                if(hardware.gripper.getPosition() == Gripper_Grab) {
+                if(hardware.gripper.getPosition() == GripperConstants.Gripper_Grab) {
                     hardware.releaseCone();
                 }
                 else {
