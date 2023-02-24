@@ -225,10 +225,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 //                hardware.intakeServoOut();
 //            }
 //
-//            else {
-//                hardware.intakeServoIn();
-//            }
-
 
         }
     }

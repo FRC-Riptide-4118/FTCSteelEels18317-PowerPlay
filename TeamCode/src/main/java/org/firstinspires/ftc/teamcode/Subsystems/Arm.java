@@ -19,7 +19,7 @@ public class Arm extends SubsystemBase {
 
     private int m_counter = 0;
 
-    private final int NUM_STATES = 5;
+    private final int ENUM_STATES = 5;
 
     public Arm(HardwareMap hardwareMap) {
         arm1 = hardwareMap.get(Servo.class, "arm1");

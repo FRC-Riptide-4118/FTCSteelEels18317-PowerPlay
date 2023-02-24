@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.RoadRunner.drive;
+package org.firstinspires.ftc.teamcode.RoadRunner.drive.opmode;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -9,23 +9,23 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
+import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
+import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
-import org.firstinspires.ftc.teamcode.Subsystems.Slides;
-import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@Autonomous(name = "Left_RRMidJunction")
-public class Left_RRMidJunction extends LinearOpMode {
+@Autonomous(name = "Right_RRMidJunction")
+public class Right_RRMidJunction extends LinearOpMode {
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -90,11 +90,12 @@ public class Left_RRMidJunction extends LinearOpMode {
         timer = new ElapsedTime();
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose           = new Pose2d(37, 63, Math.toRadians(90));
-        Pose2d PreLoadMidJunction  = new Pose2d(33, 18, Math.toRadians(135));
-        Pose2d Stack               = new Pose2d(68, 12, Math.toRadians(0));
-        Pose2d Middle_Tile         = new Pose2d(40, 18, Math.toRadians(0));
-        Pose2d closeMidJunction    = new Pose2d(33, 18, Math.toRadians(128));
+        Pose2d startPose           = new Pose2d(-37, 63, Math.toRadians(90));
+        Pose2d PreLoadMidJunction  = new Pose2d(-33, 18, Math.toRadians(45));
+        Pose2d Stack               = new Pose2d(-68, 14, Math.toRadians(180));
+        Pose2d Middle_Tile         = new Pose2d(-40, 18, Math.toRadians(180));
+        Pose2d closeMidJunction    = new Pose2d(-33, 18, Math.toRadians(52));
+
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence High_Junction = drive.trajectorySequenceBuilder(startPose)

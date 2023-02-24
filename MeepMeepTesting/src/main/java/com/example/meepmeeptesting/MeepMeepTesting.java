@@ -12,17 +12,17 @@ public class MeepMeepTesting {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-        Pose2d startPose           = new Pose2d(37, 63, Math.toRadians(90));
-        Pose2d PreLoadMidJunction  = new Pose2d(33, 18, Math.toRadians(135));
-        Pose2d Stack               = new Pose2d(68, 14, Math.toRadians(0));
-        Pose2d Middle_Tile         = new Pose2d(40, 18, Math.toRadians(0));
-        Pose2d closeMidJunction    = new Pose2d(33, 18, Math.toRadians(128));
+        Pose2d startPose           = new Pose2d(-37, 63, Math.toRadians(90));
+        Pose2d PreLoadMidJunction  = new Pose2d(-33, 18, Math.toRadians(45));
+        Pose2d Stack               = new Pose2d(-68, 14, Math.toRadians(180));
+        Pose2d Middle_Tile         = new Pose2d(-40, 18, Math.toRadians(180));
+        Pose2d closeMidJunction    = new Pose2d(-33, 18, Math.toRadians(52));
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(46, 46, Math.toRadians(180), Math.toRadians(180), 12)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(37, 63, Math.toRadians(90)))
+                        drive.trajectorySequenceBuilder(new Pose2d(-37, 63, Math.toRadians(90)))
                                 //Pre-Load
                                 .back(45)
                                 .splineTo(new Vector2d(PreLoadMidJunction.getX(), PreLoadMidJunction.getY()), PreLoadMidJunction.getHeading())
