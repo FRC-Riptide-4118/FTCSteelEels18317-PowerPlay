@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.RoadRunner.drive;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
+import static org.firstinspires.ftc.teamcode.TeleOp.FieldPoseConstants.LeftAutoConstants;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
+import org.firstinspires.ftc.teamcode.TeleOp.FieldPoseConstants;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -90,75 +91,72 @@ public class Left_RRMidJunction extends LinearOpMode {
         timer = new ElapsedTime();
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose           = new Pose2d(37, 63, Math.toRadians(90));
-        Pose2d PreLoadMidJunction  = new Pose2d(33, 18, Math.toRadians(135));
-        Pose2d Stack               = new Pose2d(68, 12, Math.toRadians(0));
-        Pose2d Middle_Tile         = new Pose2d(40, 18, Math.toRadians(0));
-        Pose2d closeMidJunction    = new Pose2d(33, 18, Math.toRadians(128));
-        drive.setPoseEstimate(startPose);
 
-        TrajectorySequence High_Junction = drive.trajectorySequenceBuilder(startPose)
+        drive.setPoseEstimate(LeftAutoConstants.startPose);
+
+
+        TrajectorySequence High_Junction = drive.trajectorySequenceBuilder(LeftAutoConstants.startPose)
                 .back(45)
-                .splineTo(new Vector2d(PreLoadMidJunction.getX(), PreLoadMidJunction.getY()), PreLoadMidJunction.getHeading())
-//                .UNSTABLE_addTemporalMarkerOffset(-2, slides::slidesToMedium)
-//                .UNSTABLE_addTemporalMarkerOffset(-1, arm::armScoring)
-//                .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
+                .splineTo(new Vector2d(LeftAutoConstants.preLoadMidJunction.getX(), LeftAutoConstants.preLoadMidJunction.getY()), LeftAutoConstants.preLoadMidJunction.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-2, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(-1, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.9, arm::armToCone1)
-//                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToStart)
+                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToStart)
                 .waitSeconds(0.5)
                 //Stack 1
-                .splineTo(new Vector2d(Stack.getX(), Stack.getY()), Stack.getHeading())
+                .splineTo(new Vector2d(LeftAutoConstants.stack.getX(), LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
                 .waitSeconds(0.5)
-//                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
-//                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
-                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-//                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
-//                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
+                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.9, arm::armToCone2)
-//                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToStart)
+                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToStart)
                 .waitSeconds(0.25)
                 .setReversed(false)
                 //Stack 2
-                .splineTo(new Vector2d(Stack.getX()+1, Stack.getY()), Stack.getHeading())
+                .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+1, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
                 .waitSeconds(0.5)
-//                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
-//                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
-                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-//                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
-//                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
+                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.9, arm::armToCone3)
-//                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToStart)
+                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToStart)
                 .waitSeconds(0.25)
                 .setReversed(false)
                 //Stack 3
-                .splineTo(new Vector2d(Stack.getX()+2, Stack.getY()), Stack.getHeading())
+                .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+2, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
                 .waitSeconds(0.5)
-//                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
-//                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
-                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-//                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
-//                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
+                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.9, arm::armToCone4)
-//                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToStart)
+                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToStart)
                 .waitSeconds(0.25)
                 .setReversed(false)
                 //Stack 4
-                .splineTo(new Vector2d(Stack.getX()+3, Stack.getY()), Stack.getHeading())
+                .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+3, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
                 .waitSeconds(0.5)
-//                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
-//                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
-                .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-//                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
-//                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
+                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.9, arm::armToCone5)
-//                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToStart)
+                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToStart)
                 .waitSeconds(0.25)
                 .setReversed(false)
-                .splineTo(new Vector2d(Middle_Tile.getX(), Middle_Tile.getY()), Middle_Tile.getHeading())
+                .splineTo(new Vector2d(LeftAutoConstants.middleTile.getX(), LeftAutoConstants.middleTile.getY()), LeftAutoConstants.middleTile.getHeading())
                 .build();
 
         Trajectory trajLeft = drive.trajectoryBuilder(High_Junction.end())
