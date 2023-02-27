@@ -246,12 +246,13 @@ public class Left_RRMidJunction extends LinearOpMode {
         intake.intakeServoOut();
         drive.followTrajectorySequence(High_Junction);
 
-        if (tagOfInterest == null || tagOfInterest.id == Left) {
+        if (tagOfInterest == null || tagOfInterest.id == Middle) {
             // Do nothing
+
+        } else if (tagOfInterest.id == Left) {
+            // Left Code
             drive.followTrajectory(trajLeft);
 
-        } else if (tagOfInterest.id == Middle) {
-            // Middle Code
 
         } else if (tagOfInterest.id == Right) {
             // Right Code
