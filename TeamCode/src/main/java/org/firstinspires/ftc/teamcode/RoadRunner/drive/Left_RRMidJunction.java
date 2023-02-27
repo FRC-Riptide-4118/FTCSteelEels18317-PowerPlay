@@ -224,7 +224,7 @@ public class Left_RRMidJunction extends LinearOpMode {
                 }
 
             }
-
+            gripper.gripCone();
             telemetry.update();
             sleep(20);
         }
