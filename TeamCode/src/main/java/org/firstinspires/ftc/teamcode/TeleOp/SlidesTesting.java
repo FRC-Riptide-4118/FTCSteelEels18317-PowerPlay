@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2Con
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,7 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
+@Disabled
 @TeleOp(name = "TestSlide", group = "Robot")
 
 @Config

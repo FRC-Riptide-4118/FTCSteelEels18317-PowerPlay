@@ -22,6 +22,7 @@
 package org.firstinspires.ftc.teamcode.Auto.OpenCV;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -38,6 +39,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
+@Disabled
 @Autonomous(name = "AprilTag")
 public class AprilTagParking extends LinearOpMode {
     private DcMotor frontLeft  = null;

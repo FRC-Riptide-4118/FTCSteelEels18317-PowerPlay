@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.BlakeStuff;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
+@Disabled
 @TeleOp(name = "(Blake) Test Hardware Class", group = "Blake")
 public class BlakeTestHardwareClass extends LinearOpMode
 {
