@@ -87,9 +87,6 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 if(hardware.gripper.getPosition() == GripperConstants.Gripper_Grab) {
                     hardware.releaseCone();
                 }
-                else if (hardware.Distance()){
-                    hardware.gripCone();
-                }
                 else {
                     hardware.gripCone();
                 }
@@ -199,6 +196,13 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 hardware.rightSlide.setTargetPosition(hardware.rightSlide.getCurrentPosition() - 50);
             }
 
+//            hardware.leftSlide. setPower(gamepad2.left_stick_y);
+//            hardware.rightSlide.setPower(gamepad2.left_stick_y);
+//
+//            if(gamepad2.a) {
+//                hardware.armToStart();
+//            }
+
 //            /*------- Intake -------*/
 //
 //            if(gamepad1.right_trigger > 0.1) {
@@ -228,7 +232,4 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
         }
     }
-
-
-
 }

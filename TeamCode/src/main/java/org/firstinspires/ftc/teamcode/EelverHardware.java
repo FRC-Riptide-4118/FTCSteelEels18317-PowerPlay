@@ -51,7 +51,7 @@ public class EelverHardware {
         Intake =        hardwareMap.get(DcMotor.class, "Intake");
         intakeLeft =       hardwareMap.get(Servo.class, "intakeLeft");
         intakeRight =       hardwareMap.get(Servo.class, "intakeRight");
-        distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
+//        distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
 
         /*------- Do hardware setup -------*/
 
@@ -91,14 +91,11 @@ public class EelverHardware {
 //        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
 //                new PIDFCoefficients(5, 0, 0, 0));
 
-        // Intake
-        Intake.     setDirection(DcMotor.Direction.FORWARD);
-        intakeServoOut();
     }
 
-    public boolean Distance() {
-        return(distanceSensor.getDistance(DistanceUnit.MM) <= 30);
-    }
+//    public boolean Distance() {
+//        return(distanceSensor.getDistance(DistanceUnit.MM) <= 30);
+//    }
 
     public boolean isGripping() {
         return gripper.getPosition() == GripperConstants.Gripper_Grab;
