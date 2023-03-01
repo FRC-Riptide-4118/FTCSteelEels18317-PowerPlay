@@ -69,6 +69,14 @@ public class Slides extends SubsystemBase {
         rightSlide.setPower(1);
     }
 
+    public void slidesToStack()
+    {
+        leftSlide.setTargetPosition(SlidesConstants.Stack);
+        rightSlide.setTargetPosition(SlidesConstants.Stack);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
     public void slidesToMedium()
     {
         leftSlide.setTargetPosition(SlidesConstants.Medium);

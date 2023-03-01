@@ -13,6 +13,7 @@ public class MotorValuesConstants {
         public static int Low       = 700;
         public static int Medium    = 1300;
         public static int High      = 1950;
+        public static int Stack     = 75;
     }
 
     // Encoder Values

@@ -2,39 +2,34 @@ package org.firstinspires.ftc.teamcode.RoadRunner.drive;
 
 import static org.firstinspires.ftc.teamcode.TeleOp.FieldPoseConstants.LeftAutoConstants;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
+import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
+import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.TeleOp.FieldPoseConstants;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
-import org.firstinspires.ftc.teamcode.Subsystems.Slides;
-import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@Config
-@Autonomous(name = "Left_RRMidJunction")
-public class Left_RRMidJunction extends LinearOpMode {
-
-    private FtcDashboard dashboard = FtcDashboard.getInstance();
+@Disabled
+@Autonomous(name = "(Blake) RR Test Auto")
+public class Blake_RRTest extends LinearOpMode {
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -61,8 +56,6 @@ public class Left_RRMidJunction extends LinearOpMode {
     @Override
 
     public void runOpMode() {
-
-        Telemetry telemetry = new MultipleTelemetry(this.telemetry, dashboard.getTelemetry());
 
         //Hardware Classes
         Drivetrain     drivetrain    = new Drivetrain(hardwareMap);
@@ -106,19 +99,19 @@ public class Left_RRMidJunction extends LinearOpMode {
 
 
         TrajectorySequence High_Junction = drive.trajectorySequenceBuilder(LeftAutoConstants.startPose)
-                .forward(55)
-                .waitSeconds(0.5)
-                .setReversed(true)
-                .splineTo(new Vector2d(LeftAutoConstants.preLoadMidJunction.getX(), LeftAutoConstants.preLoadMidJunction.getY()), LeftAutoConstants.preLoadMidJunction.getHeading())
+                //.back(45)
+                .lineToLinearHeading(new Pose2d(LeftAutoConstants.startPose.getX(),
+                                                LeftAutoConstants.startPose.getY() - 48,
+                                                Math.toRadians(-45)))
+                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
                 .UNSTABLE_addTemporalMarkerOffset(-2, slides::slidesToMedium)
                 .UNSTABLE_addTemporalMarkerOffset(-1, arm::armScoring)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.9, arm::armToCone1)
-                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToStack)
+                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToGround)
                 .waitSeconds(0.5)
                 //Stack 1
-                .setReversed(false)
                 .splineTo(new Vector2d(LeftAutoConstants.stack.getX(), LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
@@ -132,12 +125,12 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .waitSeconds(0.25)
                 .setReversed(false)
                 //Stack 2
-                .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+0.5, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
+                .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+2.5, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
-                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
+                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()+0.5), LeftAutoConstants.closeMidJunction.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
                 .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.9, arm::armToCone3)
@@ -145,12 +138,12 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .waitSeconds(0.25)
                 .setReversed(false)
                 //Stack 3
-                .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+3, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
+                .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+3.5, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
-                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
+                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()+0.5), LeftAutoConstants.closeMidJunction.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
                 .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.9, arm::armToCone4)
@@ -158,19 +151,19 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .waitSeconds(0.25)
                 .setReversed(false)
                 //Stack 4
-                .splineTo(new Vector2d(LeftAutoConstants.stack.getX()-12, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
+                .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+4.5, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
                 .waitSeconds(0.5)
-//                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
-//                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
-//                .setReversed(true)
-//                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()+0.5), LeftAutoConstants.closeMidJunction.getHeading())
-//                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
-//                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
-//                .UNSTABLE_addTemporalMarkerOffset(0.5, arm::armToStart)
-//                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToGround)
-//                .waitSeconds(0.25)
-//                .setReversed(false)
-//                .splineTo(new Vector2d(LeftAutoConstants.middleTile.getX(), LeftAutoConstants.middleTile.getY()), LeftAutoConstants.middleTile.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
+                .setReversed(true)
+                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()+0.5), LeftAutoConstants.closeMidJunction.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, arm::armToStart)
+                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToGround)
+                .waitSeconds(0.25)
+                .setReversed(false)
+                .splineTo(new Vector2d(LeftAutoConstants.middleTile.getX(), LeftAutoConstants.middleTile.getY()), LeftAutoConstants.middleTile.getHeading())
                 .build();
 
         Trajectory trajLeft = drive.trajectoryBuilder(High_Junction.end())
@@ -263,12 +256,12 @@ public class Left_RRMidJunction extends LinearOpMode {
 
         } else if (tagOfInterest.id == Left) {
             // Left Code
-//            drive.followTrajectory(trajLeft);
+            drive.followTrajectory(trajLeft);
 
 
         } else if (tagOfInterest.id == Right) {
             // Right Code
-//            drive.followTrajectory(trajRight);
+            drive.followTrajectory(trajRight);
 
         } else {
             // Do nothing
