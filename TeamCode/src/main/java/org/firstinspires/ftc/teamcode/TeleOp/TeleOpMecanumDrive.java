@@ -78,6 +78,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         telemetry.addData("Say", "Hello Driver1");
         telemetry.update();
 
+        hardware.releaseCone();
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
@@ -207,47 +208,41 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             if(gamepad1.dpad_up) {
                 hardware.incrementCount();
                 hardware.armToPosition();
-//                while(gamepad1.dpad_up);
             }
+
             if(gamepad1.dpad_down) {
                 hardware.decrementCount();
                 hardware.armToPosition();
-//                while(gamepad1.dpad_down);
             }
 
-//            hardware.leftSlide. setPower(gamepad2.left_stick_y);
-//            hardware.rightSlide.setPower(gamepad2.left_stick_y);
-//
-//            if(gamepad2.a) {
-//                hardware.armToStart();
-//            }
+            if(gamepad1.dpad_left) {
+                hardware.slidesDrop();
+            }
 
-//            /*------- Intake -------*/
-//
-//            if(gamepad1.right_trigger > 0.1) {
-//                hardware.intakeIn();
-//            }
-//
-//            else if(gamepad1.right_bumper) {
-//                hardware.intakeOut();
-//            }
-//
-//            else {
-//                hardware.intake(0);
-//            }
-//
-//            if(gamepad1.dpad_left) {
-//                hardware.intakeServoIn();
-//            }
-//
-//            if(gamepad1.dpad_right) {
-//                hardware.intakeServoOut();
-//            }
-//
-//            else if (hardware.isGripping() || hardware.Distance()) {
-//                hardware.intakeServoOut();
-//            }
-//
+            if(gamepad1.dpad_right) {
+                hardware.slidesUp();
+            }
+
+            /*------- Intake -------*/
+
+            if(gamepad1.right_trigger > 0.1) {
+                hardware.intakeIn();
+                hardware.intakeServoIn();
+            }
+
+            else if(gamepad1.right_bumper) {
+                hardware.intakeOut();
+            }
+
+            else if (hardware.isGripping()) {
+                hardware.intakeServoOut();
+                hardware.intake(0);
+            }
+
+            else {
+                hardware.intake(0);
+                hardware.intakeServoOut();
+            }
 
         }
     }

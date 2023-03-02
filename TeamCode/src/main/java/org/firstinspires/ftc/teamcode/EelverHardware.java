@@ -250,6 +250,22 @@ public class EelverHardware {
         return leftSlide.isBusy() || rightSlide.isBusy();
     }
 
+    public void slidesDrop()
+    {
+        leftSlide.setTargetPosition(leftSlide.getCurrentPosition()-200);
+        rightSlide.setTargetPosition(rightSlide.getCurrentPosition()-200);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
+    public void slidesUp()
+    {
+        leftSlide.setTargetPosition(leftSlide.getCurrentPosition()+200);
+        rightSlide.setTargetPosition(rightSlide.getCurrentPosition()+200);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
     public boolean MoveCone()
     {
         return leftSlide.isBusy() || rightSlide.isBusy();

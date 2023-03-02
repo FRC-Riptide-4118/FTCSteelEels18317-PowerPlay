@@ -107,11 +107,11 @@ public class Left_RRMidJunction extends LinearOpMode {
 
         TrajectorySequence High_Junction = drive.trajectorySequenceBuilder(LeftAutoConstants.startPose)
                 .forward(55)
-                .waitSeconds(0.25)
                 .setReversed(true)
                 .splineTo(new Vector2d(LeftAutoConstants.preLoadMidJunction.getX(), LeftAutoConstants.preLoadMidJunction.getY()), LeftAutoConstants.preLoadMidJunction.getHeading())
+                .UNSTABLE_addTemporalMarkerOffset(0.1, intake::intakeServoOut)
                 .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
-                .UNSTABLE_addTemporalMarkerOffset(-2, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(-1.75, slides::slidesToMedium)
                 .UNSTABLE_addTemporalMarkerOffset(-1, arm::armScoring)
                 .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
@@ -122,7 +122,6 @@ public class Left_RRMidJunction extends LinearOpMode {
                 //Stack 1
                 .setReversed(false)
                 .splineTo(new Vector2d(LeftAutoConstants.stack.getX(), LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
-                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
@@ -137,9 +136,8 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .setReversed(false)
                 //Stack 2
                 .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+2.25, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
-                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
-                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
@@ -152,9 +150,8 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .setReversed(false)
                 //Stack 3
                 .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+4, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
-                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
-                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
@@ -166,18 +163,17 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .waitSeconds(0.25)
                 .setReversed(false)
                 //Stack 4
-                .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+6, LeftAutoConstants.stack.getY()), LeftAutoConstants.stack.getHeading())
-                .waitSeconds(0.5)
+                .splineTo(new Vector2d(LeftAutoConstants.stack.getX()+6, LeftAutoConstants.stack.getY()-0.5), LeftAutoConstants.stack.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
-                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()+0.5), LeftAutoConstants.closeMidJunction.getHeading())
+                .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX()+3.5, LeftAutoConstants.closeMidJunction.getY()+0.5), LeftAutoConstants.closeMidJunction.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
                 .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesUp)
-                .UNSTABLE_addTemporalMarkerOffset(0.8, arm::armToStart)
-                .UNSTABLE_addTemporalMarkerOffset(1.2, slides::slidesToGround)
+                .UNSTABLE_addTemporalMarkerOffset(0.9, arm::armToStart)
+                .UNSTABLE_addTemporalMarkerOffset(1, slides::slidesToGround)
                 .waitSeconds(0.25)
                 .setReversed(false)
                 .splineTo(new Vector2d(LeftAutoConstants.middleTile.getX(), LeftAutoConstants.middleTile.getY()), LeftAutoConstants.middleTile.getHeading())
@@ -185,11 +181,11 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .build();
 
         Trajectory trajLeft = drive.trajectoryBuilder(High_Junction.end())
-                .forward(24)
+                .forward(22)
                 .build();
 
         Trajectory trajRight = drive.trajectoryBuilder(High_Junction.end())
-                .back(24)
+                .back(26)
                 .build();
 
         /* OpMode */
@@ -247,7 +243,9 @@ public class Left_RRMidJunction extends LinearOpMode {
                 }
 
             }
+
             gripper.gripCone();
+            intake.intakeServoIn();
             telemetry.update();
             sleep(20);
         }
@@ -265,8 +263,6 @@ public class Left_RRMidJunction extends LinearOpMode {
             telemetry.update();
         }
 
-//        gripper.gripCone();
-        intake.intakeServoOut();
         drive.followTrajectorySequence(High_Junction);
 
         if (tagOfInterest == null || tagOfInterest.id == Middle) {
@@ -274,12 +270,12 @@ public class Left_RRMidJunction extends LinearOpMode {
 
         } else if (tagOfInterest.id == Left) {
             // Left Code
-//            drive.followTrajectory(trajLeft);
+            drive.followTrajectory(trajLeft);
 
 
         } else if (tagOfInterest.id == Right) {
             // Right Code
-//            drive.followTrajectory(trajRight);
+            drive.followTrajectory(trajRight);
 
         } else {
             // Do nothing

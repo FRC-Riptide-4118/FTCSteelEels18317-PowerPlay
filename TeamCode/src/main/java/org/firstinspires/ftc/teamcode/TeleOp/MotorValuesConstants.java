@@ -46,10 +46,10 @@ public class MotorValuesConstants {
     @Config
     public static class IntakeServosConstants {
         public static double Move_Cone         = 0.5;
-        public static double IntakeLeft_out    = 0.9;
-        public static double IntakeRight_out   = 0.9;
-        public static double IntakeLeft_in     = 0.3;
-        public static double IntakeRight_in    = 0.3;
+        public static double IntakeLeft_out    = 1;
+        public static double IntakeRight_out   = 0.18;
+        public static double IntakeLeft_in     = 0;
+        public static double IntakeRight_in    = 0.59;
     }
 
     @Config
