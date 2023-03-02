@@ -85,11 +85,26 @@ public class Slides extends SubsystemBase {
         rightSlide.setPower(1);
     }
 
-
     public void slidesToHigh()
     {
         leftSlide.setTargetPosition(SlidesConstants.High);
         rightSlide.setTargetPosition(SlidesConstants.High);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
+    public void slidesDrop()
+    {
+        leftSlide.setTargetPosition(leftSlide.getCurrentPosition()-300);
+        rightSlide.setTargetPosition(rightSlide.getCurrentPosition()-300);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
+    public void slidesUp()
+    {
+        leftSlide.setTargetPosition(leftSlide.getCurrentPosition()+300);
+        rightSlide.setTargetPosition(rightSlide.getCurrentPosition()+300);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }

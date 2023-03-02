@@ -144,7 +144,6 @@ public class TeleOpTesting extends LinearOpMode {
 //            }
 //                telemetry.addData("Arm1 Pos", arm1.getPosition());
 //                telemetry.addData("Arm2 Pos", arm2.getPosition());
-//                telemetry.addData("Gripper Distance", distanceSensor.getDistance(DistanceUnit.CM));
 //                telemetry.addLine();
 //                telemetry.addData("left pos", leftSlide.getCurrentPosition());
 //                telemetry.addData("right pos", rightSlide.getCurrentPosition());

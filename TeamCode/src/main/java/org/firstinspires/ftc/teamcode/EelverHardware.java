@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1Constants;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2Constants;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
@@ -33,6 +34,7 @@ public class EelverHardware {
     public Servo intakeLeft = null;
     public Servo intakeRight = null;
     DistanceSensor distanceSensor = null;
+    private int m_counter = 0;
 
     //    OpenCV class
     public void init(HardwareMap hardwareMap)
@@ -51,7 +53,7 @@ public class EelverHardware {
         Intake =        hardwareMap.get(DcMotor.class, "Intake");
         intakeLeft =       hardwareMap.get(Servo.class, "intakeLeft");
         intakeRight =       hardwareMap.get(Servo.class, "intakeRight");
-//        distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
+        distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
 
         /*------- Do hardware setup -------*/
 
@@ -93,10 +95,12 @@ public class EelverHardware {
 
     }
 
-//    public boolean Distance() {
-//        return(distanceSensor.getDistance(DistanceUnit.MM) <= 30);
-//    }
+    public boolean Distance() {
+        return(distanceSensor.getDistance(DistanceUnit.MM) <= 30);
+    }
 
+
+    /*------- Gripper -------*/
     public boolean isGripping() {
         return gripper.getPosition() == GripperConstants.Gripper_Grab;
     }
@@ -111,6 +115,30 @@ public class EelverHardware {
         gripper.setPosition(GripperConstants.Gripper_Release);
     }
 
+
+    /*------- Arm -------*/
+    public void incrementCount(){
+        m_counter = (m_counter + 1) % 5;
+    }
+
+    public void decrementCount(){
+        m_counter = (m_counter - 1) % 5;
+    }
+
+    public void armToPosition()
+    {
+        if (m_counter == 0)
+            armToCone1();
+        if (m_counter == 1)
+            armToCone2();
+        if (m_counter == 2)
+            armToCone3();
+        if (m_counter == 3)
+            armToCone4();
+        if (m_counter == 4)
+            armToCone5();
+    }
+
     public void armToStart()
     {
         arm1.setPosition(Arm1Constants.Start);
@@ -121,6 +149,30 @@ public class EelverHardware {
     {
         arm1.setPosition(Arm1Constants.Cone1);
         arm2.setPosition(Arm2Constants.Cone1);
+    }
+
+    public void armToCone2()
+    {
+        arm1.setPosition(Arm1Constants.Cone2);
+        arm2.setPosition(Arm2Constants.Cone2);
+    }
+
+    public void armToCone3()
+    {
+        arm1.setPosition(Arm1Constants.Cone3);
+        arm2.setPosition(Arm2Constants.Cone3);
+    }
+
+    public void armToCone4()
+    {
+        arm1.setPosition(Arm1Constants.Cone4);
+        arm2.setPosition(Arm2Constants.Cone4);
+    }
+
+    public void armToCone5()
+    {
+        arm1.setPosition(Arm1Constants.Cone5);
+        arm2.setPosition(Arm2Constants.Cone5);
     }
 
     public void armToLow()
@@ -155,6 +207,8 @@ public class EelverHardware {
         armToStart();
     }
 
+
+    /*------- Slides -------*/
     public void setSlidesPower(double power)
     {
         leftSlide.setPower(power);
@@ -201,6 +255,8 @@ public class EelverHardware {
         return leftSlide.isBusy() || rightSlide.isBusy();
     }
 
+
+    /*------- Drivetrain -------*/
     public void setMecanumPower(double drive, double strafe, double twist, double slowMode)
     {
         frontLeft   .setPower((drive + strafe + twist) * slowMode);
@@ -209,6 +265,8 @@ public class EelverHardware {
         rearRight   .setPower((drive + strafe - twist) * slowMode);
     }
 
+
+    /*------- Intake -------*/
     public void intake(double power) {
         Intake.setPower(power);
     }

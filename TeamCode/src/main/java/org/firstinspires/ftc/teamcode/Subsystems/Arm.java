@@ -124,7 +124,7 @@ public class Arm extends SubsystemBase {
 
     }
 
-    public void incrementCounter(){
+    public void setValue(){
         m_counter = (m_counter + 1) % 5;
     }
 

@@ -20,7 +20,7 @@ public class MotorValuesConstants {
     @Config
     public static class Arm1Constants
     {
-        public static double Start 	 = 0.22;
+        public static double Start 	 = 0.2;
 		public static double Scoring = 0.85;
 		public static double Front   = 0.85;
 		public static double Cone1 	 = 0.03;
@@ -33,7 +33,7 @@ public class MotorValuesConstants {
     @Config
 	public static class Arm2Constants
 	{
-		public static double Start   = 0.78;
+		public static double Start   = 0.8;
         public static double Scoring = 0.15;
         public static double Front   = 0.15;
         public static double Cone1   = 0.97;

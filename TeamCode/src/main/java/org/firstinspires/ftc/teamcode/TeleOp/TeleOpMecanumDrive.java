@@ -31,10 +31,14 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.GripperConstants;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.EelverHardware;
 
 @TeleOp(name = "TeleOpMecanumDrive", group = "Robot")
@@ -49,7 +53,12 @@ public class TeleOpMecanumDrive extends LinearOpMode {
     private boolean atMid           = false;
     private boolean atLow           = false;
 
+
+//    public DistanceSensor distanceSensor = null;
+
+
     private ElapsedTime armInTimer;
+    private ElapsedTime testTimer;
 
     private boolean pressedLastIteration = false;
 
@@ -59,7 +68,11 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         hardware.init(hardwareMap);
 
         armInTimer = new ElapsedTime();
+        testTimer = new ElapsedTime();
         armInTimer.reset();
+        testTimer.reset();
+//        distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
+
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver1");
@@ -70,6 +83,10 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+
+//            telemetry.addData("Gripper Distance", distanceSensor.getDistance(DistanceUnit.CM));
+//            telemetry.addData("Time", testTimer.seconds());
+//            telemetry.update();
 
             /*-------Drivetrain-------*/
             // Gamepad controls
@@ -186,14 +203,16 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 }
             }
 
-            // Fine Control the Slides
-            if(gamepad1.dpad_down) {
-                hardware.leftSlide.setTargetPosition(hardware.leftSlide.getCurrentPosition() + 50);
-                hardware.rightSlide.setTargetPosition(hardware.rightSlide.getCurrentPosition() + 50);
-            }
+            // TeleOp Cone Cycling
             if(gamepad1.dpad_up) {
-                hardware.leftSlide.setTargetPosition(hardware.leftSlide.getCurrentPosition() - 50);
-                hardware.rightSlide.setTargetPosition(hardware.rightSlide.getCurrentPosition() - 50);
+                hardware.incrementCount();
+                hardware.armToPosition();
+//                while(gamepad1.dpad_up);
+            }
+            if(gamepad1.dpad_down) {
+                hardware.decrementCount();
+                hardware.armToPosition();
+//                while(gamepad1.dpad_down);
             }
 
 //            hardware.leftSlide. setPower(gamepad2.left_stick_y);
