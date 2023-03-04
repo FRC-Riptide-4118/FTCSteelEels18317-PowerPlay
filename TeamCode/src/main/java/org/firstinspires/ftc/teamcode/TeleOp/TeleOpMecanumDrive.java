@@ -61,6 +61,8 @@ public class TeleOpMecanumDrive extends LinearOpMode {
     private ElapsedTime testTimer;
 
     private boolean pressedLastIteration = false;
+    private boolean dpleftPressedLastIteration = false;
+    private boolean dprightPressedLastIteration = false;
 
     @Override
     public void runOpMode() {
@@ -215,13 +217,17 @@ public class TeleOpMecanumDrive extends LinearOpMode {
                 hardware.armToPosition();
             }
 
-            if(gamepad1.dpad_left) {
+            boolean dpleftPressed = gamepad1.dpad_left;
+            if(dpleftPressed && !dpleftPressedLastIteration) {
                 hardware.slidesDrop();
             }
+            dpleftPressedLastIteration = dpleftPressed;
 
-            if(gamepad1.dpad_right) {
+            boolean dprightPressed = gamepad1.dpad_right;
+            if(dprightPressed && !dprightPressedLastIteration) {
                 hardware.slidesUp();
             }
+            dprightPressedLastIteration = dprightPressed;
 
             /*------- Intake -------*/
 
