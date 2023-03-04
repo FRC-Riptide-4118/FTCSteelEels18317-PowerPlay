@@ -232,6 +232,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
 
             else if(gamepad1.right_bumper) {
                 hardware.intakeOut();
+                hardware.intakeServoIn();
             }
 
             else if (hardware.isGripping()) {
