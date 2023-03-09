@@ -109,7 +109,7 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .forward(55)
                 .setReversed(true)
                 .splineTo(new Vector2d(LeftAutoConstants.preLoadMidJunction.getX(), LeftAutoConstants.preLoadMidJunction.getY()), LeftAutoConstants.preLoadMidJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(0.1, intake::intakeServoOut)
+                .UNSTABLE_addTemporalMarkerOffset(-1.9, intake::intakeServoOut)
                 .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
                 .UNSTABLE_addTemporalMarkerOffset(-1.75, slides::slidesToMedium)
                 .UNSTABLE_addTemporalMarkerOffset(-1, arm::armScoring)
