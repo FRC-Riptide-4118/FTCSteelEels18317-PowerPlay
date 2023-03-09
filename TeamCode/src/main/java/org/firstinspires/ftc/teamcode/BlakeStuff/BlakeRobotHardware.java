@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.BlakeStuff;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2_Start;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Slides_Start;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1Constants;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2Constants;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -93,22 +93,22 @@ public class BlakeRobotHardware
         leftSlide.  setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlide. setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftSlide.  setTargetPosition(Slides_Start);
-        rightSlide. setTargetPosition(Slides_Start);
+        leftSlide.  setTargetPosition(SlidesConstants.Start);
+        rightSlide. setTargetPosition(SlidesConstants.Start);
 
         leftSlide.  setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightSlide. setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Arm servos
-        arm1.setPosition(Arm1_Start);
-        arm2.setPosition(Arm2_Start);
+        arm1.setPosition(Arm1Constants.Start);
+        arm2.setPosition(Arm2Constants.Start);
 
         // Wiggle the arm servos so they (hopefully) don't
         // misbehave on the first two real commands
-        arm1.setPosition(Arm1_Start + 0.01);
-        arm2.setPosition(Arm2_Start + 0.01);
-        arm1.setPosition(Arm1_Start);
-        arm2.setPosition(Arm2_Start);
+        arm1.setPosition(Arm1Constants.Start + 0.01);
+        arm2.setPosition(Arm2Constants.Start + 0.01);
+        arm1.setPosition(Arm1Constants.Start);
+        arm2.setPosition(Arm2Constants.Start);
     }
 
     /*------- Define any other methods down here! -------*/

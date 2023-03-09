@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.openftc.apriltag.AprilTagDetection;
-
+@Disabled
 @Autonomous(name = "WheelsTesting")
 
 public class WheelsTesting extends LinearOpMode {

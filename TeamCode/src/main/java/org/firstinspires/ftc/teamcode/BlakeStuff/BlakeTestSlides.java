@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.BlakeStuff;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+@Disabled
 @TeleOp(name = "(Blake) Test Slides", group = "Blake")
 public class BlakeTestSlides extends LinearOpMode {
 
@@ -17,7 +19,7 @@ public class BlakeTestSlides extends LinearOpMode {
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
 
         leftSlide.setDirection(DcMotor.Direction.REVERSE);
-        rightSlide.setDirection(DcMotor.Direction.REVERSE);
+        rightSlide.setDirection(DcMotor.Direction.FORWARD);
 
         leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

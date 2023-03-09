@@ -29,7 +29,10 @@
 
 package org.firstinspires.ftc.teamcode.Auto.Testing;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -37,6 +40,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import static java.lang.Math.*;
 import static java.lang.Math.PI;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -57,7 +62,9 @@ import static java.lang.Math.PI;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
+@Disabled
 
+@Config
 @Autonomous(name="Robot: ParkingZone1", group="Robot")
 public class ParkingZone1 extends LinearOpMode {
 
@@ -67,6 +74,8 @@ public class ParkingZone1 extends LinearOpMode {
     private DcMotor  frontRight  = null;
     private DcMotor  rearLeft  = null;
 
+    public static int targetPos = 2500;
+
     void reset_encoders() {
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -74,8 +83,12 @@ public class ParkingZone1 extends LinearOpMode {
         rearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+
     @Override
     public void runOpMode() {
+
 
         // Initialize the drive system variables.
         frontLeft = hardwareMap.get(DcMotor.class, "front_left_wheel");
@@ -98,45 +111,74 @@ public class ParkingZone1 extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-
-        frontLeft.setPower(.5);
-        frontRight.setPower(.5);
-        rearLeft.setPower(.5);
-        rearRight.setPower(.5);
-
-        frontLeft.setTargetPosition(500);
-        frontRight.setTargetPosition(500);
-        rearLeft.setTargetPosition(500);
-        rearRight.setTargetPosition(500);
-
-        // Send telemetry message to indicate successful Encoder reset
 
         int fl = frontLeft.getCurrentPosition();
         int rl = rearLeft.getCurrentPosition();
         int rr = rearRight.getCurrentPosition();
         int fr = frontRight.getCurrentPosition();
+
+        // Wait for the game to start (driver presses PLAY)
+        while(!isStarted() && !isStopRequested())
+        {
+            fl = frontLeft.getCurrentPosition();
+            rl = rearLeft.getCurrentPosition();
+            rr = rearRight.getCurrentPosition();
+            fr = frontRight.getCurrentPosition();
+            dashboardTelemetry.addData("fl", fl);
+            dashboardTelemetry.addData("fr", fr);
+            dashboardTelemetry.addData("rl", rl);
+            dashboardTelemetry.addData("rr", rr);
+            dashboardTelemetry.update();
+        }
+
+        // Step through each leg of the path,
+        // Note: Reverse movement is obtained by setting a negative distance (not speed)
+
+        frontLeft.setPower(1);
+        frontRight.setPower(1);
+        rearLeft.setPower(1);
+        rearRight.setPower(1);
+
+        frontLeft.setTargetPosition(targetPos);
+        frontRight.setTargetPosition(targetPos);
+        rearLeft.setTargetPosition(targetPos);
+        rearRight.setTargetPosition(targetPos);
+
+        // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Current Position:",  "%7d :%7d :%7d :%7d", fl, rl, rr, fr);
         telemetry.update();
 
         double current_encoder = rearLeft.getCurrentPosition();
 
-        while(current_encoder<1000){
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            current_encoder = rearLeft.getCurrentPosition();
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while(opModeIsActive() && rearLeft.getCurrentPosition() < targetPos)
+        {
             fl = frontLeft.getCurrentPosition();
             rl = rearLeft.getCurrentPosition();
             rr = rearRight.getCurrentPosition();
             fr = frontRight.getCurrentPosition();
-            telemetry.addData("Current Position:",  "%7d :%7d :%7d :%7d", fl, rl, rr, fr);
-            telemetry.update();
+            dashboardTelemetry.addData("fl", fl);
+            dashboardTelemetry.addData("fr", fr);
+            dashboardTelemetry.addData("rl", rl);
+            dashboardTelemetry.addData("rr", rr);
+            dashboardTelemetry.update();
+        }
+
+        while(opModeIsActive())
+        {
+            fl = frontLeft.getCurrentPosition();
+            rl = rearLeft.getCurrentPosition();
+            rr = rearRight.getCurrentPosition();
+            fr = frontRight.getCurrentPosition();
+            dashboardTelemetry.addData("fl", fl);
+            dashboardTelemetry.addData("fr", fr);
+            dashboardTelemetry.addData("rl", rl);
+            dashboardTelemetry.addData("rr", rr);
+            dashboardTelemetry.update();
         }
 
         frontLeft.setPower(0);

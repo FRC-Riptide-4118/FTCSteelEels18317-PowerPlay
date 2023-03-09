@@ -31,26 +31,38 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper_Grab;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.GripperConstants;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.EelverHardware;
 
 @TeleOp(name = "TeleOpMecanumDrive", group = "Robot")
 
 public class TeleOpMecanumDrive extends LinearOpMode {
 
-    private boolean raisingToLow = false;
-    private boolean returning = false;
+    private boolean raisingToLow    = false;
+    private boolean returning       = false;
     private boolean raisingToMiddle = false;
-    private boolean raisingToHigh = false;
+    private boolean raisingToHigh   = false;
+    private boolean atHigh          = false;
+    private boolean atMid           = false;
+    private boolean atLow           = false;
+
+
+//    public DistanceSensor distanceSensor = null;
+
+
     private ElapsedTime armInTimer;
+    private ElapsedTime testTimer;
 
-    int leftSlidePrevPos;
-
-    // Toggling
-    boolean pressedLastIteration = false;
+    private boolean pressedLastIteration = false;
+    private boolean dpleftPressedLastIteration = false;
+    private boolean dprightPressedLastIteration = false;
 
     @Override
     public void runOpMode() {
@@ -58,17 +70,26 @@ public class TeleOpMecanumDrive extends LinearOpMode {
         hardware.init(hardwareMap);
 
         armInTimer = new ElapsedTime();
+        testTimer = new ElapsedTime();
         armInTimer.reset();
+        testTimer.reset();
+//        distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
+
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver1");
         telemetry.update();
 
+        hardware.releaseCone();
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+
+//            telemetry.addData("Gripper Distance", distanceSensor.getDistance(DistanceUnit.CM));
+//            telemetry.addData("Time", testTimer.seconds());
+//            telemetry.update();
 
             /*-------Drivetrain-------*/
             // Gamepad controls
@@ -83,7 +104,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             boolean pressed = gamepad1.left_bumper;
             if (pressed & !pressedLastIteration) {
 
-                if(hardware.gripper.getPosition() == Gripper_Grab) {
+                if(hardware.gripper.getPosition() == GripperConstants.Gripper_Grab) {
                     hardware.releaseCone();
                 }
                 else {
@@ -96,100 +117,140 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             // Ground
             if(gamepad1.a) {
                 returning = true;
-                hardware.gripCone();
                 hardware.armToStart();
-                if (armInTimer.seconds() > 1.0) armInTimer.reset();
+                armInTimer.reset();
             }
 
             if(returning) {
-                if(armInTimer.seconds() > 1.0) {
-                    hardware.setSlidesPower(0.7);
-                    hardware.slidesToStart();
-                    hardware.releaseCone();
+                if(atHigh && (armInTimer.seconds() > 0)) {
+                    hardware.setSlidesPower(1);
+                    hardware.slidesToGround();
+                    hardware.armToStart();
+                    returning = false;
+                    atHigh = false;
+                }
+
+                if(atMid && (armInTimer.seconds() > 0.2)) {
+                    hardware.setSlidesPower(1);
+                    hardware.slidesToGround();
                     hardware.armToStart();
                     hardware.armToStart();
                     returning = false;
+                    atMid = false;
+                }
+
+                if(atLow && (armInTimer.seconds() > 0.3)) {
+                    hardware.setSlidesPower(1);
+                    hardware.slidesToGround();
+                    hardware.armToStart();
+                    returning = false;
+                    atLow = false;
+                }
+
+                else{
+                    if(armInTimer.seconds() > 0.75){
+                        hardware.setSlidesPower(1);
+                        hardware.slidesToGround();
+                        hardware.armToStart();
+                        returning = false;
+                        atLow = false;
+                    }
                 }
             }
 
             // Low
             if(gamepad1.x) {
                 raisingToLow = true;
-                hardware.gripCone();
                 hardware.setSlidesPower(1);
                 hardware.slidesToLow();
             }
             if(raisingToLow) {
                 if(hardware.leftSlide.getCurrentPosition() > 600) {
-                    hardware.armToLow();
+                    hardware.armScoring();
                     raisingToLow = false;
+                    atLow = true;
+                    atMid = false;
+                    atHigh = false;
                 }
             }
 
             // Medium
             if(gamepad1.y) {
                 raisingToMiddle = true;
-                hardware.gripCone();
                 hardware.setSlidesPower(1);
                 hardware.slidesToMedium();
             }
             if(raisingToMiddle) {
                 if(hardware.leftSlide.getCurrentPosition() > 600) {
-                    hardware.armToMedium();
+                    hardware.armScoring();
                     raisingToMiddle = false;
+                    atLow = false;
+                    atMid = true;
+                    atHigh = false;
                 }
             }
 
             // High
             if(gamepad1.b) {
                 raisingToHigh = true;
-                hardware.gripCone();
                 hardware.setSlidesPower(1);
                 hardware.slidesToHigh();
             }
             if(raisingToHigh) {
                 if(hardware.leftSlide.getCurrentPosition() > 600) {
-                    hardware.armToHigh();
+                    hardware.armScoring();
                     raisingToHigh = false;
+                    atLow = false;
+                    atMid = false;
+                    atHigh = true;
                 }
             }
 
-            // Fine Control the Slides
-            if(gamepad1.dpad_down) {
-                leftSlidePrevPos = hardware.leftSlide.getTargetPosition();
-                hardware.leftSlide.setTargetPosition(hardware.leftSlide.getCurrentPosition() + 50);
-                hardware.rightSlide.setTargetPosition(hardware.rightSlide.getCurrentPosition() + 50);
-            }
+            // TeleOp Cone Cycling
             if(gamepad1.dpad_up) {
-                leftSlidePrevPos = hardware.leftSlide.getTargetPosition();
-                hardware.leftSlide.setTargetPosition(hardware.leftSlide.getCurrentPosition() - 50);
-                hardware.rightSlide.setTargetPosition(hardware.rightSlide.getCurrentPosition() - 50);
+                hardware.incrementCount();
+                hardware.armToPosition();
             }
+
+            if(gamepad1.dpad_down) {
+                hardware.decrementCount();
+                hardware.armToPosition();
+            }
+
+            boolean dpleftPressed = gamepad1.dpad_left;
+            if(dpleftPressed && !dpleftPressedLastIteration) {
+                hardware.slidesDrop();
+            }
+            dpleftPressedLastIteration = dpleftPressed;
+
+            boolean dprightPressed = gamepad1.dpad_right;
+            if(dprightPressed && !dprightPressedLastIteration) {
+                hardware.slidesUp();
+            }
+            dprightPressedLastIteration = dprightPressed;
 
             /*------- Intake -------*/
-            if(gamepad1.right_trigger > .75) {
+
+            if(gamepad1.right_trigger > 0.1) {
                 hardware.intakeIn();
-            }
-
-            if(gamepad1.right_bumper) {
-                hardware.intakeOut();
-            }
-
-            if(gamepad1.dpad_left) {
                 hardware.intakeServoIn();
             }
 
-            if(gamepad1.dpad_right) {
+            else if(gamepad1.right_bumper) {
+                hardware.intakeOut();
+                hardware.intakeServoIn();
+            }
+
+            else if (hardware.isGripping()) {
                 hardware.intakeServoOut();
+                hardware.intake(0);
             }
 
             else {
-                hardware.Intake.setPower(0);
+                hardware.intake(0);
+                hardware.intakeServoOut();
             }
+
         }
     }
-
-
-
 }
-
