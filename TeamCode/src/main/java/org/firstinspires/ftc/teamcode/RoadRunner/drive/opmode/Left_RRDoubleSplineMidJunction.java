@@ -247,7 +247,7 @@ public class Left_RRDoubleSplineMidJunction extends LinearOpMode {
         }
 
         gripper.gripCone();
-        intake.intakeServoOut();
+        intake.open();
         drive.followTrajectorySequence(High_Junction);
 
         if (tagOfInterest == null || tagOfInterest.id == Left) {

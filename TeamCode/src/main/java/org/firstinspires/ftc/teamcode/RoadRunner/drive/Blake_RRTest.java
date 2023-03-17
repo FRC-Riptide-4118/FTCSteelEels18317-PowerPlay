@@ -248,7 +248,7 @@ public class Blake_RRTest extends LinearOpMode {
         }
 
 //        gripper.gripCone();
-        intake.intakeServoOut();
+        intake.open();
         drive.followTrajectorySequence(High_Junction);
 
         if (tagOfInterest == null || tagOfInterest.id == Middle) {

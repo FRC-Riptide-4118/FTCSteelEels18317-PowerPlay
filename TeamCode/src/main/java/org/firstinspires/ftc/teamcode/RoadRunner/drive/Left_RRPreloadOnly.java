@@ -107,7 +107,7 @@ public class Left_RRPreloadOnly extends LinearOpMode {
                 .forward(55)
                 .setReversed(true)
                 .splineTo(new Vector2d(LeftAutoConstants.preLoadMidJunction.getX(), LeftAutoConstants.preLoadMidJunction.getY()), LeftAutoConstants.preLoadMidJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(0.1, intake::intakeServoOut)
+                .UNSTABLE_addTemporalMarkerOffset(0.1, intake::open)
                 .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
                 .UNSTABLE_addTemporalMarkerOffset(-1.75, slides::slidesToMedium)
                 .UNSTABLE_addTemporalMarkerOffset(-1, arm::armScoring)
@@ -243,7 +243,7 @@ public class Left_RRPreloadOnly extends LinearOpMode {
             }
 
             gripper.gripCone();
-            intake.intakeServoIn();
+            intake.close();
             telemetry.update();
             sleep(20);
         }

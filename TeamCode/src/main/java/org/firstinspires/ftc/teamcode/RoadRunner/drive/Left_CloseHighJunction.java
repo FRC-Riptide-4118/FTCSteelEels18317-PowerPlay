@@ -164,7 +164,7 @@ public class Left_CloseHighJunction extends LinearOpMode {
 
         gripper.gripCone();
         arm.armWiggle();
-        intake.intakeServoOut();
+        intake.open();
         gripper.releaseCone();
 
         while (!isStarted() && !isStopRequested())
