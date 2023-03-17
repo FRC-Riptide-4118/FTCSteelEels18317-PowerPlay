@@ -5,23 +5,14 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 
-/**
- * An example command that uses an example subsystem.
- */
 public class DrivetrainTeleOp extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Drivetrain m_drivetrain;
     private final Gamepad m_gamepad1;
-    private boolean pressedLastIteration = false;
 
-    /**
-     * Creates a new ExampleCommand.
-     *
-     * @param drivetrain The subsystem used by this command.
-     */
     public DrivetrainTeleOp(Drivetrain drivetrain, Gamepad gamepad1) {
         m_drivetrain    = drivetrain;
-        m_gamepad1   = gamepad1;
+        m_gamepad1      = gamepad1;
+
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(drivetrain);
     }
@@ -33,7 +24,6 @@ public class DrivetrainTeleOp extends CommandBase {
 
     @Override
     public void execute() {
-        // Gamepad controls
         double drive        = -m_gamepad1.left_stick_y;
         double strafe       = m_gamepad1.left_stick_x;
         double twist        = m_gamepad1.right_stick_x;
@@ -46,5 +36,4 @@ public class DrivetrainTeleOp extends CommandBase {
     public boolean isFinished() {
         return false;
     }
-
 }
