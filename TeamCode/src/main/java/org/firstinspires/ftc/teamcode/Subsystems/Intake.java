@@ -8,50 +8,51 @@ import com.qualcomm.robotcore.hardware.Servo;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeServosConstants;
 
 public class Intake extends SubsystemBase {
+    public DcMotor intake;
+    public Servo intakeLeft;
+    public Servo intakeRight;
+
     /**
-     * Creates a new ExampleSubsystem.
+     * Default constructor to initialize intake servos and motors.
+     * @param hardwareMap the current OpMode's hardware map.
      */
-    public DcMotor Intake = null;
-
-    public Intake(HardwareMap hardwareMap) {
-        Intake = hardwareMap.get(DcMotor.class, "Intake");
-        Intake.setDirection(DcMotor.Direction.REVERSE);
-        intakeLeft =       hardwareMap.get(Servo.class, "intakeLeft");
-        intakeRight =       hardwareMap.get(Servo.class, "intakeRight");
+    public Intake(HardwareMap hardwareMap)
+    {
+        intake      = hardwareMap.get(DcMotor.class, "intake");
+        intakeLeft  = hardwareMap.get(Servo.class, "intake_left");
+        intakeRight = hardwareMap.get(Servo.class, "intake_right");
     }
 
-    public void intake(double power) {
-        Intake.setPower(power);
-    }
+    /**
+     * Take in a cone.
+     */
+    public void in() { intake.setPower(1); }
 
-    public void intakeIn() {
-        Intake.setPower(1);
-    }
+    /**
+     * Spit out a cone.
+     */
+    public void out() { intake.setPower(-0.5); }
 
-    public void intakeOut() {
-        Intake.setPower(-0.5);
-    }
+    /**
+     * Turn off the intake motor.
+     */
+    public void off() { intake.setPower(0); }
 
-    //Servos
-    public Servo intakeLeft = null;
-    public Servo intakeRight = null;
-
-    public void intakeServoIn() {
+    /**
+     * Close the intake servos.
+     */
+    public void close()
+    {
         intakeLeft.setPosition(IntakeServosConstants.IntakeLeft_in);
         intakeRight.setPosition(IntakeServosConstants.IntakeRight_in);
     }
 
-    public void intakeServoOut() {
+    /**
+     * Open the intake servos.
+     */
+    public void open()
+    {
         intakeLeft.setPosition(IntakeServosConstants.IntakeLeft_out);
         intakeRight.setPosition(IntakeServosConstants.IntakeRight_out);
-    }
-
-    public boolean intakeServosIn() {
-        return intakeLeft.getPosition() == IntakeServosConstants.IntakeLeft_in;
-    }
-
-    @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
     }
 }

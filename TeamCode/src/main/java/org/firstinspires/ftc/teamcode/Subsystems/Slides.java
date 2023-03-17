@@ -15,6 +15,9 @@ public class Slides extends SubsystemBase {
     public DcMotorEx leftSlide = null;
     public DcMotorEx rightSlide = null;
 
+
+    private final double SAFE_SLIDES_HEIGHT = 600; // encoder counts
+
     public Slides(HardwareMap hardwareMap) {
         leftSlide =  hardwareMap.get(DcMotorEx.class, "left_slide");
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
@@ -113,6 +116,8 @@ public class Slides extends SubsystemBase {
     {
         return leftSlide.isBusy() || rightSlide.isBusy();
     }
+
+    public boolean atSafeHeight() { return (leftSlide.getCurrentPosition() - SAFE_SLIDES_HEIGHT) >= 0; }
 
     @Override
     public void periodic() {

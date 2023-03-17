@@ -95,7 +95,7 @@ public class Arm extends SubsystemBase {
             armToCone5();
     }
 
-    public void armScoring()
+    public void armScoring() // FIXME should we rename to "armToScoring()" @Lohan @Elinora?
     {
         arm1.setPosition(MotorValuesConstants.Arm1Constants.Scoring);
         arm2.setPosition(MotorValuesConstants.Arm2Constants.Scoring);

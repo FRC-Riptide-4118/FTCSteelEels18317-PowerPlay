@@ -21,7 +21,7 @@ public class Gripper extends SubsystemBase {
     }
 
     public Gripper(HardwareMap hardwareMap) {
-        gripper          = hardwareMap.get(Servo.class, "Gripper");
+        gripper          = hardwareMap.get(Servo.class, "gripper");
         distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
     }
 
@@ -37,6 +37,12 @@ public class Gripper extends SubsystemBase {
     public void releaseCone()
     {
         gripper.setPosition(GripperConstants.Gripper_Release);
+    }
+
+    public void toggle()
+    {
+        if(isGripping())    releaseCone();
+        else                gripCone();
     }
 
     public double getDistance() {
