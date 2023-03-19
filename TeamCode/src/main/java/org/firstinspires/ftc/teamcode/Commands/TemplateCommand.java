@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.teamcode.Commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-
-import org.firstinspires.ftc.teamcode.Subsystems.Slides;
+import com.arcrobotics.ftclib.command.Subsystem;
 
 public class TemplateCommand extends CommandBase {
 
     // Subsystems go here
 
 
-    public TemplateCommand(Slides slides)
+    public TemplateCommand(Subsystem s) // TODO
     {
 
     }
@@ -29,7 +28,7 @@ public class TemplateCommand extends CommandBase {
     @Override
     public boolean isFinished()
     {
-        return true; // FIXME
+        return true; // TODO
     }
 
 }
