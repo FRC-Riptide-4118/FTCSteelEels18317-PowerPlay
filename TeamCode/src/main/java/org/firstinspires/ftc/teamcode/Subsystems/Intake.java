@@ -43,8 +43,8 @@ public class Intake extends SubsystemBase {
      */
     public void close()
     {
-        intakeLeft.setPosition(IntakeServosConstants.IntakeLeft_in);
-        intakeRight.setPosition(IntakeServosConstants.IntakeRight_in);
+        intakeLeft.setPosition(IntakeServosConstants.INTAKE_LEFT_IN);
+        intakeRight.setPosition(IntakeServosConstants.INTAKE_RIGHT_IN);
     }
 
     /**
@@ -52,7 +52,7 @@ public class Intake extends SubsystemBase {
      */
     public void open()
     {
-        intakeLeft.setPosition(IntakeServosConstants.IntakeLeft_out);
-        intakeRight.setPosition(IntakeServosConstants.IntakeRight_out);
+        intakeLeft.setPosition(IntakeServosConstants.INTAKE_LEFT_OUT);
+        intakeRight.setPosition(IntakeServosConstants.INTAKE_RIGHT_OUT);
     }
 }

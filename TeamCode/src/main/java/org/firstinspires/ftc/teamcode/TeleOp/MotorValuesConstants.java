@@ -8,55 +8,55 @@ public class MotorValuesConstants {
     @Config
     public static class SlidesConstants
     {
-        public static int Start     = 0;
-        public static int Ground    = -50;
-        public static int Low       = 700;
-        public static int Medium    = 1300;
-        public static int High      = 1950;
-        public static int Stack     = 75;
+        public static final int START   = 0;
+        public static final int GROUND  = -50;
+        public static final int LOW     = 700;
+        public static final int MEDIUM  = 1300;
+        public static final int HIGH    = 1950;
+        public static final int STACK   = 75;
     }
 
     // Encoder Values
     @Config
     public static class Arm1Constants
     {
-        public static double Start 	 = 0.2;
-		public static double Scoring = 0.85;
-		public static double Front   = 0.85;
-		public static double Cone1 	 = 0.03;
-        public static double Cone2   = 0.06;
-        public static double Cone3   = 0.1;
-        public static double Cone4   = 0.12;
-        public static double Cone5   = 0.2;
+        public static final double START = 0.2;
+		public static final double SCORING = 0.85;
+		public static final double FRONT = 0.85;
+		public static final double CONE_1 = 0.03;
+        public static final double CONE_2 = 0.06;
+        public static final double CONE_3 = 0.1;
+        public static final double CONE_4 = 0.12;
+        public static final double CONE_5 = 0.2;
     }
 
     @Config
 	public static class Arm2Constants
 	{
-		public static double Start   = 0.8;
-        public static double Scoring = 0.15;
-        public static double Front   = 0.15;
-        public static double Cone1   = 0.97;
-        public static double Cone2   = 0.94;
-        public static double Cone3   = 0.9;
-        public static double Cone4   = 0.88;
-        public static double Cone5   = 0.8;
+		public static final double START = 0.8;
+        public static final double SCORING = 0.15;
+        public static final double FRONT = 0.15;
+        public static final double CONE_1 = 0.97;
+        public static final double CONE_2 = 0.94;
+        public static final double CONE_3 = 0.9;
+        public static final double CONE_4 = 0.88;
+        public static final double CONE_5 = 0.8;
     }
 
     @Config
     public static class IntakeServosConstants {
-        public static double Move_Cone         = 0.5;
-        public static double IntakeLeft_out    = 0.92;
-        public static double IntakeRight_out   = 0.18;
-        public static double IntakeLeft_in     = 0.5;
-        public static double IntakeRight_in    = 0.59;
+        public static final double MOVE_CONE = 0.5;
+        public static final double INTAKE_LEFT_OUT = 0.92;
+        public static final double INTAKE_RIGHT_OUT = 0.18;
+        public static final double INTAKE_LEFT_IN = 0.5;
+        public static final double INTAKE_RIGHT_IN = 0.59;
     }
 
     @Config
     public static class GripperConstants {
         // Gripper Values
-        public static double Gripper_Grab    = 0;
-        public static double Gripper_Release = 0.25;
+        public static final double GRIPPER_GRAB = 0;
+        public static final double GRIPPER_RELEASE = 0.25;
     }
 
 }

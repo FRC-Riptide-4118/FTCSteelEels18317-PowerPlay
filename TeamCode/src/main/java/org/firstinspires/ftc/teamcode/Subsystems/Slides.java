@@ -29,8 +29,8 @@ public class Slides extends SubsystemBase {
         leftSlide.  setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlide. setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftSlide.  setTargetPosition(SlidesConstants.Start);
-        rightSlide. setTargetPosition(SlidesConstants.Start);
+        leftSlide.  setTargetPosition(SlidesConstants.START);
+        rightSlide. setTargetPosition(SlidesConstants.START);
 
         leftSlide.  setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightSlide. setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -50,48 +50,48 @@ public class Slides extends SubsystemBase {
 
     public void slidesToStart()
     {
-        leftSlide.setTargetPosition(SlidesConstants.Start);
-        rightSlide.setTargetPosition(SlidesConstants.Start);
+        leftSlide.setTargetPosition(SlidesConstants.START);
+        rightSlide.setTargetPosition(SlidesConstants.START);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }
 
     public void slidesToLow()
     {
-        leftSlide.setTargetPosition(SlidesConstants.Low);
-        rightSlide.setTargetPosition(SlidesConstants.Low);
+        leftSlide.setTargetPosition(SlidesConstants.LOW);
+        rightSlide.setTargetPosition(SlidesConstants.LOW);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }
 
     public void slidesToGround()
     {
-        leftSlide.setTargetPosition(SlidesConstants.Ground);
-        rightSlide.setTargetPosition(SlidesConstants.Ground);
+        leftSlide.setTargetPosition(SlidesConstants.GROUND);
+        rightSlide.setTargetPosition(SlidesConstants.GROUND);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }
 
     public void slidesToStack()
     {
-        leftSlide.setTargetPosition(SlidesConstants.Stack);
-        rightSlide.setTargetPosition(SlidesConstants.Stack);
+        leftSlide.setTargetPosition(SlidesConstants.STACK);
+        rightSlide.setTargetPosition(SlidesConstants.STACK);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }
 
     public void slidesToMedium()
     {
-        leftSlide.setTargetPosition(SlidesConstants.Medium);
-        rightSlide.setTargetPosition(SlidesConstants.Medium);
+        leftSlide.setTargetPosition(SlidesConstants.MEDIUM);
+        rightSlide.setTargetPosition(SlidesConstants.MEDIUM);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }
 
     public void slidesToHigh()
     {
-        leftSlide.setTargetPosition(SlidesConstants.High);
-        rightSlide.setTargetPosition(SlidesConstants.High);
+        leftSlide.setTargetPosition(SlidesConstants.HIGH);
+        rightSlide.setTargetPosition(SlidesConstants.HIGH);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }

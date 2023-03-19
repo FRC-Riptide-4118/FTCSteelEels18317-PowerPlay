@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1Constants;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2Constants;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.GripperConstants;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -14,8 +13,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Disabled
 @TeleOp(name = "TeleOp", group = "Robot")
@@ -50,8 +47,8 @@ public class TeleOpTesting extends LinearOpMode {
         rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
                 new PIDFCoefficients(5, 0, 0, 0));
 
-        arm1.setPosition(Arm1Constants.Start);
-        arm2.setPosition(Arm2Constants.Start);
+        arm1.setPosition(Arm1Constants.START);
+        arm2.setPosition(Arm2Constants.START);
 //        Gripper.setPosition(Gripper_Grab);
 
         leftSlide.setDirection(DcMotor.Direction.REVERSE);
@@ -62,8 +59,8 @@ public class TeleOpTesting extends LinearOpMode {
         rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Slides
-        leftSlide.setTargetPosition(SlidesConstants.Start);
-        rightSlide.setTargetPosition(SlidesConstants.Start);
+        leftSlide.setTargetPosition(SlidesConstants.START);
+        rightSlide.setTargetPosition(SlidesConstants.START);
         leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -76,26 +73,26 @@ public class TeleOpTesting extends LinearOpMode {
             /*-------Arm-------*/
             // Ground
             if(gamepad1.a) {
-                arm1.setPosition(Arm1Constants.Cone1);
-                arm2.setPosition(Arm2Constants.Cone1);
+                arm1.setPosition(Arm1Constants.CONE_1);
+                arm2.setPosition(Arm2Constants.CONE_1);
             }
 
             // Low
             if(gamepad1.x) {
-                arm1.setPosition(Arm1Constants.Front);
-                arm2.setPosition(Arm2Constants.Front);
+                arm1.setPosition(Arm1Constants.FRONT);
+                arm2.setPosition(Arm2Constants.FRONT);
             }
 
             // Medium
             if(gamepad1.y) {
-                arm1.setPosition(Arm1Constants.Scoring);
-                arm2.setPosition(Arm2Constants.Scoring);
+                arm1.setPosition(Arm1Constants.SCORING);
+                arm2.setPosition(Arm2Constants.SCORING);
             }
 
             // High
             if(gamepad1.b) {
-                arm1.setPosition(Arm1Constants.Scoring);
-                arm2.setPosition(Arm2Constants.Scoring);
+                arm1.setPosition(Arm1Constants.SCORING);
+                arm2.setPosition(Arm2Constants.SCORING);
             }
 
 //            /*-------Slides-------*/
@@ -132,8 +129,8 @@ public class TeleOpTesting extends LinearOpMode {
 //            }
 
             if(gamepad2.right_bumper) {
-                arm1.setPosition(Arm1Constants.Scoring);
-                arm2.setPosition(Arm2Constants.Scoring);
+                arm1.setPosition(Arm1Constants.SCORING);
+                arm2.setPosition(Arm2Constants.SCORING);
             }
 //
 //            if (gamepad1.dpad_up) {

@@ -31,14 +31,10 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.GripperConstants;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.EelverHardware;
 
 @TeleOp(name = "TeleOpMecanumDrive", group = "Robot")
@@ -104,7 +100,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             boolean pressed = gamepad1.left_bumper;
             if (pressed & !pressedLastIteration) {
 
-                if(hardware.gripper.getPosition() == GripperConstants.Gripper_Grab) {
+                if(hardware.gripper.getPosition() == GripperConstants.GRIPPER_GRAB) {
                     hardware.releaseCone();
                 }
                 else {

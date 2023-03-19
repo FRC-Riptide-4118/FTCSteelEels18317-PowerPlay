@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -37,48 +36,48 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean ArmScoring() {
-        return arm1.getPosition() == Arm1Constants.Scoring;
+        return arm1.getPosition() == Arm1Constants.SCORING;
     }
 
     public void armToStart() {
-        arm1.setPosition(Arm1Constants.Start);
-        arm2.setPosition(Arm2Constants.Start);
+        arm1.setPosition(Arm1Constants.START);
+        arm2.setPosition(Arm2Constants.START);
     }
 
     public void armToCone1()
     {
-        arm1.setPosition(Arm1Constants.Cone1);
-        arm2.setPosition(Arm2Constants.Cone1);
+        arm1.setPosition(Arm1Constants.CONE_1);
+        arm2.setPosition(Arm2Constants.CONE_1);
     }
 
     public void armToCone1Wiggle()
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.Cone1 - 0.2);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.Cone1 + 0.2);
+        arm1.setPosition(MotorValuesConstants.Arm1Constants.CONE_1 - 0.2);
+        arm2.setPosition(MotorValuesConstants.Arm2Constants.CONE_1 + 0.2);
     }
 
     public void armToCone2()
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.Cone2);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.Cone2);
+        arm1.setPosition(MotorValuesConstants.Arm1Constants.CONE_2);
+        arm2.setPosition(MotorValuesConstants.Arm2Constants.CONE_2);
     }
 
     public void armToCone3()
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.Cone3);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.Cone3);
+        arm1.setPosition(MotorValuesConstants.Arm1Constants.CONE_3);
+        arm2.setPosition(MotorValuesConstants.Arm2Constants.CONE_3);
     }
 
     public void armToCone4()
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.Cone4);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.Cone4);
+        arm1.setPosition(MotorValuesConstants.Arm1Constants.CONE_4);
+        arm2.setPosition(MotorValuesConstants.Arm2Constants.CONE_4);
     }
 
     public void armToCone5()
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.Cone5);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.Cone5);
+        arm1.setPosition(MotorValuesConstants.Arm1Constants.CONE_5);
+        arm2.setPosition(MotorValuesConstants.Arm2Constants.CONE_5);
     }
 
     public void armToPosition()
@@ -97,15 +96,15 @@ public class Arm extends SubsystemBase {
 
     public void armScoring() // FIXME should we rename to "armToScoring()" @Lohan @Elinora?
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.Scoring);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.Scoring);
+        arm1.setPosition(MotorValuesConstants.Arm1Constants.SCORING);
+        arm2.setPosition(MotorValuesConstants.Arm2Constants.SCORING);
     }
 
     public void armWiggle()
     {
         armToStart();
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.Scoring + 0.01);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.Scoring + 0.01);
+        arm1.setPosition(MotorValuesConstants.Arm1Constants.SCORING + 0.01);
+        arm2.setPosition(MotorValuesConstants.Arm2Constants.SCORING + 0.01);
         armToStart();
     }
 

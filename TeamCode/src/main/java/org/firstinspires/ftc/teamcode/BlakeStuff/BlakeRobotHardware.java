@@ -93,22 +93,22 @@ public class BlakeRobotHardware
         leftSlide.  setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlide. setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftSlide.  setTargetPosition(SlidesConstants.Start);
-        rightSlide. setTargetPosition(SlidesConstants.Start);
+        leftSlide.  setTargetPosition(SlidesConstants.START);
+        rightSlide. setTargetPosition(SlidesConstants.START);
 
         leftSlide.  setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightSlide. setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Arm servos
-        arm1.setPosition(Arm1Constants.Start);
-        arm2.setPosition(Arm2Constants.Start);
+        arm1.setPosition(Arm1Constants.START);
+        arm2.setPosition(Arm2Constants.START);
 
         // Wiggle the arm servos so they (hopefully) don't
         // misbehave on the first two real commands
-        arm1.setPosition(Arm1Constants.Start + 0.01);
-        arm2.setPosition(Arm2Constants.Start + 0.01);
-        arm1.setPosition(Arm1Constants.Start);
-        arm2.setPosition(Arm2Constants.Start);
+        arm1.setPosition(Arm1Constants.START + 0.01);
+        arm2.setPosition(Arm2Constants.START + 0.01);
+        arm1.setPosition(Arm1Constants.START);
+        arm2.setPosition(Arm2Constants.START);
     }
 
     /*------- Define any other methods down here! -------*/

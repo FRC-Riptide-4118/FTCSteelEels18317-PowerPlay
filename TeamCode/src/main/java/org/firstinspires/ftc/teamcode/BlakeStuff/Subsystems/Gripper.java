@@ -38,7 +38,7 @@ public class Gripper extends SubsystemBase {
      */
     public void grip()
     {
-        gripper.setPosition(GripperConstants.Gripper_Grab);
+        gripper.setPosition(GripperConstants.GRIPPER_GRAB);
     }
 
     /**
@@ -46,6 +46,6 @@ public class Gripper extends SubsystemBase {
      */
     public void release()
     {
-        gripper.setPosition(GripperConstants.Gripper_Release);
+        gripper.setPosition(GripperConstants.GRIPPER_RELEASE);
     }
 }

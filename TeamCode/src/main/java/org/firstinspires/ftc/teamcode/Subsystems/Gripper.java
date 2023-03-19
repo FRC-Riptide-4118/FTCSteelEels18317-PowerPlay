@@ -26,17 +26,17 @@ public class Gripper extends SubsystemBase {
     }
 
     public boolean isGripping() {
-        return gripper.getPosition() == GripperConstants.Gripper_Grab;
+        return gripper.getPosition() == GripperConstants.GRIPPER_GRAB;
     }
 
     public void gripCone()
     {
-        gripper.setPosition(GripperConstants.Gripper_Grab);
+        gripper.setPosition(GripperConstants.GRIPPER_GRAB);
     }
 
     public void releaseCone()
     {
-        gripper.setPosition(GripperConstants.Gripper_Release);
+        gripper.setPosition(GripperConstants.GRIPPER_RELEASE);
     }
 
     public void toggle()

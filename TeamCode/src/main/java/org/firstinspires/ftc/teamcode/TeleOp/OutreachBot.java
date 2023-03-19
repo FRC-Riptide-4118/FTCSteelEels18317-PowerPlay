@@ -84,7 +84,7 @@ public class OutreachBot extends LinearOpMode {
             boolean pressed = gamepad1.left_bumper;
             if (pressed & !pressedLastIteration) {
 
-                if(hardware.gripper.getPosition() == GripperConstants.Gripper_Grab) {
+                if(hardware.gripper.getPosition() == GripperConstants.GRIPPER_GRAB) {
                     hardware.releaseCone();
                 }
                 else {

@@ -46,8 +46,8 @@ public class SlidesTesting extends LinearOpMode {
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
         // Intake = hardwareMap.get(DcMotor.class, "Intake");
 //
-        arm1.setPosition(Arm1Constants.Start);
-        arm2.setPosition(Arm2Constants.Start);
+        arm1.setPosition(Arm1Constants.START);
+        arm2.setPosition(Arm2Constants.START);
 //        Gripper.setPosition(Gripper_Grab);
 
         leftSlide.setDirection(DcMotor.Direction.REVERSE);
@@ -58,8 +58,8 @@ public class SlidesTesting extends LinearOpMode {
         rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Slides
-        leftSlide.setTargetPosition(SlidesConstants.Start);
-        rightSlide.setTargetPosition(SlidesConstants.Start);
+        leftSlide.setTargetPosition(SlidesConstants.START);
+        rightSlide.setTargetPosition(SlidesConstants.START);
         leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -80,16 +80,16 @@ public class SlidesTesting extends LinearOpMode {
             if(gamepad2.a) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(SlidesConstants.Start);
-                rightSlide.setTargetPosition(SlidesConstants.Start);
+                leftSlide.setTargetPosition(SlidesConstants.START);
+                rightSlide.setTargetPosition(SlidesConstants.START);
             }
 
             // Low
             if(gamepad2.x) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(SlidesConstants.Low);
-                rightSlide.setTargetPosition(SlidesConstants.Low);
+                leftSlide.setTargetPosition(SlidesConstants.LOW);
+                rightSlide.setTargetPosition(SlidesConstants.LOW);
 
             }
 
@@ -97,16 +97,16 @@ public class SlidesTesting extends LinearOpMode {
             if(gamepad2.y) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(SlidesConstants.Medium);
-                rightSlide.setTargetPosition(SlidesConstants.Medium);
+                leftSlide.setTargetPosition(SlidesConstants.MEDIUM);
+                rightSlide.setTargetPosition(SlidesConstants.MEDIUM);
             }
 
             // High
             if(gamepad2.b) {
                 leftSlide.setPower(1);
                 rightSlide.setPower(1);
-                leftSlide.setTargetPosition(SlidesConstants.High);
-                rightSlide.setTargetPosition(SlidesConstants.High);
+                leftSlide.setTargetPosition(SlidesConstants.HIGH);
+                rightSlide.setTargetPosition(SlidesConstants.HIGH);
             }
 
 
