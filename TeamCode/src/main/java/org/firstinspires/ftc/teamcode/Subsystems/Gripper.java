@@ -23,20 +23,31 @@ public class Gripper extends SubsystemBase {
     public Gripper(HardwareMap hardwareMap) {
         gripper          = hardwareMap.get(Servo.class, "gripper");
         distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
+
+        releaseCone();
+    }
+
+    /**
+     * Returns whether a cone was detected by the color/distance sensor.
+     * @return whether a cone was detected by the color/distance sensor.
+     */
+    public boolean coneDetected()
+    {
+        return false; // TODO implementation
     }
 
     public boolean isGripping() {
-        return gripper.getPosition() == GripperConstants.GRIPPER_GRAB;
+        return gripper.getPosition() == GripperConstants.GRIP;
     }
 
     public void gripCone()
     {
-        gripper.setPosition(GripperConstants.GRIPPER_GRAB);
+        gripper.setPosition(GripperConstants.GRIP);
     }
 
     public void releaseCone()
     {
-        gripper.setPosition(GripperConstants.GRIPPER_RELEASE);
+        gripper.setPosition(GripperConstants.RELEASE);
     }
 
     public void toggle()

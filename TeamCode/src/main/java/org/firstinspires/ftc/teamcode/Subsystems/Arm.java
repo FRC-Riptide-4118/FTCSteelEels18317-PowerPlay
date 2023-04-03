@@ -4,80 +4,81 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm1Constants;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Arm2Constants;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.ArmLeftConstants;
+import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.ArmRightConstants;
 
 import org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants;
 
 public class Arm extends SubsystemBase {
-    /**
-     * Creates a new ExampleSubsystem.
-     */
-    public Servo arm1 = null;
-    public Servo arm2 = null;
+    public Servo armRight   = null;
+    public Servo armLeft    = null;
 
     private int m_counter = 0;
 
     private final int ENUM_STATES = 5;
 
     public Arm(HardwareMap hardwareMap) {
-        arm1 = hardwareMap.get(Servo.class, "arm1");
-        arm2 = hardwareMap.get(Servo.class, "arm2");
+        armRight    = hardwareMap.get(Servo.class, "arm1");
+        armLeft     = hardwareMap.get(Servo.class, "arm2");
 
         // Arm servos
         armToStart();
-
-        // Wiggle the arm servos so they (hopefully) don't
-        // misbehave on the first two real commands
-//        arm1.setPosition(MotorValuesConstants.Arm1Constants.Start + 0.2);
-//        arm2.setPosition(MotorValuesConstants.Arm2Constants.Start - 0.2);
-//        armToStart();
-
     }
 
-    public boolean ArmScoring() {
-        return arm1.getPosition() == Arm1Constants.SCORING;
-    }
-
+    
     public void armToStart() {
-        arm1.setPosition(Arm1Constants.START);
-        arm2.setPosition(Arm2Constants.START);
+        armRight.setPosition(ArmRightConstants.START);
+        armLeft.setPosition(ArmLeftConstants.START);
+    }
+    
+    public void armScoring() // FIXME should we rename to "armToSCORE()" @Lohan @Elinora?
+    {
+        armRight.setPosition(MotorValuesConstants.ArmRightConstants.SCORE);
+        armLeft.setPosition(MotorValuesConstants.ArmLeftConstants.SCORE);
+    }
+
+    public void armWiggle()
+    {
+        armToStart();
+        armRight.setPosition(MotorValuesConstants.ArmRightConstants.SCORE + 0.01);
+        armLeft.setPosition(MotorValuesConstants.ArmLeftConstants.SCORE + 0.01);
+        armToStart();
     }
 
     public void armToCone1()
     {
-        arm1.setPosition(Arm1Constants.CONE_1);
-        arm2.setPosition(Arm2Constants.CONE_1);
+        armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_1);
+        armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_1);
     }
 
     public void armToCone1Wiggle()
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.CONE_1 - 0.2);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.CONE_1 + 0.2);
+        armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_1 - 0.2);
+        armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_1 + 0.2);
     }
 
     public void armToCone2()
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.CONE_2);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.CONE_2);
+        armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_2);
+        armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_2);
     }
 
     public void armToCone3()
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.CONE_3);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.CONE_3);
+        armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_3);
+        armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_3);
     }
 
     public void armToCone4()
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.CONE_4);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.CONE_4);
+        armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_4);
+        armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_4);
     }
 
     public void armToCone5()
     {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.CONE_5);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.CONE_5);
+        armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_5);
+        armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_5);
     }
 
     public void armToPosition()
@@ -94,28 +95,17 @@ public class Arm extends SubsystemBase {
             armToCone5();
     }
 
-    public void armScoring() // FIXME should we rename to "armToScoring()" @Lohan @Elinora?
-    {
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.SCORING);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.SCORING);
+    public boolean ArmSCORE() {
+        return armRight.getPosition() == ArmRightConstants.SCORE;
     }
-
-    public void armWiggle()
-    {
-        armToStart();
-        arm1.setPosition(MotorValuesConstants.Arm1Constants.SCORING + 0.01);
-        arm2.setPosition(MotorValuesConstants.Arm2Constants.SCORING + 0.01);
-        armToStart();
-    }
-
-    public double getPosition(int side) {
+        public double getPosition(int side) {
 
         switch(side) {
 
             case 1:
-                return arm1.getPosition();
+                return armRight.getPosition();
             case 2:
-                return arm2.getPosition();
+                return armLeft.getPosition();
             default:
                 return 0;
 
