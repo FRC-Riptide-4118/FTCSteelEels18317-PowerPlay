@@ -39,6 +39,7 @@ public class Gripper extends SubsystemBase {
     public boolean isGripping() {
         return gripper.getPosition() == GripperConstants.GRIP;
     }
+    public double getPosition() { return gripper.getPosition(); }
 
     public void gripCone()
     {

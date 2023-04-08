@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
 
+import org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants;
+
 public class Slides extends SubsystemBase {
     /**
      * Creates a new ExampleSubsystem.
@@ -88,6 +90,14 @@ public class Slides extends SubsystemBase {
         rightSlide.setPower(1);
     }
 
+    public void slidesToScoreHigh()
+    {
+        leftSlide.setTargetPosition(SlidesConstants.HIGH - SlidesConstants.SCORE_DROP);
+        rightSlide.setTargetPosition(SlidesConstants.HIGH);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
     public void slidesToHigh()
     {
         leftSlide.setTargetPosition(SlidesConstants.HIGH);
@@ -98,8 +108,8 @@ public class Slides extends SubsystemBase {
 
     public void slidesDrop()
     {
-        leftSlide.setTargetPosition(leftSlide.getCurrentPosition()-300);
-        rightSlide.setTargetPosition(rightSlide.getCurrentPosition()-300);
+        leftSlide.setTargetPosition(leftSlide.getCurrentPosition() - SlidesConstants.SCORE_DROP);
+        rightSlide.setTargetPosition(rightSlide.getCurrentPosition() - SlidesConstants.SCORE_DROP);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }

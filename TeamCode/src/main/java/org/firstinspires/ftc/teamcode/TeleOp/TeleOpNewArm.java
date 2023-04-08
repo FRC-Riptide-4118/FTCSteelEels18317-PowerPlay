@@ -4,15 +4,16 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Commands.ScoringSystemTeleOp;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainTeleOp;
 import org.firstinspires.ftc.teamcode.Commands.TestScoringSystemTeleOp;
 import org.firstinspires.ftc.teamcode.Subsystems.Alignment;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
+import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Subsystems.Wrist;
 
 @TeleOp(group = "Testing")
@@ -30,8 +31,11 @@ public class TeleOpNewArm extends CommandOpMode {
         Wrist       wrist       = new Wrist(hardwareMap);
         Intake      intake      = new Intake(hardwareMap);
         Alignment   alignment   = new Alignment(hardwareMap);
+        Slides      slides      = new Slides(hardwareMap);
+        Drivetrain drive        = new Drivetrain(hardwareMap);
 
-        schedule(new TestScoringSystemTeleOp(gripper, arm, wrist, intake, alignment,
+        schedule(new DrivetrainTeleOp(drive, gamepad1),
+                new TestScoringSystemTeleOp(gripper, arm, wrist, intake, alignment, slides,
                 telemetry, gamepad1));
     }
 }

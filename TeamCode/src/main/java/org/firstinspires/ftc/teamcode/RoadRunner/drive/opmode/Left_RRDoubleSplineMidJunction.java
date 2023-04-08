@@ -24,7 +24,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-@Disabled
+//@Disabled
 @Autonomous(name = "Left_RRDoubleSplineMidJunction")
 public class Left_RRDoubleSplineMidJunction extends LinearOpMode {
 

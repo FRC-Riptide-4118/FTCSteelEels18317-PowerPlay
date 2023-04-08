@@ -5,15 +5,19 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class MotorValuesConstants {
 
+    @Config
     public static class SlidesConstants
     {
         public static final int START   = 0;
         public static final int GROUND  = -50;
-        public static final int LOW     = 700;
-        public static final int MEDIUM  = 1300;
-        public static final int HIGH    = 1950;
+        public static final int LOW     = 400;
+        public static final int MEDIUM  = 900;
+        public static final int HIGH    = 1550;
         public static final int STACK   = 75;
+
+        public static final int SCORE_DROP = 300;
     }
+
 
     public static class Arm1Constants
     {
@@ -39,25 +43,28 @@ public class MotorValuesConstants {
         public static final double CONE_5 = 0.8;
     }
 
+    @Config
     public static class ArmRightConstants
     {
-        public static final double START  = 0.9;
+        public static double START  = 0.89;
         public static double SCORE  = 0.05;
     }
 
-
+    @Config
     public static class ArmLeftConstants
     {
-        public static final double START   = 0.1;
-        public static final double SCORE   = 0.95;
+        public static double START   = 0.11;
+        public static double SCORE   = 0.95;
     }
 
+    @Config
     public static class WristConstants
     {
         public static final double START     = 0.1;
         public static final double SCORE     = 0.78;
     }
 
+    @Config
     public static class AlignmentConstants
     {
         public static final double UP = 0.23;
