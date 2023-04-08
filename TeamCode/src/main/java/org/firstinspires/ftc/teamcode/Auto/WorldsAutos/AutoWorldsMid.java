@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Subsystems.Wrist;
+import org.firstinspires.ftc.teamcode.TeleOp.FieldPoseConstants;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -97,12 +98,15 @@ public class AutoWorldsMid extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
 
-        drive.setPoseEstimate(RightAutoConstants.startPose);
+        drive.setPoseEstimate(FieldPoseConstants.LeftAutoConstants.startPose);
 
 
-        TrajectorySequence testSequence = drive.trajectorySequenceBuilder(RightAutoConstants.startPose)
-                .forward(20)
-                .lineToLinearHeading(new Pose2d(RightAutoConstants.preLoadMidJunction.getX(), RightAutoConstants.preLoadMidJunction.getY(), RightAutoConstants.preLoadMidJunction.getHeading()))
+        TrajectorySequence testSequence = drive.trajectorySequenceBuilder(FieldPoseConstants.LeftAutoConstants.startPose)
+                .forward(55)
+                .setReversed(true)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getHeading())
+                .setReversed(false)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.stack.getX(), FieldPoseConstants.LeftAutoConstants.stack.getY()), FieldPoseConstants.LeftAutoConstants.stack.getHeading())
                 .build();
 
 
@@ -265,6 +269,7 @@ public class AutoWorldsMid extends LinearOpMode {
         }
 
         drive.followTrajectorySequence(testSequence);
+
 
 //        if (tagOfInterest == null || tagOfInterest.id == Middle) {
 //            // Do nothing
