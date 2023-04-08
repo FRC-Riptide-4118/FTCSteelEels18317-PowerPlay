@@ -122,6 +122,38 @@ public class Slides extends SubsystemBase {
         rightSlide.setPower(1);
     }
 
+    public void slidesToCone1()
+    {
+        leftSlide.setTargetPosition(SlidesConstants.Cone_1);
+        rightSlide.setTargetPosition(SlidesConstants.Cone_1);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
+    public void slidesToCone2()
+    {
+        leftSlide.setTargetPosition(SlidesConstants.Cone_2);
+        rightSlide.setTargetPosition(SlidesConstants.Cone_2);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
+    public void slidesToCone3()
+    {
+        leftSlide.setTargetPosition(SlidesConstants.Cone_3);
+        rightSlide.setTargetPosition(SlidesConstants.Cone_3);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
+    public void slidesToCone4()
+    {
+        leftSlide.setTargetPosition(SlidesConstants.Cone_4);
+        rightSlide.setTargetPosition(SlidesConstants.Cone_4);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
     public boolean slidesAreBusy()
     {
         return leftSlide.isBusy() || rightSlide.isBusy();

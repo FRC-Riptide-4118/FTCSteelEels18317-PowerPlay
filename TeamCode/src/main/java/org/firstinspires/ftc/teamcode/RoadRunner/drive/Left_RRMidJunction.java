@@ -16,7 +16,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
-import org.firstinspires.ftc.teamcode.TeleOp.FieldPoseConstants;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -112,7 +111,7 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(-1.9, intake::open)
                 .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
                 .UNSTABLE_addTemporalMarkerOffset(-1.75, slides::slidesToMedium)
-                .UNSTABLE_addTemporalMarkerOffset(-1, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(-1, arm::armToSCORE)
                 .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesUp)
@@ -126,7 +125,7 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armToSCORE)
                 .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesUp)
@@ -140,7 +139,7 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armToSCORE)
                 .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesUp)
@@ -154,7 +153,7 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX(), LeftAutoConstants.closeMidJunction.getY()), LeftAutoConstants.closeMidJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armToSCORE)
                 .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesUp)
@@ -168,7 +167,7 @@ public class Left_RRMidJunction extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(LeftAutoConstants.closeMidJunction.getX()+3.5, LeftAutoConstants.closeMidJunction.getY()+0.5), LeftAutoConstants.closeMidJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armToSCORE)
                 .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesUp)

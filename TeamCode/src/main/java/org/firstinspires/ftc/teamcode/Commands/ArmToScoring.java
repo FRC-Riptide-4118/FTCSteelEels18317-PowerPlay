@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 
@@ -17,7 +16,7 @@ public class ArmToScoring extends CommandBase {
     @Override
     public void initialize()
     {
-        m_arm.armScoring();
+        m_arm.armToSCORE();
     }
 
     @Override

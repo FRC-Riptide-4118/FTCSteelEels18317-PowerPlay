@@ -31,7 +31,7 @@ public class Arm extends SubsystemBase {
         armLeft.setPosition(ArmLeftConstants.START);
     }
     
-    public void armScoring() // FIXME should we rename to "armToSCORE()" @Lohan @Elinora?
+    public void armToSCORE() // FIXME should we rename to "armToSCORE()" @Lohan @Elinora?
     {
         armRight.setPosition(MotorValuesConstants.ArmRightConstants.SCORE);
         armLeft.setPosition(MotorValuesConstants.ArmLeftConstants.SCORE);

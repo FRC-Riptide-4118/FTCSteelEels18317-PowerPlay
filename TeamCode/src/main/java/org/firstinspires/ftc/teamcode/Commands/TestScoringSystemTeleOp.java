@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Subsystems.Alignment;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
@@ -193,7 +194,7 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new SlidesToLow(m_slides),
+//                        new SlidesToLow(m_slides),
                         new ArmToScoring(m_arm),
                         new DelayForSeconds(0.2),
                         new WristToScoring(m_wrist)
@@ -274,6 +275,7 @@ public class TestScoringSystemTeleOp extends CommandBase {
         m_telemetry.addData("scoring state", scoringState.toString());
         m_telemetry.addData("intake state", intakeState.toString());
         m_telemetry.addData("gripping", m_gripper.getPosition());
+//        m_telemetry.addData("slide motors", m_slides.getCurrent(CurrentUnit.MILLIAMPS));
         m_telemetry.update();
     }
 

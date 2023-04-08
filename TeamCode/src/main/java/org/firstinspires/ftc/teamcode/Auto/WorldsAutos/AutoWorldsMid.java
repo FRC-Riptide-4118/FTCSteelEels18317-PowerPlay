@@ -1,13 +1,9 @@
 package org.firstinspires.ftc.teamcode.Auto.WorldsAutos;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.FieldPoseConstants.RightAutoConstants;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -23,6 +19,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Subsystems.Wrist;
+import org.firstinspires.ftc.teamcode.Subsystems.Alignment;
 import org.firstinspires.ftc.teamcode.TeleOp.FieldPoseConstants;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -67,12 +64,12 @@ public class AutoWorldsMid extends LinearOpMode {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, dashboard.getTelemetry());
 
         //Hardware Classes
-//        Drivetrain  drivetrain    = new Drivetrain(hardwareMap);
-//        Gripper     gripper       = new Gripper(hardwareMap);
-//        Slides      slides        = new Slides(hardwareMap);
-//        Wrist       wrist         = new Wrist(hardwareMap);
-//        Arm         arm           = new Arm(hardwareMap);
-//        Intake      intake        = new Intake(hardwareMap);
+        Gripper     gripper     = new Gripper(hardwareMap);
+        Arm         arm         = new Arm(hardwareMap);
+        Wrist       wrist       = new Wrist(hardwareMap);
+        Intake      intake      = new Intake(hardwareMap);
+        Alignment   alignment   = new Alignment(hardwareMap);
+        Slides      slides      = new Slides(hardwareMap);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -95,18 +92,44 @@ public class AutoWorldsMid extends LinearOpMode {
         });
 
         timer = new ElapsedTime();
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        SampleMecanumDrive mecanumDrive = new SampleMecanumDrive(hardwareMap);
 
 
-        drive.setPoseEstimate(FieldPoseConstants.LeftAutoConstants.startPose);
+        mecanumDrive.setPoseEstimate(FieldPoseConstants.LeftAutoConstants.startPose);
 
 
-        TrajectorySequence testSequence = drive.trajectorySequenceBuilder(FieldPoseConstants.LeftAutoConstants.startPose)
+        TrajectorySequence testSequence = mecanumDrive.trajectorySequenceBuilder(FieldPoseConstants.LeftAutoConstants.startPose)
                 .forward(55)
                 .setReversed(true)
                 .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getHeading())
+                .waitSeconds(0.25)
+                .UNSTABLE_addTemporalMarkerOffset(-3, intake::open)
+                .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, alignment::score)
+                .UNSTABLE_addTemporalMarkerOffset(-1.8, arm::armToSCORE)
+                .UNSTABLE_addTemporalMarkerOffset(-1.75, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(-1.5, wrist::toScoring)
+                .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
+                .UNSTABLE_addTemporalMarkerOffset(0.1, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.4, slides::slidesUp)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesToCone4)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStart)
                 .setReversed(false)
                 .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.stack.getX(), FieldPoseConstants.LeftAutoConstants.stack.getY()), FieldPoseConstants.LeftAutoConstants.stack.getHeading())
+                .waitSeconds(0.1)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.1, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(0.12, arm::armToSCORE)
+                .UNSTABLE_addTemporalMarkerOffset(0.25, wrist::toScoring)
+//                .UNSTABLE_addTemporalMarkerOffset(0.32 , slides::slidesDrop)
+//                .UNSTABLE_addTemporalMarkerOffset(0.1, gripper::releaseCone)
+//                .UNSTABLE_addTemporalMarkerOffset(0.4, slides::slidesUp)
+//                .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesToCone4)
+//                .UNSTABLE_addTemporalMarkerOffset(0.9, wrist::toStart)
+//                .UNSTABLE_addTemporalMarkerOffset(0.9, arm::armToStart)
+                .setReversed(true)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getHeading())
                 .build();
 
 
@@ -249,8 +272,8 @@ public class AutoWorldsMid extends LinearOpMode {
 
             }
 
-//            gripper.gripCone();
-//            intake.close();
+            gripper.gripCone();
+            intake.close();
             telemetry.update();
             sleep(20);
         }
@@ -268,7 +291,7 @@ public class AutoWorldsMid extends LinearOpMode {
             telemetry.update();
         }
 
-        drive.followTrajectorySequence(testSequence);
+        mecanumDrive.followTrajectorySequence(testSequence);
 
 
 //        if (tagOfInterest == null || tagOfInterest.id == Middle) {

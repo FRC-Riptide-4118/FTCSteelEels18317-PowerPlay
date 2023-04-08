@@ -186,7 +186,7 @@ public class ScoringSystemTeleOp extends CommandBase {
             else if(m_gamepad1.x) // scoring low
             {
                 schedule(new SequentialCommandGroup(
-                        new SlidesToLow(m_slides), // ends when at a safe height for arm to move
+//                        new SlidesToLow(m_slides), // ends when at a safe height for arm to move
                         new ArmToScoring(m_arm)
                 ));
 

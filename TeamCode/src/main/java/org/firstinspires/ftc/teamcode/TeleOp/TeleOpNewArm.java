@@ -32,7 +32,7 @@ public class TeleOpNewArm extends CommandOpMode {
         Intake      intake      = new Intake(hardwareMap);
         Alignment   alignment   = new Alignment(hardwareMap);
         Slides      slides      = new Slides(hardwareMap);
-        Drivetrain drive        = new Drivetrain(hardwareMap);
+        Drivetrain  drive       = new Drivetrain(hardwareMap);
 
         schedule(new DrivetrainTeleOp(drive, gamepad1),
                 new TestScoringSystemTeleOp(gripper, arm, wrist, intake, alignment, slides,

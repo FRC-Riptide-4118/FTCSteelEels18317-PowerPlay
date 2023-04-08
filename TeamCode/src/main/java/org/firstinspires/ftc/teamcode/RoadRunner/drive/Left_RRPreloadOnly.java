@@ -110,7 +110,7 @@ public class Left_RRPreloadOnly extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.1, intake::open)
                 .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
                 .UNSTABLE_addTemporalMarkerOffset(-1.75, slides::slidesToMedium)
-                .UNSTABLE_addTemporalMarkerOffset(-1, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(-1, arm::armToSCORE)
                 .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesUp)

@@ -4,7 +4,6 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -103,7 +102,7 @@ public class Left_RRDoubleSplineMidJunction extends LinearOpMode {
                 .splineTo(new Vector2d(PreLoadMidJunction.getX(), PreLoadMidJunction.getY()), PreLoadMidJunction.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-2, slides::slidesToMedium)
                 .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
-                .UNSTABLE_addTemporalMarkerOffset(-1, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(-1, arm::armToSCORE)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(.8, arm::armToCone1)
                 .UNSTABLE_addTemporalMarkerOffset(.9, slides::slidesToStart)
@@ -117,7 +116,7 @@ public class Left_RRDoubleSplineMidJunction extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armToSCORE)
                 .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.4, arm::armToCone2)
                 .UNSTABLE_addTemporalMarkerOffset(0.55, slides::slidesToStart)
@@ -130,7 +129,7 @@ public class Left_RRDoubleSplineMidJunction extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armToSCORE)
                 .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.4, arm::armToCone3)
                 .UNSTABLE_addTemporalMarkerOffset(0.55, slides::slidesToStart)
@@ -143,7 +142,7 @@ public class Left_RRDoubleSplineMidJunction extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armToSCORE)
                 .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.4, arm::armToCone4)
                 .UNSTABLE_addTemporalMarkerOffset(0.55, slides::slidesToStart)
@@ -156,7 +155,7 @@ public class Left_RRDoubleSplineMidJunction extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
                 .setReversed(true)
                 .splineTo(new Vector2d(closeMidJunction.getX(), closeMidJunction.getY()), closeMidJunction.getHeading())
-                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
+                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armToSCORE)
                 .UNSTABLE_addTemporalMarkerOffset(0, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.4, arm::armToCone5)
                 .UNSTABLE_addTemporalMarkerOffset(0.55, slides::slidesToStart)
