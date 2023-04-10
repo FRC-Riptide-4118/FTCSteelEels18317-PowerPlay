@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -13,19 +14,19 @@ public class Gripper extends SubsystemBase {
     /**
      * Creates a new ExampleSubsystem.
      */
-    public  Servo          gripper;
-    public  DistanceSensor distanceSensor;
-
-    public boolean Distance() {
-        return (distanceSensor.getDistance(DistanceUnit.MM) <= 50);
-    }
+    public Servo        gripper;
+    public ColorSensor  color;
 
     public Gripper(HardwareMap hardwareMap) {
-        gripper          = hardwareMap.get(Servo.class, "gripper");
-        distanceSensor   = hardwareMap.get(DistanceSensor.class, "distance_sensor");
+        gripper = hardwareMap.get(Servo.class, "gripper");
+        color   = hardwareMap.get(ColorSensor.class, "color_cone");
 
         releaseCone();
+        ledOn();
     }
+
+    public void ledOn() { color.enableLed(true); }
+    public void ledOff() { color.enableLed(false); } // FIXME currently not working
 
     /**
      * Returns whether a cone was detected by the color/distance sensor.
@@ -33,7 +34,8 @@ public class Gripper extends SubsystemBase {
      */
     public boolean coneDetected()
     {
-        return false; // TODO implementation
+        // FIXME check threshold values!!! Red was determined empirically under even, cool, LED lighting
+        return color.red() > 200 || color.blue() > 200;
     }
 
     public boolean isGripping() {
@@ -55,10 +57,6 @@ public class Gripper extends SubsystemBase {
     {
         if(isGripping())    releaseCone();
         else                gripCone();
-    }
-
-    public double getDistance() {
-        return distanceSensor.getDistance(DistanceUnit.MM);
     }
 
     @Override

@@ -304,6 +304,12 @@ public class TestScoringSystemTeleOp extends CommandBase {
     }
 
     @Override
+    public void end(boolean interrupted)
+    {
+        m_gripper.ledOff();
+    }
+
+    @Override
     public boolean isFinished() { return false; }
 
     /**
