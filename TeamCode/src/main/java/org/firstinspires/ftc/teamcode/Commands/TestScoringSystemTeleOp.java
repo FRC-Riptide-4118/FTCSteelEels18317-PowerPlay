@@ -194,7 +194,7 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-//                        new SlidesToLow(m_slides),
+                        new SlidesToLow(m_slides),
                         new ArmToScoring(m_arm),
                         new DelayForSeconds(0.2),
                         new WristToScoring(m_wrist)
@@ -231,6 +231,30 @@ public class TestScoringSystemTeleOp extends CommandBase {
         }
         else if(scoringState == ScoringState.READY)
         {
+            if(m_gamepad1.x)
+            {
+                schedule(new SlidesToLow(m_slides));
+
+                nextScoringState = ScoringState.READY;
+            }
+
+            if(m_gamepad1.y)
+            {
+                schedule(new SlidesToMedium(m_slides));
+
+                nextScoringState = ScoringState.READY;
+            }
+
+
+            if(m_gamepad1.b)
+            {
+                schedule(new SlidesToHigh(m_slides));
+
+                nextScoringState = ScoringState.READY;
+            }
+
+
+
             if(a_pressed && !gp1_a_PLI)
             {
                 schedule(new SequentialCommandGroup(
@@ -250,7 +274,7 @@ public class TestScoringSystemTeleOp extends CommandBase {
                         new AlignmentToDown(m_alignment),
                         new DelayForSeconds(0.5),
                         new WristToStart(m_wrist),
-                        new SlidesToGround(m_slides),
+                        new SlidesToStart(m_slides),
                         new DelayForSeconds(0.2),
                         new ArmToStart(m_arm),
                         new DelayForSeconds(0.8),

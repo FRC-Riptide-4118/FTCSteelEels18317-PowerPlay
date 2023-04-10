@@ -10,7 +10,7 @@ public class MotorValuesConstants {
     {
         public static final int START   = 0;
         public static final int GROUND  = -50;
-        public static final int LOW     = 450;
+        public static final int LOW     = 200;
         public static final int MEDIUM  = 950;
         public static final int HIGH    = 1600;
         public static final int STACK   = 75;
