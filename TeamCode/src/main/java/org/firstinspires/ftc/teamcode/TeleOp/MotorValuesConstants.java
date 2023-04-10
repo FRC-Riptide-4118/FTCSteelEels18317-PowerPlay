@@ -52,15 +52,15 @@ public class MotorValuesConstants {
     @Config
     public static class ArmRightConstants
     {
-        public static double START  = 0.83;
-        public static double SCORE  = 0.05;
+        public static double START  = 0.93;
+        public static double SCORE  = 0.1;
     }
 
     @Config
     public static class ArmLeftConstants
     {
-        public static double START   = 0.17;
-        public static double SCORE   = 0.95;
+        public static double START   = 0.07;
+        public static double SCORE   = 0.9;
     }
 
     @Config
@@ -81,10 +81,10 @@ public class MotorValuesConstants {
 
     public static class IntakeServosConstants {
         public static final double MOVE_CONE = 0.5;
-        public static final double INTAKE_LEFT_OUT = 0.92;
-        public static final double INTAKE_RIGHT_OUT = 0.18;
+        public static final double INTAKE_LEFT_OUT = 0.9;
+        public static final double INTAKE_RIGHT_OUT = 0.25;
         public static final double INTAKE_LEFT_IN = 0.5;
-        public static final double INTAKE_RIGHT_IN = 0.59;
+        public static final double INTAKE_RIGHT_IN = 0.6;
     }
 
     public static class GripperConstants {
