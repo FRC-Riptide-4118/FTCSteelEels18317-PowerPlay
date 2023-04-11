@@ -19,18 +19,18 @@ public class TestServos extends LinearOpMode {
     public void runOpMode() {
         Telemetry m_telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        Servo servo1 = hardwareMap.servo.get("intake_left");
-        Servo servo2 = hardwareMap.servo.get("intake_right");
+        Servo rightArm = hardwareMap.servo.get("arm1");
+        Servo leftArm = hardwareMap.servo.get("arm2");
 
         waitForStart();
 
         while(opModeIsActive()) {
-            servo1.setPosition(servo1Pos);
-            servo2.setPosition(servo2Pos);
+            rightArm.setPosition(MotorValuesConstants.ArmRightConstants.START);
+            leftArm.setPosition(MotorValuesConstants.ArmLeftConstants.START);
 
 
-            m_telemetry.addData("intake left pos",  servo1.getPosition());
-            m_telemetry.addData("intake right pos", servo2.getPosition());
+            m_telemetry.addData("intake right pos",  rightArm.getPosition());
+            m_telemetry.addData("intake left pos", leftArm.getPosition());
             m_telemetry.update();
         }
     }

@@ -25,10 +25,10 @@ public class SlidesToLow extends CommandBase {
 
     }
 
-    @Override
-    public boolean isFinished()
-    {
-        return m_slides.atSafeHeight();
-    }
+//    @Override
+//    public boolean isFinished()
+//    {
+//        return m_slides.atSafeHeight();
+//    }
 
 }

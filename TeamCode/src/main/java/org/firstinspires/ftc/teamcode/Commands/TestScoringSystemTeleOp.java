@@ -258,7 +258,7 @@ public class TestScoringSystemTeleOp extends CommandBase {
             if(a_pressed && !gp1_a_PLI)
             {
                 schedule(new SequentialCommandGroup(
-                        new SlidesDropToScore(m_slides)
+                        new SlidesDropToScore(m_slides), new ArmToDrop(m_arm)
                 ));
 
                 nextScoringState = ScoringState.SCORING;

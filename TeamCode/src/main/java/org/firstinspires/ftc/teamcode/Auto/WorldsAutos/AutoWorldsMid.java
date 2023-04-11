@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.Auto.OpenCV.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
-import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
@@ -26,6 +25,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
+import java.text.FieldPosition;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -99,9 +99,11 @@ public class AutoWorldsMid extends LinearOpMode {
 
 
         TrajectorySequence testSequence = mecanumDrive.trajectorySequenceBuilder(FieldPoseConstants.LeftAutoConstants.startPose)
+                .UNSTABLE_addTemporalMarkerOffset(-7, arm::armToMiddle)
                 .forward(55)
                 .setReversed(true)
-                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getHeading())
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.closeMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getHeading())
+                // PreLoad
                 .waitSeconds(0.25)
                 .UNSTABLE_addTemporalMarkerOffset(-3, intake::open)
                 .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
@@ -110,34 +112,109 @@ public class AutoWorldsMid extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(-1.75, slides::slidesToMedium)
                 .UNSTABLE_addTemporalMarkerOffset(-1.5, wrist::toScoring)
                 .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
-                .UNSTABLE_addTemporalMarkerOffset(0.2, gripper::releaseCone)
-                .UNSTABLE_addTemporalMarkerOffset(0.4, slides::slidesUp)
-                .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesToCone5)
-                .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
-                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStart)
+                .UNSTABLE_addTemporalMarkerOffset(0, arm::armToDrop)
+                .UNSTABLE_addTemporalMarkerOffset(0.1, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.3, slides::slidesUp)
+                .UNSTABLE_addTemporalMarkerOffset(0.4, slides::slidesToCone5)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, wrist::toStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, arm::armToStart)
+                // Cone1
                 .setReversed(false)
                 .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.stack.getX(), FieldPoseConstants.LeftAutoConstants.stack.getY()), FieldPoseConstants.LeftAutoConstants.stack.getHeading())
-                .waitSeconds(0.1)
-                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
-                .UNSTABLE_addTemporalMarkerOffset(0.1, slides::slidesToMedium)
-                .UNSTABLE_addTemporalMarkerOffset(0.12, arm::armToSCORE)
-                .UNSTABLE_addTemporalMarkerOffset(0.25, wrist::toScoring)
+                .waitSeconds(0.25)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(-0.25, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(0.11, arm::armToSCORE)
+                .UNSTABLE_addTemporalMarkerOffset(0.11, wrist::toScoring)
                 .setReversed(true)
-                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getHeading())
-                .waitSeconds(0.1)
-                .UNSTABLE_addTemporalMarkerOffset(0.05 , slides::slidesDrop)
-                .UNSTABLE_addTemporalMarkerOffset(0.09, gripper::releaseCone)
-                .UNSTABLE_addTemporalMarkerOffset(0.1, slides::slidesUp)
-                .UNSTABLE_addTemporalMarkerOffset(0.15, wrist::toStart)
-                .UNSTABLE_addTemporalMarkerOffset(0.15, arm::armToStart)
-                .UNSTABLE_addTemporalMarkerOffset(0.22, slides::slidesToCone4)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.closeMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getHeading())
+                .waitSeconds(0.25)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, slides::slidesDrop)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, arm::armToDrop)
+                .UNSTABLE_addTemporalMarkerOffset(-0.7, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesUp)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesToCone4)
+                // Cone2
+                .setReversed(false)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.stack.getX(), FieldPoseConstants.LeftAutoConstants.stack.getY()), FieldPoseConstants.LeftAutoConstants.stack.getHeading())
+                .waitSeconds(0.25)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(-0.25, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(0.11, arm::armToSCORE)
+                .UNSTABLE_addTemporalMarkerOffset(0.11, wrist::toScoring)
+                .setReversed(true)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.closeMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getHeading())
+                .waitSeconds(0.25)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, slides::slidesDrop)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, arm::armToDrop)
+                .UNSTABLE_addTemporalMarkerOffset(-0.7, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesUp)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesToCone4)
+                // Cone3
+                .setReversed(false)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.stack.getX(), FieldPoseConstants.LeftAutoConstants.stack.getY()), FieldPoseConstants.LeftAutoConstants.stack.getHeading())
+                .waitSeconds(0.25)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(-0.25, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(0.11, arm::armToSCORE)
+                .UNSTABLE_addTemporalMarkerOffset(0.11, wrist::toScoring)
+                .setReversed(true)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.closeMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getHeading())
+                .waitSeconds(0.25)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, slides::slidesDrop)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, arm::armToDrop)
+                .UNSTABLE_addTemporalMarkerOffset(-0.7, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesUp)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesToCone3)
+                // Cone4
+                .setReversed(false)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.stack.getX(), FieldPoseConstants.LeftAutoConstants.stack.getY()), FieldPoseConstants.LeftAutoConstants.stack.getHeading())
+                .waitSeconds(0.25)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(-0.25, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(0.11, arm::armToSCORE)
+                .UNSTABLE_addTemporalMarkerOffset(0.11, wrist::toScoring)
+                .setReversed(true)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.closeMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getHeading())
+                .waitSeconds(0.25)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, slides::slidesDrop)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, arm::armToDrop)
+                .UNSTABLE_addTemporalMarkerOffset(-0.7, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesUp)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesToCone3)
+                // Cone5
+                .setReversed(false)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.stack.getX(), FieldPoseConstants.LeftAutoConstants.stack.getY()), FieldPoseConstants.LeftAutoConstants.stack.getHeading())
+                .waitSeconds(0.25)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, gripper::gripCone)
+                .UNSTABLE_addTemporalMarkerOffset(-0.25, slides::slidesToMedium)
+                .UNSTABLE_addTemporalMarkerOffset(0.11, arm::armToSCORE)
+                .UNSTABLE_addTemporalMarkerOffset(0.11, wrist::toScoring)
+                .setReversed(true)
+                .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.closeMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.closeMidJunction.getHeading())
+                .waitSeconds(0.25)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, slides::slidesDrop)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, arm::armToDrop)
+                .UNSTABLE_addTemporalMarkerOffset(-0.7, gripper::releaseCone)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesUp)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, slides::slidesToGround)
                 .build();
 
 
 //        TrajectorySequence High_Junction = drive.trajectorySequenceBuilder(RightAutoConstants.startPose)
 //                .forward(55)
 //                .setReversed(true)
-//                .splineTo(new Vector2d(RightAutoConstants.preLoadMidJunction.getX(), RightAutoConstants.preLoadMidJunction.getY()), RightAutoConstants.preLoadMidJunction.getHeading())
+//                .splineTo(new Vector2d(RightAutoConstants.closeMidJunction.getX(), RightAutoConstants.closeMidJunction.getY()), RightAutoConstants.closeMidJunction.getHeading())
 //                .UNSTABLE_addTemporalMarkerOffset(0.1, intake::open)
 //                .UNSTABLE_addTemporalMarkerOffset(-3, gripper::gripCone)
 //                .UNSTABLE_addTemporalMarkerOffset(-1.75, slides::slidesToMedium)
@@ -154,7 +231,7 @@ public class AutoWorldsMid extends LinearOpMode {
 //                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
 //                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
 //                .setReversed(true)
-//                .splineTo(new Vector2d(RightAutoConstants.closeMidJunction.getX(), RightAutoConstants.closeMidJunction.getY()), RightAutoConstants.closeMidJunction.getHeading())
+//                .splineTo(new Vector2d(RightAutoConstants.MidJunction.getX(), RightAutoConstants.MidJunction.getY()), RightAutoConstants.MidJunction.getHeading())
 //                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
 //                .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
 //                .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
@@ -168,7 +245,7 @@ public class AutoWorldsMid extends LinearOpMode {
 //                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
 //                .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesToMedium)
 //                .setReversed(true)
-//                .splineTo(new Vector2d(RightAutoConstants.closeMidJunction.getX(), RightAutoConstants.closeMidJunction.getY()), RightAutoConstants.closeMidJunction.getHeading())
+//                .splineTo(new Vector2d(RightAutoConstants.MidJunction.getX(), RightAutoConstants.MidJunction.getY()), RightAutoConstants.MidJunction.getHeading())
 //                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
 //                .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
 //                .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
@@ -182,7 +259,7 @@ public class AutoWorldsMid extends LinearOpMode {
 //                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
 //                .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesToMedium)
 //                .setReversed(true)
-//                .splineTo(new Vector2d(RightAutoConstants.closeMidJunction.getX(), RightAutoConstants.closeMidJunction.getY()), RightAutoConstants.closeMidJunction.getHeading())
+//                .splineTo(new Vector2d(RightAutoConstants.MidJunction.getX(), RightAutoConstants.MidJunction.getY()), RightAutoConstants.MidJunction.getHeading())
 //                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
 //                .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
 //                .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
@@ -196,7 +273,7 @@ public class AutoWorldsMid extends LinearOpMode {
 //                .UNSTABLE_addTemporalMarkerOffset(-0.1, gripper::gripCone)
 //                .UNSTABLE_addTemporalMarkerOffset(0.01, slides::slidesToMedium)
 //                .setReversed(true)
-//                .splineTo(new Vector2d(RightAutoConstants.closeMidJunction.getX()-3.5, RightAutoConstants.closeMidJunction.getY()+0.5), RightAutoConstants.closeMidJunction.getHeading())
+//                .splineTo(new Vector2d(RightAutoConstants.MidJunction.getX()-3.5, RightAutoConstants.MidJunction.getY()+0.5), RightAutoConstants.MidJunction.getHeading())
 //                .UNSTABLE_addTemporalMarkerOffset(-0.9, arm::armScoring)
 //                .UNSTABLE_addTemporalMarkerOffset(0, slides::slidesDrop)
 //                .UNSTABLE_addTemporalMarkerOffset(0.3, gripper::releaseCone)
@@ -274,7 +351,7 @@ public class AutoWorldsMid extends LinearOpMode {
             }
 
             gripper.gripCone();
-            intake.close();
+            intake.open();
             telemetry.update();
             sleep(20);
         }

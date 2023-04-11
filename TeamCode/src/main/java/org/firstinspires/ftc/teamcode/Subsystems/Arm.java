@@ -30,6 +30,11 @@ public class Arm extends SubsystemBase {
         armRight.setPosition(ArmRightConstants.START);
         armLeft.setPosition(ArmLeftConstants.START);
     }
+
+    public void armToMiddle() {
+        armRight.setPosition(ArmRightConstants.MIDDLE);
+        armLeft.setPosition(ArmLeftConstants.MIDDLE);
+    }
     
     public void armToSCORE() // FIXME should we rename to "armToSCORE()" @Lohan @Elinora?
     {
@@ -79,6 +84,11 @@ public class Arm extends SubsystemBase {
     {
         armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_5);
         armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_5);
+    }
+
+    public void armToDrop() {
+        armRight.setPosition(ArmRightConstants.SCORE - 0.18);
+        armLeft.setPosition(ArmLeftConstants.SCORE + 0.18);
     }
 
     public void armToPosition()
