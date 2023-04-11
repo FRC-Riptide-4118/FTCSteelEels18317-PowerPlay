@@ -92,13 +92,13 @@ public class AutoWorldsSafeHighL extends LinearOpMode{
         });
 
         timer = new ElapsedTime();
-        SampleMecanumDrive mecanumDrive = new SampleMecanumDrive(hardwareMap);
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
 
-        mecanumDrive.setPoseEstimate(FieldPoseConstants.RightAutoConstants.startPose);
+        drive.setPoseEstimate(FieldPoseConstants.RightAutoConstants.startPose);
 
 
-        TrajectorySequence testSequenceL = mecanumDrive.trajectorySequenceBuilder(FieldPoseConstants.RightAutoConstants.startPose)
+        TrajectorySequence testSequenceL = drive.trajectorySequenceBuilder(FieldPoseConstants.RightAutoConstants.startPose)
         //Pre-Load
                 .lineToLinearHeading(new Pose2d(34, -10, Math.toRadians(-45)))
                 .waitSeconds(.5)
@@ -134,6 +134,7 @@ public class AutoWorldsSafeHighL extends LinearOpMode{
                 .lineToLinearHeading(new Pose2d(10, -13.5, Math.toRadians(45)))
                 .waitSeconds(0.25)
                 .build();
+
               /*  .forward(55)
                 .setReversed(true)
                 .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getHeading())
@@ -166,8 +167,6 @@ public class AutoWorldsSafeHighL extends LinearOpMode{
                 .setReversed(true)
                 .splineTo(new Vector2d(FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getX(), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getY()), FieldPoseConstants.LeftAutoConstants.preLoadMidJunction.getHeading())
                 .build(); */
-
-
 //        TrajectorySequence High_Junction = drive.trajectorySequenceBuilder(RightAutoConstants.startPose)
 //                .forward(55)
 //                .setReversed(true)
@@ -243,14 +242,14 @@ public class AutoWorldsSafeHighL extends LinearOpMode{
 //                .waitSeconds(0.5)
 //                .build();
 
-       Trajectory trajLeft = mecanumDrive.trajectoryBuilder(testSequenceL.end())
+       Trajectory trajLeft = drive.trajectoryBuilder(testSequenceL.end())
                 .lineToLinearHeading(new Pose2d(16, -12, Math.toRadians(0)))
                 .build();
-//
-       Trajectory trajRight = mecanumDrive.trajectoryBuilder(testSequenceL.end())
+
+       Trajectory trajRight = drive.trajectoryBuilder(testSequenceL.end())
                .lineToLinearHeading(new Pose2d(38, -12, Math.toRadians(0)))
                 .build();
-        Trajectory trajMiddle = mecanumDrive.trajectoryBuilder(testSequenceL.end())
+        Trajectory trajMiddle = drive.trajectoryBuilder(testSequenceL.end())
                 .lineToLinearHeading(new Pose2d(60, -12, Math.toRadians(0)))
                 .build();
        /* OpMode */
@@ -328,20 +327,20 @@ public class AutoWorldsSafeHighL extends LinearOpMode{
             telemetry.update();
         }
 
-        mecanumDrive.followTrajectorySequence(testSequenceL);
+        drive.followTrajectorySequence(testSequenceL);
 
 
         if (tagOfInterest == null || tagOfInterest.id == Middle) {
-           mecanumDrive.followTrajectory(trajMiddle);
+           drive.followTrajectory(trajMiddle);
 
         } else if (tagOfInterest.id == Left) {
             // Left Code
-        mecanumDrive.followTrajectory(trajLeft);
+        drive.followTrajectory(trajLeft);
 
 
         } else if (tagOfInterest.id == Right) {
-//            // Right Code
-        mecanumDrive.followTrajectory(trajRight);
+            // Right Code
+        drive.followTrajectory(trajRight);
 
        } else {
             // Do nothing
