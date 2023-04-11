@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
-
-import org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants;
 
 public class Slides extends SubsystemBase {
     /**
@@ -122,14 +119,6 @@ public class Slides extends SubsystemBase {
         rightSlide.setPower(1);
     }
 
-    public void slidesToCone1()
-    {
-        leftSlide.setTargetPosition(SlidesConstants.Cone_1);
-        rightSlide.setTargetPosition(SlidesConstants.Cone_1);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
-    }
-
     public void slidesToCone2()
     {
         leftSlide.setTargetPosition(SlidesConstants.Cone_2);
@@ -150,6 +139,14 @@ public class Slides extends SubsystemBase {
     {
         leftSlide.setTargetPosition(SlidesConstants.Cone_4);
         rightSlide.setTargetPosition(SlidesConstants.Cone_4);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
+    public void slidesToCone5()
+    {
+        leftSlide.setTargetPosition(SlidesConstants.Cone_5);
+        rightSlide.setTargetPosition(SlidesConstants.Cone_5);
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }

@@ -17,10 +17,10 @@ public class MotorValuesConstants {
 
         public static final int SCORE_DROP = 300;
 
-        public static final int Cone_1 = 50;
-        public static final int Cone_2 = 150;
-        public static final int Cone_3 = 250;
-        public static final int Cone_4 = 350;
+        public static final int Cone_2 = 50;
+        public static final int Cone_3 = 150;
+        public static final int Cone_4 = 250;
+        public static final int Cone_5 = 350;
 
     }
 
