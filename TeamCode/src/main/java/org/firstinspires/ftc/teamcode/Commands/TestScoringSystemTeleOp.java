@@ -194,7 +194,7 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new SlidesToLow(m_slides),
+//                        new SlidesToLow(m_slides),
                         new ArmToScoring(m_arm),
                         new DelayForSeconds(0.2),
                         new WristToScoring(m_wrist)
@@ -207,10 +207,10 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new SlidesToMedium(m_slides),
                         new ArmToScoring(m_arm),
-                        new DelayForSeconds(0.2),
-                        new WristToScoring(m_wrist)
+                        new DelayForSeconds(0.04),
+                        new WristToScoring(m_wrist),
+                        new SlidesToMedium(m_slides)
                 ));
 
                 nextScoringState = ScoringState.READY;
@@ -220,10 +220,10 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new SlidesToHigh(m_slides),
                         new ArmToScoring(m_arm),
-                        new DelayForSeconds(0.2),
-                        new WristToScoring(m_wrist)
+                        new DelayForSeconds(0.04),
+                        new WristToScoring(m_wrist),
+                        new SlidesToHigh(m_slides)
                 ));
 
                 nextScoringState = ScoringState.READY;
@@ -258,7 +258,8 @@ public class TestScoringSystemTeleOp extends CommandBase {
             if(a_pressed && !gp1_a_PLI)
             {
                 schedule(new SequentialCommandGroup(
-                        new SlidesDropToScore(m_slides), new ArmToDrop(m_arm)
+//                        new SlidesDropToScore(m_slides),
+                        new ArmToDrop(m_arm)
                 ));
 
                 nextScoringState = ScoringState.SCORING;

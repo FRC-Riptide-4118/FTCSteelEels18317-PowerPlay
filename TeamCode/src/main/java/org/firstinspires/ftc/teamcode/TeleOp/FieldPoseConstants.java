@@ -12,7 +12,7 @@ public class FieldPoseConstants {
         public static Pose2d closeMidJunction    = new Pose2d(33.25, 16.75, Math.toRadians(135));
         public static Pose2d stack               = new Pose2d(68.5, 13, Math.toRadians(0));
         public static Pose2d middleTile          = new Pose2d(45, 10, Math.toRadians(0));
-        public static Pose2d MidJunction         = new Pose2d(33, 16, Math.toRadians(128));
+        public static Pose2d MidJunction         = new Pose2d(33, 15, Math.toRadians(128));
     }
 
     public static class RightAutoConstants
