@@ -53,6 +53,7 @@ public class MotorValuesConstants {
     public static class ArmRightConstants
     {
         public static double START  = 1;
+        public static double STACK  = 0.95;
         public static double MIDDLE = 0.5;
         public static double SCORE  = 0.25;
     }
@@ -61,6 +62,7 @@ public class MotorValuesConstants {
     public static class ArmLeftConstants
     {
         public static double START   = 0;
+        public static double STACK  = 0.05;
         public static double MIDDLE  = 0.5;
         public static double SCORE   = 0.75;
     }

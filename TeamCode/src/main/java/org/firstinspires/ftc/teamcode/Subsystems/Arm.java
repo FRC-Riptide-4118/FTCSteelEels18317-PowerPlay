@@ -31,6 +31,11 @@ public class Arm extends SubsystemBase {
         armLeft.setPosition(ArmLeftConstants.START);
     }
 
+    public void armToStack() {
+        armRight.setPosition(ArmRightConstants.STACK);
+        armLeft.setPosition(ArmLeftConstants.STACK);
+    }
+
     public void armToMiddle() {
         armRight.setPosition(ArmRightConstants.MIDDLE);
         armLeft.setPosition(ArmLeftConstants.MIDDLE);

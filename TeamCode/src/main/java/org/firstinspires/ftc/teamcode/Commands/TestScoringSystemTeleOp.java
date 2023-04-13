@@ -187,6 +187,9 @@ public class TestScoringSystemTeleOp extends CommandBase {
         /* ------------ Gripper ------------ */
         if (lb_pressed && !gp1_lb_PLI) m_gripper.toggle();
 
+        /* ------------ Slides ------------ */
+//        if (gp1_) m_gripper.toggle();
+
         /* ------------ Arm/Slides/Wrist ------------ */
         if(scoringState == ScoringState.GROUND)
         {

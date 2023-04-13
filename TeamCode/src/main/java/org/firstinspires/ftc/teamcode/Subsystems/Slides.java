@@ -105,8 +105,8 @@ public class Slides extends SubsystemBase {
 
     public void slidesDrop()
     {
-        leftSlide.setTargetPosition(Math.max(leftSlide.getCurrentPosition() - SlidesConstants.SCORE_DROP, SlidesConstants.START));
-        rightSlide.setTargetPosition(Math.max(rightSlide.getCurrentPosition() - SlidesConstants.SCORE_DROP, SlidesConstants.START));
+        leftSlide.setTargetPosition(Math.max(leftSlide.getTargetPosition() - SlidesConstants.SCORE_DROP, SlidesConstants.START));
+        rightSlide.setTargetPosition(Math.max(rightSlide.getTargetPosition() - SlidesConstants.SCORE_DROP, SlidesConstants.START));
         leftSlide.setPower(1);
         rightSlide.setPower(1);
     }
