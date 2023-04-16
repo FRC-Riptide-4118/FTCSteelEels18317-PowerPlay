@@ -119,6 +119,14 @@ public class Slides extends SubsystemBase {
         rightSlide.setPower(1);
     }
 
+    public void slidesToCone1()
+    {
+        leftSlide.setTargetPosition(SlidesConstants.Cone_1);
+        rightSlide.setTargetPosition(SlidesConstants.Cone_1);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
     public void slidesToCone2()
     {
         leftSlide.setTargetPosition(SlidesConstants.Cone_2);

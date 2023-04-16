@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Subsystems.Wrist;
 
-@TeleOp(group = "Testing")
-public class TeleOpNewArm extends CommandOpMode {
+@TeleOp(group = "_Worlds")
+public class TeleOpWorlds extends CommandOpMode {
 
     private Telemetry m_telemetry;
 

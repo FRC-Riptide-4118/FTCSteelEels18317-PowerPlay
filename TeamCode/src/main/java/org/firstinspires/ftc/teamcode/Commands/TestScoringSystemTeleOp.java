@@ -155,7 +155,10 @@ public class TestScoringSystemTeleOp extends CommandBase {
             m_intake.open();
             m_intake.off();
 
-            if(rt_pressed && !gp1_rt_PLI) nextIntakeState = IntakeState.IN;
+            if(rt_pressed && !gp1_rt_PLI) {
+                nextIntakeState = IntakeState.IN;
+                if(scoringState == ScoringState.GROUND) m_arm.armToStart();
+            }
             else if(rb_pressed && !gp1_rb_PLI) nextIntakeState = IntakeState.OUT;
             // else stay in OFF
         }
@@ -168,6 +171,7 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 nextIntakeState = IntakeState.OFF;
                 m_gripper.gripCone();
+                m_arm.armOffGround();
             }
             else
             {
@@ -197,7 +201,7 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-//                        new SlidesToLow(m_slides),
+                        new SlidesToLow(m_slides),
                         new ArmToScoring(m_arm),
                         new DelayForSeconds(0.2),
                         new WristToScoring(m_wrist)
@@ -236,14 +240,26 @@ public class TestScoringSystemTeleOp extends CommandBase {
         {
             if(m_gamepad1.x)
             {
-                schedule(new SlidesToLow(m_slides));
+                schedule(new SequentialCommandGroup(
+                        new AlignmentToScoring(m_alignment),
+                        new ArmToScoring(m_arm),
+                        new DelayForSeconds(0.04),
+                        new WristToScoring(m_wrist),
+                        new SlidesToLow(m_slides)
+                ));
 
                 nextScoringState = ScoringState.READY;
             }
 
             if(m_gamepad1.y)
             {
-                schedule(new SlidesToMedium(m_slides));
+                schedule(new SequentialCommandGroup(
+                        new AlignmentToScoring(m_alignment),
+                        new ArmToScoring(m_arm),
+                        new DelayForSeconds(0.04),
+                        new WristToScoring(m_wrist),
+                        new SlidesToMedium(m_slides)
+                ));
 
                 nextScoringState = ScoringState.READY;
             }
@@ -251,7 +267,13 @@ public class TestScoringSystemTeleOp extends CommandBase {
 
             if(m_gamepad1.b)
             {
-                schedule(new SlidesToHigh(m_slides));
+                schedule(new SequentialCommandGroup(
+                        new AlignmentToScoring(m_alignment),
+                        new ArmToScoring(m_arm),
+                        new DelayForSeconds(0.04),
+                        new WristToScoring(m_wrist),
+                        new SlidesToHigh(m_slides)
+                ));
 
                 nextScoringState = ScoringState.READY;
             }
@@ -270,6 +292,46 @@ public class TestScoringSystemTeleOp extends CommandBase {
         }
         else // (ScoringState.SCORING)
         {
+            if(m_gamepad1.x)
+            {
+                schedule(new SequentialCommandGroup(
+                        new AlignmentToScoring(m_alignment),
+                        new ArmToScoring(m_arm),
+                        new DelayForSeconds(0.04),
+                        new WristToScoring(m_wrist),
+                        new SlidesToLow(m_slides)
+                ));
+
+                nextScoringState = ScoringState.READY;
+            }
+
+            if(m_gamepad1.y)
+            {
+                schedule(new SequentialCommandGroup(
+                        new AlignmentToScoring(m_alignment),
+                        new ArmToScoring(m_arm),
+                        new DelayForSeconds(0.04),
+                        new WristToScoring(m_wrist),
+                        new SlidesToMedium(m_slides)
+                ));
+
+                nextScoringState = ScoringState.READY;
+            }
+
+
+            if(m_gamepad1.b)
+            {
+                schedule(new SequentialCommandGroup(
+                        new AlignmentToScoring(m_alignment),
+                        new ArmToScoring(m_arm),
+                        new DelayForSeconds(0.04),
+                        new WristToScoring(m_wrist),
+                        new SlidesToHigh(m_slides)
+                ));
+
+                nextScoringState = ScoringState.READY;
+            }
+
             if(a_pressed && !gp1_a_PLI)
             {
                 m_gripper.releaseCone();

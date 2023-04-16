@@ -18,8 +18,8 @@ public class Arm extends SubsystemBase {
     private final int ENUM_STATES = 5;
 
     public Arm(HardwareMap hardwareMap) {
-        armRight    = hardwareMap.get(Servo.class, "arm1");
-        armLeft     = hardwareMap.get(Servo.class, "arm2");
+        armRight    = hardwareMap.get(Servo.class, "arm_right");
+        armLeft     = hardwareMap.get(Servo.class, "arm_left");
 
         // Arm servos
         armToStart();
@@ -34,6 +34,11 @@ public class Arm extends SubsystemBase {
     public void armToStack() {
         armRight.setPosition(ArmRightConstants.STACK);
         armLeft.setPosition(ArmLeftConstants.STACK);
+    }
+
+    public void armOffGround() {
+        armRight.setPosition(ArmRightConstants.OFF_GROUND);
+        armLeft.setPosition(ArmLeftConstants.OFF_GROUND);
     }
 
     public void armToMiddle() {

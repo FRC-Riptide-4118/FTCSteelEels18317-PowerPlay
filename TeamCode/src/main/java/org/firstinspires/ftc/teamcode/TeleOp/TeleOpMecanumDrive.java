@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -37,6 +38,7 @@ import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.Gripper
 
 import org.firstinspires.ftc.teamcode.EelverHardware;
 
+@Disabled
 @TeleOp(name = "TeleOpMecanumDrive", group = "Robot")
 
 public class TeleOpMecanumDrive extends LinearOpMode {
@@ -100,7 +102,7 @@ public class TeleOpMecanumDrive extends LinearOpMode {
             boolean pressed = gamepad1.left_bumper;
             if (pressed & !pressedLastIteration) {
 
-                if(hardware.gripper.getPosition() == GripperConstants.GRIPPER_GRAB) {
+                if(hardware.gripper.getPosition() == GripperConstants.OLD_GRIPPER_GRAB) {
                     hardware.releaseCone();
                 }
                 else {

@@ -100,17 +100,17 @@ public class EelverHardware {
 
     /*------- Gripper -------*/
     public boolean isGripping() {
-        return gripper.getPosition() == GripperConstants.GRIPPER_GRAB;
+        return gripper.getPosition() == GripperConstants.OLD_GRIPPER_GRAB;
     }
 
     public void gripCone()
     {
-        gripper.setPosition(MotorValuesConstants.GripperConstants.GRIPPER_GRAB);
+        gripper.setPosition(MotorValuesConstants.GripperConstants.OLD_GRIPPER_GRAB);
     }
 
     public void releaseCone()
     {
-        gripper.setPosition(GripperConstants.GRIPPER_RELEASE);
+        gripper.setPosition(GripperConstants.OLD_GRIPPER_RELEASE);
     }
 
 

@@ -2,29 +2,30 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.acmerobotics.dashboard.config.Config;
 
-@Config
 public class MotorValuesConstants {
 
     @Config
     public static class SlidesConstants
     {
-        public static final int START   = 0;
-        public static final int GROUND  = -50;
-        public static final int LOW     = 250;
-        public static final int MEDIUM  = 800;
-        public static final int HIGH    = 1450;
-        public static final int STACK   = 75;
+        public static int START   = 0;
+        public static int GROUND  = -50;
+        public static int LOW     = 150;
+        public static int MEDIUM  = 700;
+        public static int HIGH    = 1350;
+        public static int STACK   = 75;
 
         public static final int SCORE_DROP = 300;
 
-        public static final int Cone_2 = 110;
-        public static final int Cone_3 = 210;
-        public static final int Cone_4 = 270;
-        public static final int Cone_5 = 370;
+        public static int Cone_1 = 210;
+        public static int Cone_2 = 130;
+        public static int Cone_3 = 0;
+        public static int Cone_4 = 0;
+        public static int Cone_5 = 0;
 
     }
 
 
+    @Deprecated
     public static class Arm1Constants
     {
         public static final double START = 0.2;
@@ -37,6 +38,7 @@ public class MotorValuesConstants {
         public static final double CONE_5 = 0.2;
     }
 
+    @Deprecated
 	public static class Arm2Constants
 	{
 		public static final double START = 0.8;
@@ -53,6 +55,7 @@ public class MotorValuesConstants {
     public static class ArmRightConstants
     {
         public static double START  = 1;
+        public static double OFF_GROUND = 0.95;
         public static double STACK  = 0.95;
         public static double MIDDLE = 0.5;
         public static double SCORE  = 0.25;
@@ -62,6 +65,7 @@ public class MotorValuesConstants {
     public static class ArmLeftConstants
     {
         public static double START   = 0;
+        public static double OFF_GROUND = 0.05;
         public static double STACK  = 0.05;
         public static double MIDDLE  = 0.5;
         public static double SCORE   = 0.75;
@@ -70,35 +74,36 @@ public class MotorValuesConstants {
     @Config
     public static class WristConstants
     {
-        public static final double START     = 0.1;
-        public static final double SCORE     = 0.78;
+        public static double START     = 0.1;
+        public static double SCORE     = 0.78;
     }
 
     @Config
     public static class AlignmentConstants
     {
-        public static final double UP = 0.23;
-        public static final double SCORE = 0.58;
-        public static final double DOWN = 0.6;
+        public static double UP = 0.23;
+        public static double SCORE = 0.58;
+        public static double DOWN = 0.7;
     }
 
 
+    @Config
     public static class IntakeServosConstants {
-        public static final double MOVE_CONE = 0.5;
-        public static final double INTAKE_LEFT_OUT = 0.9;
-        public static final double INTAKE_RIGHT_OUT = 0.25;
-        public static final double INTAKE_LEFT_IN = 0.5;
-        public static final double INTAKE_RIGHT_IN = 0.6;
+        public static double MOVE_CONE = 0.5;
+        public static double INTAKE_LEFT_OUT = 0.9;
+        public static double INTAKE_RIGHT_OUT = 0.25;
+        public static double INTAKE_LEFT_IN = 0.5;
+        public static double INTAKE_RIGHT_IN = 0.6;
     }
 
     public static class GripperConstants {
 
         // Old values
-        public static final double GRIPPER_GRAB = 0;
-        public static final double GRIPPER_RELEASE = 0.25;
+        public static final double OLD_GRIPPER_GRAB = 0;
+        public static final double OLD_GRIPPER_RELEASE = 0.25;
 
-        public static final double RELEASE = 0.4;
-        public static final double GRIP    = 0.53;
+        public static double RELEASE = 0.4;
+        public static double GRIP    = 0.53;
     }
 
 }

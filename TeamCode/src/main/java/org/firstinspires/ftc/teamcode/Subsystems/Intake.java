@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase {
     /**
      * Spit out a cone.
      */
-    public void out() { intake.setPower(-0.5); }
+    public void out() { intake.setPower(-0.7); }
 
     /**
      * Turn off the intake motor.
