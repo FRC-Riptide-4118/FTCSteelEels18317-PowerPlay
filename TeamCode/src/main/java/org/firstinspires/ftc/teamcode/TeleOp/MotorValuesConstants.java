@@ -11,16 +11,16 @@ public class MotorValuesConstants {
         public static int START   = 0;
         public static int GROUND  = -50;
         public static int LOW     = 150;
-        public static int MEDIUM  = 700;
-        public static int HIGH    = 1350;
+        public static int MEDIUM  = 800;
+        public static int HIGH    = 1450;
         public static int STACK   = 75;
 
         public static final int SCORE_DROP = 300;
 
-        public static int Cone_1 = 210;
-        public static int Cone_2 = 130;
-        public static int Cone_3 = 0;
-        public static int Cone_4 = 0;
+        public static int Cone_1 = 300;
+        public static int Cone_2 = 180;
+        public static int Cone_3 = 50;
+        public static int Cone_4 = 50;
         public static int Cone_5 = 0;
 
     }
@@ -58,7 +58,7 @@ public class MotorValuesConstants {
         public static double START      = 0.18;
         public static double CONE_FLIP  = 0.23;
         public static double OFF_GROUND = 0.23;
-        public static double STACK      = 0.23;
+        public static double STACK      = 0.20;
         public static double MIDDLE     = 0.50;
         public static double PRE_SCORE  = 0.85;
         public static double SCORE      = 1.00;
@@ -70,7 +70,7 @@ public class MotorValuesConstants {
         public static double START      = 0.18;
         public static double CONE_FLIP  = 0.23;
         public static double OFF_GROUND = 0.23;
-        public static double STACK      = 0.23;
+        public static double STACK      = 0.20;
         public static double MIDDLE     = 0.50;
         public static double PRE_SCORE  = 0.85;
         public static double SCORE      = 1.00;
