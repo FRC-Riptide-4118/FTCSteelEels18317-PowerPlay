@@ -25,6 +25,20 @@ public class Arm extends SubsystemBase {
         armToStart();
     }
 
+    public void toggleConeFlip() {
+        if(armRight.getPosition() == ArmRightConstants.START)
+        {
+            armRight.setPosition(ArmRightConstants.CONE_FLIP);
+            armLeft.setPosition(ArmLeftConstants.CONE_FLIP);
+
+        }
+        else
+        {
+            armRight.setPosition(ArmRightConstants.START);
+            armLeft.setPosition(ArmLeftConstants.START);
+        }
+    }
+
     
     public void armToStart() {
         armRight.setPosition(ArmRightConstants.START);
@@ -46,10 +60,10 @@ public class Arm extends SubsystemBase {
         armLeft.setPosition(ArmLeftConstants.MIDDLE);
     }
     
-    public void armToSCORE() // FIXME should we rename to "armToSCORE()" @Lohan @Elinora?
+    public void armToPreScore()
     {
-        armRight.setPosition(MotorValuesConstants.ArmRightConstants.SCORE);
-        armLeft.setPosition(MotorValuesConstants.ArmLeftConstants.SCORE);
+        armRight.setPosition(MotorValuesConstants.ArmRightConstants.PRE_SCORE);
+        armLeft.setPosition(MotorValuesConstants.ArmLeftConstants.PRE_SCORE);
     }
 
     public void armWiggle()
@@ -60,45 +74,51 @@ public class Arm extends SubsystemBase {
         armToStart();
     }
 
+    @Deprecated
     public void armToCone1()
     {
         armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_1);
         armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_1);
     }
 
+    @Deprecated
     public void armToCone1Wiggle()
     {
         armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_1 - 0.2);
         armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_1 + 0.2);
     }
 
+    @Deprecated
     public void armToCone2()
     {
         armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_2);
         armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_2);
     }
 
+    @Deprecated
     public void armToCone3()
     {
         armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_3);
         armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_3);
     }
 
+    @Deprecated
     public void armToCone4()
     {
         armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_4);
         armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_4);
     }
 
+    @Deprecated
     public void armToCone5()
     {
         armRight.setPosition(MotorValuesConstants.Arm1Constants.CONE_5);
         armLeft.setPosition(MotorValuesConstants.Arm2Constants.CONE_5);
     }
 
-    public void armToDrop() {
-        armRight.setPosition(ArmRightConstants.SCORE - 0.18);
-        armLeft.setPosition(ArmLeftConstants.SCORE + 0.18);
+    public void armToScore() {
+        armRight.setPosition(ArmRightConstants.SCORE);
+        armLeft.setPosition(ArmLeftConstants.SCORE);
     }
 
     public void armToPosition()

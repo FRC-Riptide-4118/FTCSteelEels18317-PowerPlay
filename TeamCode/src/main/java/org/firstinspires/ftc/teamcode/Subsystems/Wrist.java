@@ -34,4 +34,6 @@ public class Wrist extends SubsystemBase {
      * Moves the wrist to the scoring position.
      */
     public void toScoring() { m_wrist.setPosition(WristConstants.SCORE); }
+
+    public double getPosition() { return m_wrist.getPosition(); }
 }

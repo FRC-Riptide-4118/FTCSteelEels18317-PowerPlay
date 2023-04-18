@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.acmerobotics.dashboard.config.Config;
 
+@Config
 public class MotorValuesConstants {
 
     @Config
@@ -54,21 +55,25 @@ public class MotorValuesConstants {
     @Config
     public static class ArmRightConstants
     {
-        public static double START  = 1;
-        public static double OFF_GROUND = 0.95;
-        public static double STACK  = 0.95;
-        public static double MIDDLE = 0.5;
-        public static double SCORE  = 0.25;
+        public static double START      = 0.18;
+        public static double CONE_FLIP  = 0.23;
+        public static double OFF_GROUND = 0.23;
+        public static double STACK      = 0.23;
+        public static double MIDDLE     = 0.50;
+        public static double PRE_SCORE  = 0.85;
+        public static double SCORE      = 1.00;
     }
 
     @Config
     public static class ArmLeftConstants
     {
-        public static double START   = 0;
-        public static double OFF_GROUND = 0.05;
-        public static double STACK  = 0.05;
-        public static double MIDDLE  = 0.5;
-        public static double SCORE   = 0.75;
+        public static double START      = 0.18;
+        public static double CONE_FLIP  = 0.23;
+        public static double OFF_GROUND = 0.23;
+        public static double STACK      = 0.23;
+        public static double MIDDLE     = 0.50;
+        public static double PRE_SCORE  = 0.85;
+        public static double SCORE      = 1.00;
     }
 
     @Config

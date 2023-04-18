@@ -7,7 +7,6 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Subsystems.Alignment;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.firstinspires.ftc.teamcode.Subsystems.Gripper;
@@ -86,9 +85,11 @@ public class TestScoringSystemTeleOp extends CommandBase {
     private boolean gp1_a_PLI = false;
     private boolean gp1_rt_PLI = false;
     private boolean gp1_rb_PLI = false;
+    private boolean gp1_lsb_PLI = false;
 
     // Constants
     private final double TRIGGER_THRESHOLD = 0.5;
+    private final double WRIST_SCORE_DELAY = 0.8;
 
 
     public TestScoringSystemTeleOp(Gripper gripper, Arm arm, Wrist wrist, Intake intake, Alignment alignment, Slides slides,
@@ -149,6 +150,8 @@ public class TestScoringSystemTeleOp extends CommandBase {
         boolean rt_pressed = m_gamepad1.right_trigger > TRIGGER_THRESHOLD;
         boolean rb_pressed = m_gamepad1.right_bumper;
 
+        boolean lsb_pressed = m_gamepad1.left_stick_button;
+
         /* ------------ Intake ------------ */
         if(intakeState == IntakeState.OFF)
         {
@@ -171,7 +174,7 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 nextIntakeState = IntakeState.OFF;
                 m_gripper.gripCone();
-                m_arm.armOffGround();
+                m_arm.armToMiddle();
             }
             else
             {
@@ -191,19 +194,21 @@ public class TestScoringSystemTeleOp extends CommandBase {
         /* ------------ Gripper ------------ */
         if (lb_pressed && !gp1_lb_PLI) m_gripper.toggle();
 
-        /* ------------ Slides ------------ */
-//        if (gp1_) m_gripper.toggle();
-
         /* ------------ Arm/Slides/Wrist ------------ */
         if(scoringState == ScoringState.GROUND)
         {
+            if(m_gamepad1.left_stick_button && gp1_lsb_PLI)
+            {
+                m_arm.toggleConeFlip();
+            }
+
             if(m_gamepad1.x)
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
                         new SlidesToLow(m_slides),
-                        new ArmToScoring(m_arm),
-                        new DelayForSeconds(0.2),
+                        new ArmToPreScore(m_arm),
+                        new DelayForSeconds(WRIST_SCORE_DELAY),
                         new WristToScoring(m_wrist)
                 ));
 
@@ -214,10 +219,10 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new ArmToScoring(m_arm),
-                        new DelayForSeconds(0.04),
-                        new WristToScoring(m_wrist),
-                        new SlidesToMedium(m_slides)
+                        new ArmToPreScore(m_arm),
+                        new SlidesToMedium(m_slides),
+                        new DelayForSeconds(WRIST_SCORE_DELAY),
+                        new WristToScoring(m_wrist)
                 ));
 
                 nextScoringState = ScoringState.READY;
@@ -227,13 +232,19 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new ArmToScoring(m_arm),
-                        new DelayForSeconds(0.04),
-                        new WristToScoring(m_wrist),
-                        new SlidesToHigh(m_slides)
+                        new ArmToPreScore(m_arm),
+                        new SlidesToHigh(m_slides),
+                        new DelayForSeconds(WRIST_SCORE_DELAY),
+                        new WristToScoring(m_wrist)
                 ));
 
                 nextScoringState = ScoringState.READY;
+            }
+
+            if(m_gamepad1.a)
+            {
+                m_arm.armToStart();
+                m_gripper.releaseCone();
             }
         }
         else if(scoringState == ScoringState.READY)
@@ -242,10 +253,10 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new ArmToScoring(m_arm),
+                        new ArmToPreScore(m_arm),
+                        new SlidesToLow(m_slides),
                         new DelayForSeconds(0.04),
-                        new WristToScoring(m_wrist),
-                        new SlidesToLow(m_slides)
+                        new WristToScoring(m_wrist)
                 ));
 
                 nextScoringState = ScoringState.READY;
@@ -255,10 +266,10 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new ArmToScoring(m_arm),
+                        new ArmToPreScore(m_arm),
+                        new SlidesToMedium(m_slides),
                         new DelayForSeconds(0.04),
-                        new WristToScoring(m_wrist),
-                        new SlidesToMedium(m_slides)
+                        new WristToScoring(m_wrist)
                 ));
 
                 nextScoringState = ScoringState.READY;
@@ -269,10 +280,10 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new ArmToScoring(m_arm),
+                        new ArmToPreScore(m_arm),
+                        new SlidesToHigh(m_slides),
                         new DelayForSeconds(0.04),
-                        new WristToScoring(m_wrist),
-                        new SlidesToHigh(m_slides)
+                        new WristToScoring(m_wrist)
                 ));
 
                 nextScoringState = ScoringState.READY;
@@ -284,7 +295,7 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
 //                        new SlidesDropToScore(m_slides),
-                        new ArmToDrop(m_arm)
+                        new ArmToScore(m_arm)
                 ));
 
                 nextScoringState = ScoringState.SCORING;
@@ -296,10 +307,10 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new ArmToScoring(m_arm),
+                        new ArmToPreScore(m_arm),
+                        new SlidesToLow(m_slides),
                         new DelayForSeconds(0.04),
-                        new WristToScoring(m_wrist),
-                        new SlidesToLow(m_slides)
+                        new WristToScoring(m_wrist)
                 ));
 
                 nextScoringState = ScoringState.READY;
@@ -309,10 +320,10 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new ArmToScoring(m_arm),
+                        new ArmToPreScore(m_arm),
+                        new SlidesToMedium(m_slides),
                         new DelayForSeconds(0.04),
-                        new WristToScoring(m_wrist),
-                        new SlidesToMedium(m_slides)
+                        new WristToScoring(m_wrist)
                 ));
 
                 nextScoringState = ScoringState.READY;
@@ -323,10 +334,10 @@ public class TestScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToScoring(m_alignment),
-                        new ArmToScoring(m_arm),
+                        new ArmToPreScore(m_arm),
+                        new SlidesToHigh(m_slides),
                         new DelayForSeconds(0.04),
-                        new WristToScoring(m_wrist),
-                        new SlidesToHigh(m_slides)
+                        new WristToScoring(m_wrist)
                 ));
 
                 nextScoringState = ScoringState.READY;
@@ -339,10 +350,10 @@ public class TestScoringSystemTeleOp extends CommandBase {
                 schedule(new SequentialCommandGroup(
                         new AlignmentToDown(m_alignment),
                         new DelayForSeconds(0.5),
-                        new WristToStart(m_wrist),
+                        new ArmToStart(m_arm),
                         new SlidesToStart(m_slides),
                         new DelayForSeconds(0.2),
-                        new ArmToStart(m_arm),
+                        new WristToStart(m_wrist),
                         new DelayForSeconds(0.8),
                         new AlignmentToUp(m_alignment)
                 ));
@@ -360,12 +371,14 @@ public class TestScoringSystemTeleOp extends CommandBase {
         gp1_a_PLI = a_pressed;
         gp1_rt_PLI = rt_pressed;
         gp1_lb_PLI = lb_pressed;
+        gp1_lsb_PLI = lsb_pressed;
 
         /* ------------ Telemetry ------------ */
         m_telemetry.addData("scoring state", scoringState.toString());
         m_telemetry.addData("intake state", intakeState.toString());
         m_telemetry.addData("gripping", m_gripper.getPosition());
-//        m_telemetry.addData("slide motors", m_slides.getCurrent(CurrentUnit.MILLIAMPS));
+        m_telemetry.addLine();
+        m_telemetry.addData("wrist pos", m_wrist.getPosition());
         m_telemetry.update();
     }
 

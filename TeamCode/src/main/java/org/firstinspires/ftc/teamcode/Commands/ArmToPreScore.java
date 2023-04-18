@@ -4,11 +4,11 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 
-public class ArmToDrop extends CommandBase {
+public class ArmToPreScore extends CommandBase {
 
     private Arm m_arm;
 
-    public ArmToDrop(Arm arm)
+    public ArmToPreScore(Arm arm)
     {
         m_arm = arm;
     }
@@ -16,7 +16,7 @@ public class ArmToDrop extends CommandBase {
     @Override
     public void initialize()
     {
-        m_arm.armToDrop();
+        m_arm.armToPreScore();
     }
 
     @Override

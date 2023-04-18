@@ -5,7 +5,6 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
@@ -169,7 +168,7 @@ public class ScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new SlidesToHigh(m_slides), // ends when at a safe height for arm to move
-                        new ArmToScoring(m_arm)
+                        new ArmToPreScore(m_arm)
                 ));
 
                 slidesState = SlidesState.HIGH;
@@ -178,7 +177,7 @@ public class ScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
                         new SlidesToMedium(m_slides), // ends when at a safe height for arm to move
-                        new ArmToScoring(m_arm)
+                        new ArmToPreScore(m_arm)
                 ));
 
                 slidesState = SlidesState.MEDIUM;
@@ -187,7 +186,7 @@ public class ScoringSystemTeleOp extends CommandBase {
             {
                 schedule(new SequentialCommandGroup(
 //                        new SlidesToLow(m_slides), // ends when at a safe height for arm to move
-                        new ArmToScoring(m_arm)
+                        new ArmToPreScore(m_arm)
                 ));
 
                 slidesState = SlidesState.LOW;
