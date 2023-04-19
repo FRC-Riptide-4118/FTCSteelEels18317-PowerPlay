@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Subsystems.Alignment;
@@ -16,6 +17,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.Wrist;
 
 public class TestScoringSystemTeleOp extends CommandBase {
 
+    private boolean startMachine;
+    ElapsedTime timer;
     private enum ScoringState
     {
         GROUND,
@@ -86,6 +89,15 @@ public class TestScoringSystemTeleOp extends CommandBase {
     private boolean gp1_rt_PLI = false;
     private boolean gp1_rb_PLI = false;
 
+    public enum DepositState {
+        IDLE,
+        RELEASE,
+        DOWN,
+        DONE
+    }
+
+    DepositState state = DepositState.IDLE;
+
     // Constants
     private final double TRIGGER_THRESHOLD = 0.5;
 
@@ -110,6 +122,8 @@ public class TestScoringSystemTeleOp extends CommandBase {
     public void initialize()
     {
         m_gripper.releaseCone();
+        startMachine = false;
+        timer = new ElapsedTime();
     }
 
     @Override
@@ -337,21 +351,53 @@ public class TestScoringSystemTeleOp extends CommandBase {
 
             if(a_pressed && !gp1_a_PLI)
             {
+//                m_gripper.releaseCone();
+//
+//                schedule(new SequentialCommandGroup(
+//                        new AlignmentToDown(m_alignment),
+//                        new DelayForSeconds(0.5),
+//                        new WristToStart(m_wrist),
+//                        new SlidesToStart(m_slides),
+//                        new DelayForSeconds(1.0),
+//                        new ArmToStart(m_arm),
+//                        new DelayForSeconds(0.8),
+//                        new AlignmentToUp(m_alignment)
+//                ));
+//
+//                nextScoringState = ScoringState.GROUND;
+
+                startMachine = true;
+            }
+        }
+
+        switch(state) {
+            case IDLE:
+                if(startMachine) {
+                    timer.reset();
+                    startMachine = false;
+                    state = DepositState.RELEASE;
+                }
+                break;
+            case RELEASE:
                 m_gripper.releaseCone();
 
-                schedule(new SequentialCommandGroup(
-                        new AlignmentToDown(m_alignment),
-                        new DelayForSeconds(0.5),
-                        new WristToStart(m_wrist),
-                        new SlidesToStart(m_slides),
-                        new DelayForSeconds(1.0),
-                        new ArmToStart(m_arm),
-                        new DelayForSeconds(0.8),
-                        new AlignmentToUp(m_alignment)
-                ));
+                if(timer.seconds() > 0.5) {
+                    m_wrist.toStart();
+                    m_slides.slidesToStart();
+                    timer.reset();
+                    state = DepositState.DOWN;
+                }
+                break;
+            case DOWN:
+                if(timer.seconds() > 1.0 && timer.seconds() < 1.1) {
+                    m_arm.armToStart();
+                }
 
-                nextScoringState = ScoringState.GROUND;
-            }
+                if(timer.seconds() > 1.8) {
+                    m_alignment.up();
+                    state = DepositState.IDLE;
+                }
+                break;
         }
 
 

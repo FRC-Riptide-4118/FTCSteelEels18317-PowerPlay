@@ -39,6 +39,10 @@ public class Arm extends SubsystemBase {
         }
     }
 
+    public double getPosition() {
+        return armRight.getPosition();
+    }
+
     
     public void armToStart() {
         armRight.setPosition(ArmRightConstants.START);
