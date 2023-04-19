@@ -39,7 +39,6 @@ public class Left_AutoWorldsMid extends LinearOpMode {
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
     // Time
-    public ElapsedTime timer;
     static final double FEET_PER_METER = 3.28084;
 
     double fx = 578.272;
@@ -62,18 +61,17 @@ public class Left_AutoWorldsMid extends LinearOpMode {
     public static double wristIntakeArmDelay = 0.25;
 
     @Override
-
     public void runOpMode() {
 
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, dashboard.getTelemetry());
 
-        //Hardware Classes
-        Gripper     gripper     = new Gripper(hardwareMap);
-        Arm         arm         = new Arm(hardwareMap);
-        Wrist       wrist       = new Wrist(hardwareMap);
-        Intake      intake      = new Intake(hardwareMap);
-        Alignment   alignment   = new Alignment(hardwareMap);
-        Slides      slides      = new Slides(hardwareMap);
+        // Subsystems
+        Gripper     gripper     = new Gripper   (hardwareMap);
+        Arm         arm         = new Arm       (hardwareMap);
+        Wrist       wrist       = new Wrist     (hardwareMap);
+        Intake      intake      = new Intake    (hardwareMap);
+        Alignment   alignment   = new Alignment (hardwareMap);
+        Slides      slides      = new Slides    (hardwareMap);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -95,7 +93,6 @@ public class Left_AutoWorldsMid extends LinearOpMode {
             }
         });
 
-        timer = new ElapsedTime();
         SampleMecanumDrive mecanumDrive = new SampleMecanumDrive(hardwareMap);
 
 

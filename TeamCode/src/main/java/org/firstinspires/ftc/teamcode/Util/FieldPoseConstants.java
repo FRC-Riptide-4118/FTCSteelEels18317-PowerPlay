@@ -17,8 +17,12 @@ public class FieldPoseConstants {
         public static Pose2d MidJunction         = new Pose2d(35, 14, Math.toRadians(128));
 
         public static Pose2d parkLeft           = new Pose2d(64, 11.9, Math.toRadians(0));
-        public static Pose2d parkMiddle         = new Pose2d(43, 11.9, Math.toRadians(0));
-        public static Pose2d parkRight          = new Pose2d(30, 11.9, Math.toRadians(180));
+        public static Pose2d parkMiddle         = new Pose2d(38, 11.9, Math.toRadians(0));
+        public static Pose2d parkRight          = new Pose2d(10, 11.9, Math.toRadians(180));
+
+        public static Pose2d parkCloseLeft      = new Pose2d(64, 24 + 11.9, Math.toRadians(0));
+        public static Pose2d parkCloseMiddle    = new Pose2d(38, 24 + 11.9, Math.toRadians(0));
+        public static Pose2d parkCloseRight     = new Pose2d(10, 24 + 11.9, Math.toRadians(180));
     }
 
     @Config
@@ -32,8 +36,9 @@ public class FieldPoseConstants {
         public static Pose2d closeMidJunction    = new Pose2d(-34, 17, Math.toRadians(38));
 
         public static Pose2d parkLeft           = new Pose2d(-64, 11.9, Math.toRadians(0));
-        public static Pose2d parkMiddle         = new Pose2d(-43, 11.9, Math.toRadians(0));
-        public static Pose2d parkRight          = new Pose2d(-30, 11.9, Math.toRadians(180));
+        public static Pose2d parkMiddle         = new Pose2d(-38, 11.9, Math.toRadians(0));
+        public static Pose2d parkRight          = new Pose2d(-10, 11.9, Math.toRadians(180));
+
     }
 
 }
