@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Subsystems.Wrist;
 
-public class TestScoringSystemTeleOp extends CommandBase {
+public class OperatorTeleOpControls extends CommandBase {
 
     private boolean startMachine;
     ElapsedTime timer;
@@ -102,8 +102,8 @@ public class TestScoringSystemTeleOp extends CommandBase {
     private final double TRIGGER_THRESHOLD = 0.5;
 
 
-    public TestScoringSystemTeleOp(Gripper gripper, Arm arm, Wrist wrist, Intake intake, Alignment alignment, Slides slides,
-                                   Telemetry telemetry, Gamepad gamepad1) {
+    public OperatorTeleOpControls(Gripper gripper, Arm arm, Wrist wrist, Intake intake, Alignment alignment, Slides slides,
+                                  Telemetry telemetry, Gamepad gamepad1) {
         m_gripper   = gripper;
         m_arm       = arm;
         m_wrist     = wrist;
@@ -390,7 +390,7 @@ public class TestScoringSystemTeleOp extends CommandBase {
                 break;
             case DOWN:
                 if(timer.seconds() > 1.0 && timer.seconds() < 1.1) {
-                    m_arm.armToStart();
+                    m_arm.toStart();
                 }
 
                 if(timer.seconds() > 1.8) {

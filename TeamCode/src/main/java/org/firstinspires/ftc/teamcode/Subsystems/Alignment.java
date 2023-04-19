@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants;
+import org.firstinspires.ftc.teamcode.Util.MotorValuesConstants;
 
 public class Alignment extends SubsystemBase {
 
@@ -26,16 +26,16 @@ public class Alignment extends SubsystemBase {
 
     public void up()
     {
-        m_alignment.setPosition(MotorValuesConstants.AlignmentConstants.UP);
+        m_alignment.setPosition(MotorValuesConstants.AlignmentConstants.up);
     }
 
     public void score()
     {
-        m_alignment.setPosition(MotorValuesConstants.AlignmentConstants.SCORE);
+        m_alignment.setPosition(MotorValuesConstants.AlignmentConstants.score);
     }
 
     public void down()
     {
-        m_alignment.setPosition(MotorValuesConstants.AlignmentConstants.DOWN);
+        m_alignment.setPosition(MotorValuesConstants.AlignmentConstants.down);
     }
 }

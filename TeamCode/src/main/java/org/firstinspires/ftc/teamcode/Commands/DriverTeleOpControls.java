@@ -2,14 +2,14 @@ package org.firstinspires.ftc.teamcode.Commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.qualcomm.robotcore.hardware.Gamepad;
-
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 
-public class DrivetrainTeleOp extends CommandBase {
+public class DriverTeleOpControls extends CommandBase {
     private final Drivetrain m_drivetrain;
     private final Gamepad m_gamepad1;
 
-    public DrivetrainTeleOp(Drivetrain drivetrain, Gamepad gamepad1) {
+    public DriverTeleOpControls(Drivetrain drivetrain, Gamepad gamepad1)
+    {
         m_drivetrain    = drivetrain;
         m_gamepad1      = gamepad1;
 
@@ -18,12 +18,14 @@ public class DrivetrainTeleOp extends CommandBase {
     }
 
     @Override
-    public void initialize() {
+    public void initialize()
+    {
 
     }
 
     @Override
-    public void execute() {
+    public void execute()
+    {
         double drive        = -m_gamepad1.left_stick_y;
         double strafe       = m_gamepad1.left_stick_x;
         double twist        = m_gamepad1.right_stick_x;
@@ -33,7 +35,8 @@ public class DrivetrainTeleOp extends CommandBase {
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isFinished()
+    {
         return false;
     }
 }

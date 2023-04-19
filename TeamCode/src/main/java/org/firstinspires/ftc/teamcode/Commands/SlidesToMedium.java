@@ -28,7 +28,7 @@ public class SlidesToMedium extends CommandBase {
     @Override
     public boolean isFinished()
     {
-        return m_slides.atSafeHeight();
+        return true;
     }
 
 }

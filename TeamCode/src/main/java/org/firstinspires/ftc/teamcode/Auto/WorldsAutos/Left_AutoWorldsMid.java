@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Subsystems.Wrist;
 import org.firstinspires.ftc.teamcode.Subsystems.Alignment;
-import org.firstinspires.ftc.teamcode.TeleOp.FieldPoseConstants;
+import org.firstinspires.ftc.teamcode.Util.FieldPoseConstants;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -118,7 +118,7 @@ public class Left_AutoWorldsMid extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.2, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesUp)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
-                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStack)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::toStack)
                 .UNSTABLE_addTemporalMarkerOffset(0.7, slides::slidesToCone1)
                 // Cone 1
                 .setReversed(false)
@@ -140,7 +140,7 @@ public class Left_AutoWorldsMid extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.2, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesUp)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
-                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStack)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::toStack)
                 .UNSTABLE_addTemporalMarkerOffset(0.7, slides::slidesToCone2)
                 // Cone 2
                 .setReversed(false)
@@ -161,7 +161,7 @@ public class Left_AutoWorldsMid extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.2, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesUp)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
-                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStack)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::toStack)
                 .UNSTABLE_addTemporalMarkerOffset(0.7, slides::slidesToCone3)
                 // Cone 3
                 .setReversed(false)
@@ -182,7 +182,7 @@ public class Left_AutoWorldsMid extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.2, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesUp)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
-                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStack)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::toStack)
                 .UNSTABLE_addTemporalMarkerOffset(0.7, slides::slidesToCone4)
                 // Cone 4
                 .setReversed(false)
@@ -203,7 +203,7 @@ public class Left_AutoWorldsMid extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.2, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesUp)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
-                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStart)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::toStart)
                 .UNSTABLE_addTemporalMarkerOffset(0.7, slides::slidesToCone5)
                 // Cone 5??
                 .setReversed(false)
@@ -225,7 +225,7 @@ public class Left_AutoWorldsMid extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.2, gripper::releaseCone)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, slides::slidesUp)
                 .UNSTABLE_addTemporalMarkerOffset(0.6, wrist::toStart)
-                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::armToStack)
+                .UNSTABLE_addTemporalMarkerOffset(0.6, arm::toStack)
                 .UNSTABLE_addTemporalMarkerOffset(0.7, slides::slidesToCone5)
                 .UNSTABLE_addTemporalMarkerOffset(0.9, alignment::up)
                 // PARK PARK PARK

@@ -1,173 +1,114 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.SlidesConstants;
+import static org.firstinspires.ftc.teamcode.Util.MotorValuesConstants.SlidesConstants;
 
+@Config
 public class Slides extends SubsystemBase {
-    /**
-     * Creates a new ExampleSubsystem.
-     */
-    public DcMotorEx leftSlide = null;
-    public DcMotorEx rightSlide = null;
+    public DcMotorEx leftSlide;
+    public DcMotorEx rightSlide;
 
+    PIDFCoefficients slidePIDF = new PIDFCoefficients(5, 0, 0, 0);
 
-    private final double SAFE_SLIDES_HEIGHT = 600; // encoder counts
 
     public Slides(HardwareMap hardwareMap) {
-        leftSlide =  hardwareMap.get(DcMotorEx.class, "left_slide");
+        leftSlide = hardwareMap.get(DcMotorEx.class, "left_slide");
         rightSlide = hardwareMap.get(DcMotorEx.class, "right_slide");
 
         // Slide motors
-        leftSlide.  setDirection(DcMotor.Direction.REVERSE);
-        rightSlide. setDirection(DcMotor.Direction.FORWARD);
+        leftSlide.setDirection(DcMotor.Direction.REVERSE);
+        rightSlide.setDirection(DcMotor.Direction.FORWARD);
 
-        leftSlide.  setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide. setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftSlide.  setTargetPosition(SlidesConstants.START);
-        rightSlide. setTargetPosition(SlidesConstants.START);
+        leftSlide.setTargetPosition(SlidesConstants.start);
+        rightSlide.setTargetPosition(SlidesConstants.start);
 
-        leftSlide.  setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightSlide. setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // PID Values
-        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-                new PIDFCoefficients(5, 0, 0, 0));
-        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,
-                new PIDFCoefficients(5, 0, 0, 0));
-    }
+        leftSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, slidePIDF);
+        rightSlide.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, slidePIDF);
 
-    public void setSlidesPower(double power)
-    {
-        leftSlide.setPower(power);
-        rightSlide.setPower(power);
+        setPower(1.0);
     }
 
     public void slidesToStart()
     {
-        leftSlide.setTargetPosition(SlidesConstants.START);
-        rightSlide.setTargetPosition(SlidesConstants.START);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
+        leftSlide.setTargetPosition(SlidesConstants.start);
+        rightSlide.setTargetPosition(SlidesConstants.start);
     }
 
     public void slidesToLow()
     {
-        leftSlide.setTargetPosition(SlidesConstants.LOW);
-        rightSlide.setTargetPosition(SlidesConstants.LOW);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
-    }
-
-    public void slidesToGround()
-    {
-        leftSlide.setTargetPosition(SlidesConstants.GROUND);
-        rightSlide.setTargetPosition(SlidesConstants.GROUND);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
-    }
-
-    public void slidesToStack()
-    {
-        leftSlide.setTargetPosition(SlidesConstants.STACK);
-        rightSlide.setTargetPosition(SlidesConstants.STACK);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
+        leftSlide.setTargetPosition(SlidesConstants.low);
+        rightSlide.setTargetPosition(SlidesConstants.low);
     }
 
     public void slidesToMedium()
     {
-        leftSlide.setTargetPosition(SlidesConstants.MEDIUM);
-        rightSlide.setTargetPosition(SlidesConstants.MEDIUM);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
-    }
-
-    public void slidesToScoreHigh()
-    {
-        leftSlide.setTargetPosition(SlidesConstants.HIGH - SlidesConstants.SCORE_DROP);
-        rightSlide.setTargetPosition(SlidesConstants.HIGH);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
+        leftSlide.setTargetPosition(SlidesConstants.medium);
+        rightSlide.setTargetPosition(SlidesConstants.medium);
     }
 
     public void slidesToHigh()
     {
-        leftSlide.setTargetPosition(SlidesConstants.HIGH);
-        rightSlide.setTargetPosition(SlidesConstants.HIGH);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
-    }
-
-    public void slidesDrop()
-    {
-        leftSlide.setTargetPosition(Math.max(leftSlide.getTargetPosition() - SlidesConstants.SCORE_DROP, SlidesConstants.START));
-        rightSlide.setTargetPosition(Math.max(rightSlide.getTargetPosition() - SlidesConstants.SCORE_DROP, SlidesConstants.START));
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
+        leftSlide.setTargetPosition(SlidesConstants.high);
+        rightSlide.setTargetPosition(SlidesConstants.high);
     }
 
     public void slidesUp()
     {
         leftSlide.setTargetPosition(leftSlide.getCurrentPosition()+300);
         rightSlide.setTargetPosition(rightSlide.getCurrentPosition()+300);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
     }
 
     public void slidesToCone1()
     {
-        leftSlide.setTargetPosition(SlidesConstants.Cone_1);
-        rightSlide.setTargetPosition(SlidesConstants.Cone_1);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
+        leftSlide.setTargetPosition(SlidesConstants.cone1);
+        rightSlide.setTargetPosition(SlidesConstants.cone1);
     }
 
     public void slidesToCone2()
     {
-        leftSlide.setTargetPosition(SlidesConstants.Cone_2);
-        rightSlide.setTargetPosition(SlidesConstants.Cone_2);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
+        leftSlide.setTargetPosition(SlidesConstants.cone2);
+        rightSlide.setTargetPosition(SlidesConstants.cone2);
     }
 
     public void slidesToCone3()
     {
-        leftSlide.setTargetPosition(SlidesConstants.Cone_3);
-        rightSlide.setTargetPosition(SlidesConstants.Cone_3);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
+        leftSlide.setTargetPosition(SlidesConstants.cone3);
+        rightSlide.setTargetPosition(SlidesConstants.cone3);
     }
 
     public void slidesToCone4()
     {
-        leftSlide.setTargetPosition(SlidesConstants.Cone_4);
-        rightSlide.setTargetPosition(SlidesConstants.Cone_4);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
+        leftSlide.setTargetPosition(SlidesConstants.cone4);
+        rightSlide.setTargetPosition(SlidesConstants.cone4);
     }
 
     public void slidesToCone5()
     {
-        leftSlide.setTargetPosition(SlidesConstants.Cone_5);
-        rightSlide.setTargetPosition(SlidesConstants.Cone_5);
-        leftSlide.setPower(1);
-        rightSlide.setPower(1);
+        leftSlide.setTargetPosition(SlidesConstants.cone5);
+        rightSlide.setTargetPosition(SlidesConstants.cone5);
     }
 
-    public boolean slidesAreBusy()
+    private void setPower(double power)
     {
-        return leftSlide.isBusy() || rightSlide.isBusy();
+        leftSlide.setPower(power);
+        rightSlide.setPower(power);
     }
-
-    public boolean atSafeHeight() { return (leftSlide.getCurrentPosition() - SAFE_SLIDES_HEIGHT) >= 0; }
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
+
     }
 }

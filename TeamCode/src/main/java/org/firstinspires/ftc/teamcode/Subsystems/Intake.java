@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.IntakeServosConstants;
+import static org.firstinspires.ftc.teamcode.Util.MotorValuesConstants.IntakeServosConstants;
 
 public class Intake extends SubsystemBase {
     public DcMotor intake;
@@ -18,9 +18,9 @@ public class Intake extends SubsystemBase {
      */
     public Intake(HardwareMap hardwareMap)
     {
-        intake      = hardwareMap.get(DcMotor.class, "intake");
-        intakeLeft  = hardwareMap.get(Servo.class, "intake_left");
-        intakeRight = hardwareMap.get(Servo.class, "intake_right");
+        intake      = hardwareMap.dcMotor.get("intake");
+        intakeLeft  = hardwareMap.servo.get("intake_left");
+        intakeRight = hardwareMap.servo.get("intake_right");
     }
 
     /**
@@ -43,8 +43,8 @@ public class Intake extends SubsystemBase {
      */
     public void close()
     {
-        intakeLeft.setPosition(IntakeServosConstants.INTAKE_LEFT_IN);
-        intakeRight.setPosition(IntakeServosConstants.INTAKE_RIGHT_IN);
+        intakeLeft.setPosition(IntakeServosConstants.leftIn);
+        intakeRight.setPosition(IntakeServosConstants.rightIn);
     }
 
     /**
@@ -52,7 +52,7 @@ public class Intake extends SubsystemBase {
      */
     public void open()
     {
-        intakeLeft.setPosition(IntakeServosConstants.INTAKE_LEFT_OUT);
-        intakeRight.setPosition(IntakeServosConstants.INTAKE_RIGHT_OUT);
+        intakeLeft.setPosition(IntakeServosConstants.leftOut);
+        intakeRight.setPosition(IntakeServosConstants.rightOut);
     }
 }

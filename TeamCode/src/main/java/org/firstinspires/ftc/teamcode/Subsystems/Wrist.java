@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.TeleOp.MotorValuesConstants.WristConstants;
+import org.firstinspires.ftc.teamcode.Util.MotorValuesConstants.WristConstants;
 
 public class Wrist extends SubsystemBase {
 
@@ -19,21 +19,25 @@ public class Wrist extends SubsystemBase {
         toStart();
     }
 
-    @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
-    }
-
-    /* ---------------- Custom Functions ---------------- */
     /**
      * Moves the wrist to the starting position.
      */
-    public void toStart() { m_wrist.setPosition(WristConstants.START); }
+    public void toStart() { m_wrist.setPosition(WristConstants.start); }
 
     /**
      * Moves the wrist to the scoring position.
      */
-    public void toScoring() { m_wrist.setPosition(WristConstants.SCORE); }
+    public void toScoring() { m_wrist.setPosition(WristConstants.score); }
 
+    /**
+     * Returns the current position of the wrist servo.
+     * @return the current position of the wrist servo.
+     */
     public double getPosition() { return m_wrist.getPosition(); }
+
+
+    @Override
+    public void periodic() {
+
+    }
 }
