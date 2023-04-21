@@ -37,6 +37,6 @@ public class TeleOpWorlds extends CommandOpMode {
 
         schedule(new DrivetrainTeleOp(drive, gamepad1),
                 new TestScoringSystemTeleOp(gripper, arm, wrist, intake, alignment, slides,
-                telemetry, gamepad1));
+                m_telemetry, gamepad1));
     }
 }
