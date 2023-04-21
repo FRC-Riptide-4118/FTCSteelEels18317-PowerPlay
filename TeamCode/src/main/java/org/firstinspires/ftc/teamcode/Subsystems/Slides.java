@@ -25,8 +25,8 @@ public class Slides extends SubsystemBase {
         leftSlide.  setDirection(DcMotor.Direction.REVERSE);
         rightSlide. setDirection(DcMotor.Direction.FORWARD);
 
-        leftSlide.  setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide. setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        leftSlide.  setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        rightSlide. setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         leftSlide.  setTargetPosition(SlidesConstants.START);
         rightSlide. setTargetPosition(SlidesConstants.START);
