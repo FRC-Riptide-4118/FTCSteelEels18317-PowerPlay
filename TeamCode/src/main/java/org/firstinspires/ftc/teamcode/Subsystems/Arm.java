@@ -124,6 +124,10 @@ public class Arm extends SubsystemBase {
         armRight.setPosition(ArmRightConstants.SCORE);
         armLeft.setPosition(ArmLeftConstants.SCORE);
     }
+    public void armToPreScoreBeacon() {
+        armRight.setPosition(ArmRightConstants.PRE_SCORE_BEACON);
+        armLeft.setPosition(ArmLeftConstants.PRE_SCORE_BEACON);
+    }
 
     public void armToPosition()
     {

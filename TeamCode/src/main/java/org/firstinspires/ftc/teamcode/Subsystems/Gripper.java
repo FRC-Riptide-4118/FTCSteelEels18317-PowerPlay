@@ -53,6 +53,8 @@ public class Gripper extends SubsystemBase {
         gripper.setPosition(GripperConstants.RELEASE);
     }
 
+    public void releaseBeacon() {gripper.setPosition(GripperConstants.RELEASEBEACON);}
+
     public void toggle()
     {
         if(isGripping())    releaseCone();
