@@ -61,6 +61,7 @@ public class MotorValuesConstants {
         public static double STACK      = 0.20;
         public static double MIDDLE     = 0.50;
         public static double PRE_SCORE  = 0.85;
+        public static double PRE_SCORE_BEACON  = 0.83;
         public static double SCORE      = 1.00;
     }
 
@@ -73,6 +74,7 @@ public class MotorValuesConstants {
         public static double STACK      = 0.20;
         public static double MIDDLE     = 0.50;
         public static double PRE_SCORE  = 0.85;
+        public static double PRE_SCORE_BEACON  = 0.83;
         public static double SCORE      = 1.00;
     }
 
@@ -101,14 +103,16 @@ public class MotorValuesConstants {
         public static double INTAKE_RIGHT_IN = 0.6;
     }
 
+    @Config
     public static class GripperConstants {
 
         // Old values
         public static final double OLD_GRIPPER_GRAB = 0;
         public static final double OLD_GRIPPER_RELEASE = 0.25;
 
-        public static double RELEASE = 0.4;
-        public static double GRIP    = 0.53;
+        public static double RELEASEBEACON = 0.65;
+        public static double RELEASE       = 0.55;
+        public static double GRIP          = 0.445;
     }
 
 }
