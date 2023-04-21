@@ -299,6 +299,8 @@ public class Right_AutoWorldsMid extends LinearOpMode {
 //            sleep(20);
         }
 
+        slides.resetEncoders();
+
         /* Update the telemetry */
         if(tagOfInterest != null)
         {
