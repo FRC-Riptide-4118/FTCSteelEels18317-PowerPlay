@@ -159,6 +159,41 @@ public class Slides extends SubsystemBase {
         rightSlide.setPower(1);
     }
 
+    public void setPosition(int position) {
+        leftSlide.setTargetPosition(position);
+        rightSlide.setTargetPosition(position);
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+    }
+
+    public void resetEncoders() {
+        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        leftSlide.setTargetPosition(SlidesConstants.START);
+        rightSlide.setTargetPosition(SlidesConstants.START);
+
+        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public int getLeftPosition () {
+        return leftSlide.getCurrentPosition();
+    }
+
+    public int getRightPosition () {
+        return rightSlide.getCurrentPosition();
+    }
+
+    public int getLeftTarget () {
+        return leftSlide.getTargetPosition();
+    }
+
+    public int getRightTarget () {
+        return rightSlide.getTargetPosition();
+    }
+
+
     public boolean slidesAreBusy()
     {
         return leftSlide.isBusy() || rightSlide.isBusy();
